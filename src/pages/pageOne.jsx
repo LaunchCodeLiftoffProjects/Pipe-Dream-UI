@@ -6,7 +6,7 @@ export default class PageOne extends React.Component {
     return (
       <div>
         <h1>Page 1</h1>
-        <p>Welcome to the first page!</p>
+        <p>Welcome to the first page.</p>
       </div>
     );
   }
