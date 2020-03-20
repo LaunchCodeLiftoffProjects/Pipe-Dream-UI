@@ -22,6 +22,41 @@ export default class PageTwo extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentDidMount() {
+    const businessName = localStorage.getItem('businessName');
+    this.setState(() => ({businessName}));
+
+    const businessType = localStorage.getItem('businessType');
+    this.setState(() => ({businessType}));
+
+    const jsonAccessible = localStorage.getItem('isAccessible');
+    const isAccessible = JSON.parse(jsonAccessible);
+    this.setState(() => ({isAccessible}));
+
+    const jsonGenderNeutral = localStorage.getItem('isGenderNeutral');
+    const isGenderNeutral = JSON.parse(jsonGenderNeutral);
+    this.setState(() => ({isGenderNeutral}));
+
+    const jsonSingleStall = localStorage.getItem('isSingleStall');
+    const isSingleStall = JSON.parse(jsonSingleStall);
+    this.setState(() => ({isSingleStall}));
+
+    const jsonChangingTable = localStorage.getItem('hasChangingTable');
+    const hasChangingTable = JSON.parse(jsonChangingTable);
+    this.setState(() => ({hasChangingTable}));
+  
+  }
+
+  componentDidUpdate() {
+    console.log('didUpdate');
+    localStorage.setItem('businessName', this.state.businessName);
+    localStorage.setItem('businessType', this.state.businessType);
+    localStorage.setItem('isAccessible', this.state.isAccessible);
+    localStorage.setItem('isSingleStall', this.state.isSingleStall);
+    localStorage.setItem('isGenderNeutral', this.state.isGenderNeutral);
+    localStorage.setItem('hasChangingTable', this.state.hasChangingTable);
+  }
+
   handleBusinessNameChange = (event) => {
     this.setState({
       businessName: event.target.value
