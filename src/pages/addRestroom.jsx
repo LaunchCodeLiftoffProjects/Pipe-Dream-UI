@@ -1,6 +1,7 @@
 import React from "react";
+import axios from "axios";
 
-export default class PageTwo extends React.Component {
+export default class AddRestroom extends React.Component {
   //Write HTML inside render function
   constructor(props){
     super(props);
@@ -22,40 +23,6 @@ export default class PageTwo extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidMount() {
-    const businessName = localStorage.getItem('businessName');
-    this.setState(() => ({businessName}));
-
-    const businessType = localStorage.getItem('businessType');
-    this.setState(() => ({businessType}));
-
-    const jsonAccessible = localStorage.getItem('isAccessible');
-    const isAccessible = JSON.parse(jsonAccessible);
-    this.setState(() => ({isAccessible}));
-
-    const jsonGenderNeutral = localStorage.getItem('isGenderNeutral');
-    const isGenderNeutral = JSON.parse(jsonGenderNeutral);
-    this.setState(() => ({isGenderNeutral}));
-
-    const jsonSingleStall = localStorage.getItem('isSingleStall');
-    const isSingleStall = JSON.parse(jsonSingleStall);
-    this.setState(() => ({isSingleStall}));
-
-    const jsonChangingTable = localStorage.getItem('hasChangingTable');
-    const hasChangingTable = JSON.parse(jsonChangingTable);
-    this.setState(() => ({hasChangingTable}));
-  
-  }
-
-  componentDidUpdate() {
-    console.log('didUpdate');
-    localStorage.setItem('businessName', this.state.businessName);
-    localStorage.setItem('businessType', this.state.businessType);
-    localStorage.setItem('isAccessible', this.state.isAccessible);
-    localStorage.setItem('isSingleStall', this.state.isSingleStall);
-    localStorage.setItem('isGenderNeutral', this.state.isGenderNeutral);
-    localStorage.setItem('hasChangingTable', this.state.hasChangingTable);
-  }
 
   handleBusinessNameChange = (event) => {
     this.setState({
@@ -94,8 +61,22 @@ export default class PageTwo extends React.Component {
   }
 
   handleSubmit = (event) => {
-    alert(`This is the business name: ${this.state.businessName}.  The business type is: ${this.state.businessType}. Single Stall? ${this.state.isSingleStall}. Accessible? ${this.state.isAccessible}. Gender Neutral? ${this.state.isGenderNeutral}. Changing Table? ${this.state.hasChangingTable}`);
     event.preventDefault();
+    
+    const restroom = {
+      businessName: this.state.businessName,
+      businessType: this.state.businessType,
+      isAccessible: this.state.isAccessible,
+      isSingleStall: this.state.isSingleStall,
+      isGenderNeutral: this.state.isGenderNeutral,
+      hasChangingTable: this.state.hasChangingTable
+    }
+
+    axios.post(`http://localhost:8080`, { restroom } )
+      .then(response => {
+        console.log(response);
+        console.log(response.data);
+      })
   }
 
   render() {
@@ -145,5 +126,5 @@ export default class PageTwo extends React.Component {
         <button type="submit">Submit</button>
       </form>
     );
-    }
-}
+    };
+  }

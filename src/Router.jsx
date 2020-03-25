@@ -2,8 +2,8 @@ import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Layout from "./Layout";
 import PageOne from "./pages/pageOne.jsx";
-import PageTwo from "./pages/pageTwo.jsx";
-import PageThree from "./pages/pageThree.jsx";
+import PageTwo from "./pages/addRestroom.jsx";
+import PageThree from "./pages/restroomList.jsx";
 import PageFour from "./pages/pageFour.jsx";
 
 export const Routes = () => {
