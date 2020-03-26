@@ -72,7 +72,7 @@ export default class AddRestroom extends React.Component {
       hasChangingTable: this.state.hasChangingTable
     }
 
-    axios.post(`http://localhost:8080/restroom`, { restroom } )
+    axios.post(`http://localhost:8080/restroom`, restroom)
       .then(response => {
         console.log(response);
         console.log(response.data);
@@ -84,7 +84,7 @@ export default class AddRestroom extends React.Component {
       <form onSubmit={this.handleSubmit}>
         <div>
           <label>Business Name: </label>
-          <input type='text' value={this.state.businessName} onChange={this.handleBusinessNameChange}/>
+          <input type="text" name="businessName" value={this.state.businessName} onChange={this.handleBusinessNameChange}/>
         </div>
         <div>
           <label>Type of Business: </label>
@@ -98,6 +98,7 @@ export default class AddRestroom extends React.Component {
         <div>
           <label>Single Stall? </label>
           <input type="checkbox"
+            name={this.checked}
             checked={this.state.isSingleStall}
             onChange={this.handleOnChangeSingleStall}
           />
