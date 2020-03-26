@@ -11,7 +11,7 @@ export default class RestroomList extends React.Component {
   }
 
   componentDidMount() {
-    axios.get(`http://localhost:8080`)
+    axios.get(`http://localhost:8080/restroom`)
       .then(
         response => {
           this.setState({restrooms: response.data})
@@ -30,7 +30,8 @@ export default class RestroomList extends React.Component {
               {
                 this.state.restrooms.map(
                   restroom => 
-                    <tr key={restroom.businessName}>
+                    <tr key={restroom.id}>
+                      <td>{restroom.id}</td>
                       <td>{restroom.businessName}</td>
                       <td>{restroom.businessType}</td>
                     </tr>

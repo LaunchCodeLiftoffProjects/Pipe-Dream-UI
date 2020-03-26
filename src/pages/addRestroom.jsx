@@ -72,7 +72,7 @@ export default class AddRestroom extends React.Component {
       hasChangingTable: this.state.hasChangingTable
     }
 
-    axios.post(`http://localhost:8080`, { restroom } )
+    axios.post(`http://localhost:8080/restroom`, { restroom } )
       .then(response => {
         console.log(response);
         console.log(response.data);
