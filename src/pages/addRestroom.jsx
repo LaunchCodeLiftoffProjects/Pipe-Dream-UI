@@ -7,7 +7,7 @@ export default class AddRestroom extends React.Component {
     super(props);
     this.state = {
       businessName: '',
-      businessType: '',
+      businessType: 'restaurant',
       isAccessible: false,
       isSingleStall: false,
       isGenderNeutral: false,
@@ -98,7 +98,6 @@ export default class AddRestroom extends React.Component {
         <div>
           <label>Single Stall? </label>
           <input type="checkbox"
-            name={this.checked}
             checked={this.state.isSingleStall}
             onChange={this.handleOnChangeSingleStall}
           />

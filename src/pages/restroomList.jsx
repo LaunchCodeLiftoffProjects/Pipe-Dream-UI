@@ -35,10 +35,11 @@ export default class RestroomList extends React.Component {
                       <td>{restroom.id}</td>
                       <td>{restroom.businessName}</td>
                       <td>{restroom.businessType}</td>
-                      <td>Is Accessible? {restroom.isAccessible.toString()}</td>
-                      {// <td>{restroom.isSingleStall}</td>
-                      // <td>{restroom.isGenderNeutral}</td>
-                      // <td>{restroom.hasChangingTable}</td>
+                      <td>Is Accessible? {restroom.isAccessible.toString() }</td>
+                      {// <td>{restroom.isSingleStall.toString()}</td>
+                      // <td>{restroom.isGenderNeutral.toString()}</td>
+                      // <td>{restroom.hasChangingTable.toString()}</td>
+                }
                 }
                     </tr>
                 )
