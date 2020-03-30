@@ -98,6 +98,7 @@ export default class AddRestroom extends React.Component {
         <div>
           <label>Single Stall? </label>
           <input type="checkbox"
+            name="isSingleStall"
             checked={this.state.isSingleStall}
             onChange={this.handleOnChangeSingleStall}
           />
@@ -105,6 +106,7 @@ export default class AddRestroom extends React.Component {
         <div>
           <label>Accessible Option? </label>
           <input type="checkbox"
+            name="isAccessible"
             checked={this.state.isAccessible}
             onChange={this.handleOnChangeIsAccessible}
           />

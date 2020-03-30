@@ -2,9 +2,9 @@ import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Layout from "./Layout";
 import PageOne from "./pages/pageOne.jsx";
-import PageTwo from "./pages/addRestroom.jsx";
-import PageThree from "./pages/restroomList.jsx";
-import PageFour from "./pages/pageFour.jsx";
+import AddRestroom from "./pages/addRestroom.jsx";
+import RestroomList from "./pages/restroomList.jsx";
+import RestroomProfile from "./pages/restroomProfile.jsx";
 
 export const Routes = () => {
   return (
@@ -12,9 +12,9 @@ export const Routes = () => {
       <Layout>
         <div style={{ marginTop: "100px" }}>
           <Route path="/" exact component={PageOne} />
-          <Route path="/2" exact component={PageTwo} />
-          <Route path="/3" exact component={PageThree} />
-          <Route path="/4" exact component={PageFour} />
+          <Route path="/add-restroom" exact component={AddRestroom} />
+          <Route path="/restroom-list" exact component={RestroomList} />
+          <Route path="/restroom-profile" exact component={RestroomProfile} />
         </div>
       </Layout>
     </Router>

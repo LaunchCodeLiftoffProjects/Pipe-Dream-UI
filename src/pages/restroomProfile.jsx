@@ -1,6 +1,6 @@
 import React from "react";
 
-export default class PageFour extends React.Component {
+export default class RestroomProfile extends React.Component {
   //Write HTML inside render function
   render() {
     return (

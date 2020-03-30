@@ -32,15 +32,15 @@ export default class RestroomList extends React.Component {
                 this.state.restrooms.map(
                   restroom => 
                     <tr key={restroom.id}>
-                      <td>{restroom.id}</td>
-                      <td>{restroom.businessName}</td>
-                      <td>{restroom.businessType}</td>
-                      <td>Is Accessible? {restroom.isAccessible.toString() }</td>
-                      {// <td>{restroom.isSingleStall.toString()}</td>
-                      // <td>{restroom.isGenderNeutral.toString()}</td>
-                      // <td>{restroom.hasChangingTable.toString()}</td>
-                }
-                }
+                      <td>{restroom.businessName}<br />
+                      Insert Address
+                      </td>
+                      <td>Business Type: <br />
+                      {restroom.businessType}</td>
+                      <td>
+                        <button>Directions</button><br />
+                        <button>Details</button>
+                      </td>
                     </tr>
                 )
               }
