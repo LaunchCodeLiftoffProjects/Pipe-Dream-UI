@@ -9,14 +9,14 @@ export const NavBar = ({ color }) => (
       <Link to="/">
         <Button>Home</Button>
       </Link>
-      <Link to="/2">
-        <Button>Page Two</Button>
+      <Link to="/add-restroom">
+        <Button>Add a Restroom</Button>
       </Link>
-      <Link to="/3">
-        <Button>Page Three</Button>
+      <Link to="/restroom-list">
+        <Button>Restroom List</Button>
       </Link>
-      <Link to="/4">
-        <Button>Page Four</Button>
+      <Link to="/restroom-profile">
+        <Button>Restroom Profile</Button>
       </Link>
     </Toolbar>
   </AppBar>

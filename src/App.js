@@ -4,6 +4,7 @@ import { Routes } from "./Router";
 import { Component } from "react";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 
+
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -23,6 +24,7 @@ class App extends Component {
           <Routes />
         </MuiThemeProvider>
       </div>
+      
     );
   }
 }
