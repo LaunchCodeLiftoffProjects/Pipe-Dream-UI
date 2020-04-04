@@ -11,7 +11,9 @@ export default class RestroomList extends React.Component {
     }
 
     this.refreshRestrooms = this.refreshRestrooms.bind(this);
+    this.updateRestroomClicked = this.updateRestroomClicked.bind(this);
     this.deleteRestroomClicked = this.deleteRestroomClicked.bind(this);
+    this.addRestroomClicked = this.addRestroomClicked.bind(this);
   }
 
   componentDidMount() {
@@ -32,12 +34,25 @@ export default class RestroomList extends React.Component {
     );
   }
 
+  retrieveRestroom(name, id) {
+    return axios.get(`http://localhost:8080/restroom/${id}`)
+  }
+
+  updateRestroomClicked(id) {
+    console.log('Update: ' + id);
+    this.props.history.push(`/restrooms/${id}`);
+  }
+
   deleteRestroomClicked(id) {
     axios.delete(`http://localhost:8080/restroom/${id}`)
       .then(response => {
         this.setState({message: `Deletion of Restroom ID: ${id} Successful!`});
         this.refreshRestrooms();
     })
+  }
+
+  addRestroomClicked() {
+    this.props.history.push(`/add-restroom`);
   }
   
   //Write HTML inside render function
@@ -62,23 +77,14 @@ export default class RestroomList extends React.Component {
                         <button>Directions</button><br />
                         <button>Details</button>
                       </td>
+                      <td><button className="btn btn-success" onClick={() => this.updateRestroomClicked(restroom.id)}>Update</button></td>
                       <td><button className="btn btn-warning" onClick={() => this.deleteRestroomClicked(restroom.id)}>Delete</button></td>
                     </tr>
                 )
               }
-
-              {// <tr>
-              //   <td>LaunchCode<br />
-              //     1234 Delmar Blvd.
-              //   </td>
-              //   <td>1.5 miles away</td>
-              //   <td>
-              //     <button>Directions</button><br />
-              //     <button>Details</button>
-              //   </td>
-              // </tr>
-              }
               
+                <tr><td><button className="btn btn-success" onClick={this.addRestroomClicked}>Add Restroom</button></td></tr>
+          
             </tbody>
           </table>
         </div>

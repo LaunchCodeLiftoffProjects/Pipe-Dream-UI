@@ -13,8 +13,8 @@ export const Routes = () => {
         <div style={{ marginTop: "100px" }}>
           <Route path="/" exact component={PageOne} />
           <Route path="/add-restroom" exact component={AddRestroom} />
-          <Route path="/restroom-list" exact component={RestroomList} />
-          <Route path="/restroom-profile" exact component={RestroomProfile} />
+          <Route path="/restrooms" exact component={RestroomList} />
+          <Route path="/restrooms/:id" component={RestroomProfile} />
         </div>
       </Layout>
     </Router>
