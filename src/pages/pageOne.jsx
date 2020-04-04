@@ -1,4 +1,5 @@
 import React from "react";
+import MapComponent from "../components/map"; 
 
 export default class PageOne extends React.Component {
   //Write HTML inside render function
@@ -7,7 +8,10 @@ export default class PageOne extends React.Component {
       <div>
         <h1>Page 1</h1>
         <p>Welcome to the first page!</p>
+        <MapComponent/>
       </div>
     );
   }
 }
+
+
