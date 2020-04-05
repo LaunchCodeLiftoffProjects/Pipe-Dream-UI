@@ -1,17 +1,40 @@
 import React from "react";
-import { Map, GoogleApiWrapper } from 'google-maps-react';
+import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
+
 
 
 export class MapComponent extends React.Component {
-    render() {
+  constructor(props){
+    super(props);
 
+this.state = {
+  businesses: [{lat: 38.592220, lng: -90.295372},
+    {latitude: 38.592220, longitude: -90.295372},
+    {latitude: 38.591511, longitude: -90.293442},
+    {latitude: 38.593860, longitude: -90.293510}]
+}
+  }
+
+  displayMarkers = () => {
+    return this.state.businesses.map((business, index) => {
+      return <Marker key={index} id={index} position={{
+       lat: business.latitude,
+       lng: business.longitude
+     }}
+     onClick={() => console.log("Welcome!")} />
+    })
+  }
+
+    render() {
         return (
         <Map
           google={this.props.google}
           zoom={8}
           style={mapStyles}
-          initialCenter={{ lat: 47.444, lng: -122.176}}
-        />
+          initialCenter={{ lat: 38.592220, lng: -90.295372}}
+        >
+          {this.displayMarkers()}
+          </Map>
     );
   }
 }
@@ -21,7 +44,7 @@ export default GoogleApiWrapper({
 })(MapComponent);
 
 const mapStyles = {
-  width: '100%',
-  height: '100%',
+  width: '75%',
+  height: '75%',
 };
 
