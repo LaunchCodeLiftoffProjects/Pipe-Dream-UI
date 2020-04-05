@@ -17,10 +17,15 @@ export default class RestroomProfile extends React.Component {
       isGenderNeutral: false,
       hasChangingTable: false
     }
+    this.onSubmit = this.onSubmit.bind(this);
+
   }
 
-  retrieveRestroom(id) {
-    axios.get(`http://localhost:8080/restroom/${id}`)
+  componentDidMount() {
+    if (this.state.id === -1){
+      return;
+    }
+    axios.get(`http://localhost:8080/restroom/${this.state.id}`)
     .then(
       response => {
         this.setState({
@@ -31,18 +36,15 @@ export default class RestroomProfile extends React.Component {
           isGenderNeutral: response.data.isGenderNeutral,
           hasChangingTable: response.data.hasChangingTable
         })
+      })
   
-      }
-    );
+    }
+  
+ 
+  onSubmit(values) {
+    console.log(values);
   }
 
-  componentDidMount() {
-    if (this.state.id === -1){
-      return;
-    }
-    this.retrieveRestroom(this.state.id);
-  }
- 
   //Write HTML inside render function
   render() {
     let {id, businessName, businessType, isAccessible, isSingleStall, isGenderNeutral, hasChangingTable} = this.state;
@@ -53,6 +55,7 @@ export default class RestroomProfile extends React.Component {
         <div className="container">
           <Formik
             initialValues = {{id, businessName, businessType, isAccessible, isSingleStall, isGenderNeutral, hasChangingTable}}
+            onSubmit={this.onSubmit}
           >
             {
               (props) => (
@@ -92,6 +95,7 @@ export default class RestroomProfile extends React.Component {
                     <Field className="form-control" type="checkbox" name="hasChangingTable" >
                     </Field>
                   </fieldset>
+                  <button className="btn btn-success" type="submit">Save</button>
                 </Form>
               )
             }
@@ -105,7 +109,7 @@ export default class RestroomProfile extends React.Component {
         // <p>Gender Neutral Option? {(isGenderNeutral === true) ? "Yes" : "No"}</p>
         // <p>Has Changing Table(s)? {(isAccessible === true) ? "Yes" : "No"}</p>
     }
-        <button className="btn btn-success" onClick={this.editRestroom}>Save</button>
+        
       </div>
     );
   }
