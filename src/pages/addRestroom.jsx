@@ -125,7 +125,7 @@ export default class AddRestroom extends React.Component {
             onChange={this.handleOnChangeHasChangingTable}
           />
         </div>
-        <button type="submit">Submit</button>
+        <button className="btn btn-success" type="submit">Submit</button>
       </form>
     );
     };

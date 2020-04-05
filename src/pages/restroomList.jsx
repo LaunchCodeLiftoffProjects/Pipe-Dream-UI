@@ -34,9 +34,6 @@ export default class RestroomList extends React.Component {
     );
   }
 
-  retrieveRestroom(name, id) {
-    return axios.get(`http://localhost:8080/restroom/${id}`)
-  }
 
   updateRestroomClicked(id) {
     console.log('Update: ' + id);
