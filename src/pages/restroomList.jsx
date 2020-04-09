@@ -1,6 +1,5 @@
 import React from "react";
 import axios from "axios";
-import Restroom from "./Restroom"
 
 export default class RestroomList extends React.Component {
   

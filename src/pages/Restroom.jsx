@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 
-export default class Restroom extends React.Component {
+ class Restroom extends React.Component {
   render() {
       return (
           <ul>
@@ -12,5 +12,5 @@ export default class Restroom extends React.Component {
 
 }
 
-
+export default Restroom;
 
