@@ -3,7 +3,19 @@ import "./App.css";
 import { Routes } from "./Router";
 import { Component } from "react";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
+import Restrooms from './Restrooms';
 
+let restrooms =
+[{
+  name: "Cafe Mochi"
+},
+{
+  name: "The Vine"
+},
+{ 
+ name: "CBGB"
+}
+]
 
 const theme = createMuiTheme({
   palette: {
@@ -23,6 +35,8 @@ class App extends Component {
         <MuiThemeProvider theme={theme}>
           <Routes />
         </MuiThemeProvider>
+        <h1> Restrooms</h1>
+        <Restrooms restrooms= {this.props.restrooms} />
       </div>
       
     );

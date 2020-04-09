@@ -14,13 +14,7 @@ export default class PageOne extends React.Component {
       hasChangingTable: false
     };
 
-    this.searchBusinessName = this.searchBusinessName.bind(this);
-    this.handleBusinessTypeChange = this.handleBusinessTypeChange.bind(this);
-    this.handleOnChangeSingleStall = this.handleOnChangeSingleStall.bind(this);
-    this.handleOnChangeIsAccessible = this.handleOnChangeIsAccessible.bind(this);
-    this.handleOnChangeIsGenderNeutral = this.handleOnChangeIsGenderNeutral.bind(this);
-    this.handleOnChangeHasChangingTable = this.handleOnChangeHasChangingTable.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+  
   }
 
 
@@ -31,31 +25,31 @@ export default class PageOne extends React.Component {
     })
   }
 
-  handleBusinessTypeChange = (event) => {
+  searchBusinessType = (event) => {
     this.setState({
       businessType: event.target.value
     })
   }
 
-  handleOnChangeSingleStall = () => {
+  searchSingleStall = () => {
     this.setState(initialState => ({
       isSingleStall: !initialState.isSingleStall
     }));
   }
 
-  handleOnChangeIsAccessible = () => {
+  searchIsAccessible = () => {
     this.setState(initialState => ({
       isAccessible: !initialState.isAccessible
     }));
   }
 
-  handleOnChangeIsGenderNeutral = () => {
+searchIsGenderNeutral = () => {
     this.setState(initialState => ({
       isGenderNeutral: !initialState.isGenderNeutral
     }));
   }
 
-  handleOnChangeHasChangingTable = () => {
+  searchHasChangingTable = () => {
     this.setState(initialState => ({
       hasChangingTable: !initialState.hasChangingTable
     }));
@@ -82,7 +76,7 @@ export default class PageOne extends React.Component {
 
   render() {
     return (
-       <form onSubmit={this.handleSubmit}>
+       <form onSubmit={this.handleSubmit.bind(this)}>
         <div>
         <h1> Search for a Restroom:</h1>
           <label>Business Name: </label>
@@ -90,7 +84,7 @@ export default class PageOne extends React.Component {
         </div>
         <div>
           <label>Type of Business: </label>
-          <select value={this.state.businessType} onChange={this.handleBusinessTypeChange}>
+          <select value={this.state.businessType} onChange={this.searchBusinessType.bind(this)}>
             <option value="restaurant">Restaurant</option>
             <option value="gas-station">Gas station</option>
             <option value="retail-store">Retail Store</option>
@@ -102,7 +96,7 @@ export default class PageOne extends React.Component {
           <input type="checkbox"
             name="isSingleStall"
             checked={this.state.isSingleStall}
-            onChange={this.handleOnChangeSingleStall}
+            onChange={this.searchSingleStall.bind(this)}
           />
         </div>
         <div>
@@ -110,21 +104,21 @@ export default class PageOne extends React.Component {
           <input type="checkbox"
             name="isAccessible"
             checked={this.state.isAccessible}
-            onChange={this.handleOnChangeIsAccessible}
+            onChange={this.searchIsAccessible.bind(this)}
           />
         </div>
         <div>
           <label>Gender Neutral Option? </label>
           <input type="checkbox"
             checked={this.state.isGenderNeutral}
-            onChange={this.handleOnChangeIsGenderNeutral}
+            onChange={this.searchIsGenderNeutral.bind(this)}
           />
         </div>
         <div>
           <label>Has Changing Table(s)? </label>
           <input type="checkbox"
             checked={this.state.hasChangingTable}
-            onChange={this.handleOnChangeHasChangingTable}
+            onChange={this.searchHasChangingTable.bind(this)}
           />
         </div>
         <button type="submit">Search</button>
