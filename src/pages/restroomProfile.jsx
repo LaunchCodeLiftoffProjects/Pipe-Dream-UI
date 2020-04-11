@@ -18,13 +18,11 @@ export default class RestroomProfile extends React.Component {
       hasChangingTable: false
     }
     this.onSubmit = this.onSubmit.bind(this);
+    this.loadData = this.loadData.bind(this);
 
   }
 
-  componentDidMount() {
-    if (this.state.id === -1){
-      return;
-    }
+  loadData() {
     axios.get(`http://localhost:8080/restroom/${this.state.id}`)
     .then(
       response => {
@@ -37,8 +35,12 @@ export default class RestroomProfile extends React.Component {
           hasChangingTable: response.data.hasChangingTable
         })
       })
-  
-    }
+  }
+
+  componentDidMount() {
+    this.loadData();
+  }
+   
   
  
   onSubmit(values) {
@@ -48,14 +50,25 @@ export default class RestroomProfile extends React.Component {
   //Write HTML inside render function
   render() {
     let {id, businessName, businessType, isAccessible, isSingleStall, isGenderNeutral, hasChangingTable} = this.state;
+    
+    if (this.state.id === -1) {
+      return <div />
+    }
 
     return (
+       <div>
+          { this.state.isLoading &&
+            <div>Loading...please wait!</div>
+          }
+
+    {!this.state.isLoading &&
       <div>
         <h1>Restroom</h1>
         <div className="container">
           <Formik
             initialValues = {{id, businessName, businessType, isAccessible, isSingleStall, isGenderNeutral, hasChangingTable}}
             onSubmit={this.onSubmit}
+            enableReinitialize={true}
           >
             {
               (props) => (
@@ -66,11 +79,11 @@ export default class RestroomProfile extends React.Component {
                   </fieldset>
                   <fieldset className="form-group">
                     <label>Business Name: </label>
-                    <Field className="form-control" type="text" name="businessName" placeholder={this.state.businessName}/>
+                    <Field className="form-control" type="text" name="businessName" />
                   </fieldset>
                   <fieldset className="form-group">
                     <label>Business Type: </label>
-                    <Field as="select" className="form-control" name="businessType" placeholder={this.state.businessType}>
+                    <Field as="select" className="form-control" name="businessType" >
                       <option value="restaurant">Restaurant</option>
                       <option value="gas-station">Gas station</option>
                       <option value="retail-store">Retail Store</option>
@@ -111,6 +124,8 @@ export default class RestroomProfile extends React.Component {
     }
         
       </div>
+    }
+    </div>
     );
   }
 }
