@@ -5,13 +5,16 @@ import Restroom from "./Restroom"
 
 // let restrooms =
 // [{
-//   name: "Cafe Mochi"
+//   name: "Cafe Mochi",
+//   id: 1
 // },
 // {
-//   name: "The Vine"
+//   name: "The Vine",
+//   id: 2
 // },
 // { 
-//  name: "CBGB"
+//  name: "CBGB",
+//  id: 3
 // }
 // ]
 
@@ -23,7 +26,7 @@ class Restrooms extends React.Component {
                   return <Restroom restroom={restroom} key={restroom.id}/>
 
               })}
-              <Restroom />
+             
           </ul>
       )
   }

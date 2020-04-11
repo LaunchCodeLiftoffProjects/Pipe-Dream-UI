@@ -1,4 +1,6 @@
 import React from "react";
+import Restrooms from "./Restrooms"
+import Restroom from "./Restroom"
 
 export default class RestroomProfile extends React.Component {
   //Write HTML inside render function
@@ -6,6 +8,8 @@ export default class RestroomProfile extends React.Component {
     return (
       <div>
         <h1>Page 4</h1>
+    
+ 
         <p>Welcome to the fourth page!</p>
       </div>
     );

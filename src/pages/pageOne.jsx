@@ -1,11 +1,13 @@
 import React from "react";
 import axios from "axios";
+import Restrooms from "./Restrooms"
+import Restroom from "./Restroom"
 
 export default class PageOne extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      // search: '',
+      search: '',
       businessName: '',
       businessType: 'restaurant',
       isAccessible: false,
@@ -75,10 +77,24 @@ searchIsGenderNeutral = () => {
   }
 
   render() {
+    let filteredRestrooms= this.props.restrooms.filter
+    ((restroom) => {
+      return restroom.name.indexOf(this.state.search) !== -1;
+     }
+    );
+
     return (
        <form onSubmit={this.handleSubmit.bind(this)}>
         <div>
+        {filteredRestrooms.map((restroom)=> {
+                  return <Restroom restroom={restroom} key={restroom.id}/>
+
+              })}
         <h1> Search for a Restroom:</h1>
+          <label>Search: </label>
+          <input type="text" 
+          value={this.state.search}
+          onChange={this.updateSearch.bind(this)}></input>
           <label>Business Name: </label>
           <input type="text" name="businessName" value={this.state.businessName} onChange={this.searchBusinessName.bind(this)}/>
         </div>
