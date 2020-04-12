@@ -15,10 +15,12 @@ export default class RestroomProfile extends React.Component {
       isAccessible: false,
       isSingleStall: false,
       isGenderNeutral: false,
-      hasChangingTable: false
+      hasChangingTable: false,
+      message: null
     }
     this.onSubmit = this.onSubmit.bind(this);
     this.loadData = this.loadData.bind(this);
+    this.validate = this.validate.bind(this);
 
   }
 
@@ -41,18 +43,56 @@ export default class RestroomProfile extends React.Component {
     this.loadData();
   }
    
-  
- 
-  onSubmit(values) {
-    console.log(values);
+  validate(values) {
+    let errors = {}
+    if (!values.businessName) {
+      errors.businessName = 'Enter Business Name.'
+    } else if (values.businessName.length < 5 || values.businessName.length > 100) {
+      errors.businessName = 'Business Name must be between 5 and 100 characters.'
+    }
+
+    return errors
   }
+
+  refreshRestrooms() {
+    axios.get(`http://localhost:8080/restroom`)
+    .then(
+      response => {
+        this.setState({restrooms: response.data})
+      }
+    );
+  }
+
+  onSubmit = (values) => {
+
+    const restroom = {
+      id: this.state.id,
+      businessName: values.businessName,
+      businessType: values.businessType,
+      isAccessible: values.isAccessible,
+      isSingleStall: values.isSingleStall,
+      isGenderNeutral: values.isGenderNeutral,
+      hasChangingTable: values.hasChangingTable
+    };
+
+    axios.put(`http://localhost:8080/restroom/${this.state.id}`, restroom)
+      .then((response) => {
+        this.setState({message: `Update of Restroom ID: ${this.state.id} Successful!`});
+        this.refreshRestrooms();
+      })
+
+  
+    
+    
+  }
+
 
   //Write HTML inside render function
   render() {
     let {id, businessName, businessType, isAccessible, isSingleStall, isGenderNeutral, hasChangingTable} = this.state;
     
     if (this.state.id === -1) {
-      return <div />
+      return 
     }
 
     return (
@@ -64,15 +104,21 @@ export default class RestroomProfile extends React.Component {
     {!this.state.isLoading &&
       <div>
         <h1>Restroom</h1>
+        {this.state.message && <div className="alert alert-success">{this.state.message}</div>}
         <div className="container">
           <Formik
             initialValues = {{id, businessName, businessType, isAccessible, isSingleStall, isGenderNeutral, hasChangingTable}}
             onSubmit={this.onSubmit}
+            validateOnChange={false}
+            validateOnBlur={false}
+            validate={this.validate}
             enableReinitialize={true}
           >
             {
               (props) => (
                 <Form>
+                  <ErrorMessage name="businessName" component="div"
+                    className="alert alert-warning" />
                   <fieldset className="form-group">
                     <label>Restroom ID: </label>
                     <Field className="form-control" type="text" name="id" disabled />

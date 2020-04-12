@@ -48,6 +48,8 @@ export default class RestroomList extends React.Component {
     })
   }
 
+ 
+
   addRestroomClicked() {
     this.props.history.push(`/add-restroom`);
   }
@@ -57,7 +59,7 @@ export default class RestroomList extends React.Component {
     return (
       <div className="container">
         <h1>All Restrooms</h1>
-        {this.state.message && <div class="alert alert-success">{this.state.message}</div>}
+        {this.state.message && <div className="alert alert-success">{this.state.message}</div>}
         <div className="container">
           <table className="table">
             <tbody>
