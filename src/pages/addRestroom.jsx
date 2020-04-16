@@ -11,7 +11,8 @@ export default class AddRestroom extends React.Component {
       isAccessible: false,
       isSingleStall: false,
       isGenderNeutral: false,
-      hasChangingTable: false
+      hasChangingTable: false,
+      message: null
     };
 
     this.handleBusinessNameChange = this.handleBusinessNameChange.bind(this);
@@ -73,15 +74,15 @@ export default class AddRestroom extends React.Component {
     }
 
     axios.post(`http://localhost:8080/restrooms`, restroom)
-      .then(response => {
-        console.log(response);
-        console.log(response.data);
-      })
-  }
+        .then((response) => {
+            this.setState({message: `Restroom ID: ${response.data.id} Added!`});
+        })
+    }
 
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
+      {this.state.message && <div className="alert alert-success">{this.state.message}</div>}
         <div>
           <label>Business Name: </label>
           <input type="text" name="businessName" value={this.state.businessName} onChange={this.handleBusinessNameChange}/>
