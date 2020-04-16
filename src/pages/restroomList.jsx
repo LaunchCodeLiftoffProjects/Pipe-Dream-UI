@@ -17,7 +17,7 @@ export default class RestroomList extends React.Component {
   }
 
   componentDidMount() {
-    axios.get(`http://localhost:8080/restroom`)
+    axios.get(`http://localhost:8080/restrooms`)
       .then(
         response => {
           this.setState({restrooms: response.data})
@@ -26,7 +26,7 @@ export default class RestroomList extends React.Component {
   }
 
   refreshRestrooms() {
-    axios.get(`http://localhost:8080/restroom`)
+    axios.get(`http://localhost:8080/restrooms`)
     .then(
       response => {
         this.setState({restrooms: response.data})
@@ -41,7 +41,7 @@ export default class RestroomList extends React.Component {
   }
 
   deleteRestroomClicked(id) {
-    axios.delete(`http://localhost:8080/restroom/${id}`)
+    axios.delete(`http://localhost:8080/restrooms/${id}`)
       .then(response => {
         this.setState({message: `Deletion of Restroom ID: ${id} Successful!`});
         this.refreshRestrooms();

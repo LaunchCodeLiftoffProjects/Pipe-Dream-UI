@@ -1,5 +1,5 @@
-import React from "react";
-import axios from "axios";
+import axios from 'axios';
+import React from 'react';
 
 export default class AddRestroom extends React.Component {
   //Write HTML inside render function
@@ -72,7 +72,7 @@ export default class AddRestroom extends React.Component {
       hasChangingTable: this.state.hasChangingTable
     }
 
-    axios.post(`http://localhost:8080/restroom`, restroom)
+    axios.post(`http://localhost:8080/restrooms`, restroom)
       .then(response => {
         console.log(response);
         console.log(response.data);

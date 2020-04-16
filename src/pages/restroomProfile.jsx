@@ -25,7 +25,7 @@ export default class RestroomProfile extends React.Component {
   }
 
   loadData() {
-    axios.get(`http://localhost:8080/restroom/${this.state.id}`)
+    axios.get(`http://localhost:8080/restrooms/${this.state.id}`)
     .then(
       response => {
         this.setState({
@@ -55,7 +55,7 @@ export default class RestroomProfile extends React.Component {
   }
 
   refreshRestrooms() {
-    axios.get(`http://localhost:8080/restroom`)
+    axios.get(`http://localhost:8080/restrooms`)
     .then(
       response => {
         this.setState({restrooms: response.data})
@@ -75,7 +75,7 @@ export default class RestroomProfile extends React.Component {
       hasChangingTable: values.hasChangingTable
     };
 
-    axios.put(`http://localhost:8080/restroom/${this.state.id}`, restroom)
+    axios.put(`http://localhost:8080/restrooms/${this.state.id}`, restroom)
       .then((response) => {
         this.setState({message: `Update of Restroom ID: ${this.state.id} Successful!`});
         this.refreshRestrooms();
