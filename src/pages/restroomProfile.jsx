@@ -75,14 +75,16 @@ export default class RestroomProfile extends React.Component {
       hasChangingTable: values.hasChangingTable
     };
 
-    axios.put(`http://localhost:8080/restrooms/${this.state.id}`, restroom)
+    if (this.state.id !== -1){
+      axios.put(`http://localhost:8080/restrooms/${this.state.id}`, restroom)
       .then((response) => {
         this.setState({message: `Update of Restroom ID: ${this.state.id} Successful!`});
         this.refreshRestrooms();
       })
+    } else {
+      axios.post(`http://localhost:8080/restrooms`, restroom)
+    }
 
-  
-    
     
   }
 
@@ -92,7 +94,7 @@ export default class RestroomProfile extends React.Component {
     let {id, businessName, businessType, isAccessible, isSingleStall, isGenderNeutral, hasChangingTable} = this.state;
     
     if (this.state.id === -1) {
-      return 
+      return
     }
 
     return (

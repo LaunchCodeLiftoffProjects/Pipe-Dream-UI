@@ -48,10 +48,10 @@ export default class RestroomList extends React.Component {
     })
   }
 
- 
-
   addRestroomClicked() {
-    this.props.history.push(`/add-restroom`);
+    console.log('Add restroom clicked');
+    this.props.history.push(`/restrooms/`);
+
   }
   
   //Write HTML inside render function
