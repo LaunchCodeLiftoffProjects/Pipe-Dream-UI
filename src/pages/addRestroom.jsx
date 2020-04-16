@@ -80,9 +80,10 @@ export default class AddRestroom extends React.Component {
     }
 
   render() {
+   
     return (
       <form onSubmit={this.handleSubmit}>
-      {this.state.message && <div className="alert alert-success">{this.state.message}</div>}
+      {this.state.message && <div className="alert alert-success">{this.state.message} <a href="/restrooms">See All Restrooms</a></div>}
         <div>
           <label>Business Name: </label>
           <input type="text" name="businessName" value={this.state.businessName} onChange={this.handleBusinessNameChange}/>
