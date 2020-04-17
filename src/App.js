@@ -3,7 +3,7 @@ import "./App.css";
 import { Routes } from "./Router";
 import { Component } from "react";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
-import Restroom from "./Restroom";
+import Restrooms from "./Restrooms";
 
 let restrooms =
 [{
@@ -38,8 +38,8 @@ class App extends Component {
         <MuiThemeProvider theme={theme}>
           <Routes />
         </MuiThemeProvider>
-        {/* <h1> Restrooms</h1>
-        <Restrooms restrooms= {this.props.restrooms} /> */}
+        <h1> Restrooms</h1>
+        <Restrooms restrooms= {this.props.restrooms} />
       </div>
       
     );

@@ -1,7 +1,22 @@
 import React from "react";
 import axios from "axios";
-import Restrooms from "./Restrooms"
-import Restroom from "./Restroom"
+import Restrooms from "../Restrooms"
+import Restroom from "../Restroom"
+
+let restrooms =
+[{
+  name: "Cafe Mochi",
+  id: 1
+},
+{
+  name: "The Vine",
+  id: 2
+},
+{ 
+ name: "CBGB",
+ id: 3
+}
+]
 
 export default class PageOne extends React.Component {
   constructor(props){
@@ -19,6 +34,9 @@ export default class PageOne extends React.Component {
   
   }
 
+  updateSearch(event) {
+    this.setState({search: event.target.value});
+  }
 
   searchBusinessName = (event) => {
     console.log(event.target.value)
@@ -71,15 +89,15 @@ searchIsGenderNeutral = () => {
 
     axios.get(`http://localhost:8080/restroom`, restroom)
       .then(response => {
-        console.log(response);
+        console.log(restroom);
         console.log(response.data);
       })
   }
 
   render() {
-    let filteredRestrooms= this.props.restrooms.filter
+    let filteredRestrooms= restrooms.filter
     ((restroom) => {
-      return restroom.name.indexOf(this.state.search) !== -1;
+      return restroom.name.toLowerCase().indexOf(this.state.search) !== -1;
      }
     );
 
@@ -91,10 +109,13 @@ searchIsGenderNeutral = () => {
 
               })}
         <h1> Search for a Restroom:</h1>
+        <div>
           <label>Search: </label>
+          
           <input type="text" 
-          value={this.state.search}
+          value={this.state.search.toLowerCase()}
           onChange={this.updateSearch.bind(this)}></input>
+          </div>
           <label>Business Name: </label>
           <input type="text" name="businessName" value={this.state.businessName} onChange={this.searchBusinessName.bind(this)}/>
         </div>
