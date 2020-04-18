@@ -66,8 +66,14 @@ export default class RestroomSearch extends React.Component {
     console.log(`filtering restrooms with name: ${name} and singleStall: ${singleStall}`);
 
     filteredRestrooms = filteredRestrooms.filter((restroom) => {
-      return restroom.businessName.toLowerCase().indexOf(name) !== -1 && restroom.isSingleStall === singleStall;
+      return restroom.businessName.toLowerCase().indexOf(name) !== -1
     });
+
+    if(singleStall === true ){
+      filteredRestrooms = filteredRestrooms.filter((restroom) => {
+        return restroom.isSingleStall === true
+      });
+    }
 
     this.setState({ filteredRestrooms });
   };
