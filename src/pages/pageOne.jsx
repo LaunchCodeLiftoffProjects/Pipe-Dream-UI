@@ -1,111 +1,119 @@
 import React from "react";
 import axios from "axios";
-import Restroom from "../Restroom"
 
-export default class RestroomList extends React.Component {
-  
+export default class RestroomSearch extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      search: '',
+      search: "",
       restrooms: [],
-      message: null
-    }
+      filteredRestrooms: [],
+      message: null,
+    };
   }
+
+  //On Mount GET all restrooms
+  componentDidMount() {
+    this.getRestrooms();
+  }
+
+  //Get All Restrooms From API
+  getRestrooms = async () => {
+    let response = await axios.get(`http://localhost:8080/restroom`);
+
+    console.log(`Got ${response.data.length} restrooms`);
+
+    this.setState({
+      restrooms: response.data,
+      filteredRestrooms: response.data,
+    });
+  };
+
+  //Update the Search Param entered by user and Filter Data
   updateSearch(event) {
-    this.setState({search: event.target.value});
+    console.log(`Updating search parameters`);
+    this.setState({ search: event.target.value });
+    this.filterRestrooms(event.target.value);
   }
 
   handleSubmit = (event) => {
     event.preventDefault();
-  }
+  };
 
-  componentDidMount() {
-    axios.get(`http://localhost:8080/restroom`)
-      .then(
-        response => {
-         this.setState({restrooms: response.data})
-        }
-      );
-  }
+  //Filter Restrooms by Search Parameter entered by User
+  filterRestrooms = (search) => {
+    console.log(`filtering with search: ${search}`);
 
-//   refreshRestrooms() {
-//     axios.get(`http://localhost:8080/restroom`)
-//     .then(
-//       response => {
-//         this.setState({restrooms: response.data})
-//       }
-//     );
-//   }
+    let filteredRestrooms = this.state.restrooms;
 
+    filteredRestrooms = filteredRestrooms.filter((restroom) => {
+      return restroom.businessName.toLowerCase().indexOf(search) !== -1;
+    });
 
-  
+    this.setState({ filteredRestrooms });
+  };
+
   //Write HTML inside render function
   render() {
-    let filteredRestrooms= this.state.restrooms.filter
-    ((restroom) => {
-      return restroom.businessName.toLowerCase().indexOf(this.state.search) !== -1;
-     }
-    );
-
     return (
-       <form onSubmit={this.handleSubmit.bind(this)}>
-        <div>
-        {filteredRestrooms.map((restroom)=> {
-                  return <Restroom restroom={restroom} />
-              })}
-              </div>
-        <h1> Search for a Restroom:</h1>
-        <div>
-          <label>Search: </label>
-          
-          <input type="text" 
-          value={this.state.search.toLowerCase()}
-          onChange={this.updateSearch.bind(this)}></input>
+      <div>
+        {/* Search Form */}
+
+        <form onSubmit={this.handleSubmit.bind(this)}>
+          <h1> Search for a Restroom:</h1>
+          <div>
+            <label>Search: </label>
+
+            <input
+              type="text"
+              value={this.state.search.toLowerCase()}
+              onChange={this.updateSearch.bind(this)}
+            ></input>
           </div>
-        
-    return (
-      <div className="container">
-        <h1>All Restrooms</h1>
-        {this.state.message && <div class="alert alert-success">{this.state.message}</div>}
-        <div className="container">
-          <table className="table">
-            <tbody>
-              {
-                this.state.restrooms.map(
-                  restroom => 
-                    <tr key={restroom.id}>
-                      <td>{restroom.businessName}<br />
-                      Insert Address
-                      </td>
-                      <td>Business Type: <br />
-                      {restroom.businessType}</td>
-                      <td>
-                        <button>Directions</button><br />
-                        <button>Details</button>
-                      </td>
-                      <td><button className="btn btn-warning" onClick={() => this.deleteRestroomClicked(restroom.id)}>Delete</button></td>
-                    </tr>
-                )
-              }
+        </form>
 
-              {// <tr>
-              //   <td>LaunchCode<br />
-              //     1234 Delmar Blvd.
-              //   </td>
-              //   <td>1.5 miles away</td>
-              //   <td>
-              //     <button>Directions</button><br />
-              //     <button>Details</button>
-              //   </td>
-              // </tr>
-              }
-              
-            </tbody>
-          </table>
+        {/* Restroom Results */}
+
+        <div className="container">
+          <h1>All Restrooms</h1>
+          {this.state.message && (
+            <div className="alert alert-success">{this.state.message}</div>
+          )}
+          <div className="container">
+            <table className="table">
+              {" "}
+              <tbody>
+                {this.state.filteredRestrooms.map((restroom) => (
+                  <tr key={restroom.id}>
+                    <td>
+                      {restroom.businessName}
+                      <br />
+                      Insert Address
+                    </td>
+                    <td>
+                      Business Type: <br />
+                      {restroom.businessType}
+                    </td>
+                    <td>
+                      <button>Directions</button>
+                      <br />
+                      <button>Details</button>
+                    </td>
+                    <td>
+                      <button
+                        className="btn btn-warning"
+                        onClick={() => this.deleteRestroomClicked(restroom.id)}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-      </form>
     );
   }
 }
