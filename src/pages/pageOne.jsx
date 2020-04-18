@@ -5,7 +5,8 @@ export default class RestroomSearch extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      search: "",
+      name: "",
+      singleStall: false,
       restrooms: [],
       filteredRestrooms: [],
       message: null,
@@ -31,13 +32,23 @@ export default class RestroomSearch extends React.Component {
 
   };
 
-  //Update the Search Param entered by user and Filter Data
-  updateSearch(event) {
+  //Update & Search By Name
+  updateName = async (event) => {
 
-    console.log(`Updating search parameters`);
+    console.log(`Updating name`);
+    await this.setState({ name: event.target.value });
+    this.filterRestrooms();
 
-    this.setState({ search: event.target.value });
-    this.filterRestrooms(event.target.value);
+  }
+
+  //Update & Search By Single Stall
+  updateSingleStall = async () => {
+
+    console.log(`Updating singleStall`);
+    await this.setState(initialState => ({
+      singleStall: !initialState.singleStall
+    }));
+    this.filterRestrooms();
 
   }
 
@@ -46,14 +57,16 @@ export default class RestroomSearch extends React.Component {
   };
 
   //Filter Restrooms by Search Parameter entered by User
-  filterRestrooms = (search) => {
-
-    console.log(`filtering with search: ${search}`);
+  filterRestrooms = () => {
 
     let filteredRestrooms = this.state.restrooms;
+    let name = this.state.name;
+    let singleStall = this.state.singleStall;
+
+    console.log(`filtering restrooms with name: ${name} and singleStall: ${singleStall}`);
 
     filteredRestrooms = filteredRestrooms.filter((restroom) => {
-      return restroom.businessName.toLowerCase().indexOf(search) !== -1;
+      return restroom.businessName.toLowerCase().indexOf(name) !== -1 && restroom.isSingleStall === singleStall;
     });
 
     this.setState({ filteredRestrooms });
@@ -70,12 +83,18 @@ export default class RestroomSearch extends React.Component {
         <form onSubmit={this.handleSubmit.bind(this)}>
           <h1> Search for a Restroom:</h1>
           <div>
-            <label>Search: </label>
+            <label>Search By Name: </label>
             <input
               type="text"
-              value={this.state.search.toLowerCase()}
-              onChange={this.updateSearch.bind(this)}/>
+              value={this.state.name.toLowerCase()}
+              onChange={this.updateName.bind(this)}/>
           </div>
+          <label>Single Stall </label>
+          <input type="checkbox"
+            name="singleStall"
+            checked={this.state.singleStall}
+            onChange={this.updateSingleStall}
+          />
         </form>
 
         {/* Restroom Results */}
