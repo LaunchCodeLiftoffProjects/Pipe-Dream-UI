@@ -19,6 +19,7 @@ export default class RestroomSearch extends React.Component {
 
   //Get All Restrooms From API
   getRestrooms = async () => {
+
     let response = await axios.get(`http://localhost:8080/restroom`);
 
     console.log(`Got ${response.data.length} restrooms`);
@@ -27,13 +28,17 @@ export default class RestroomSearch extends React.Component {
       restrooms: response.data,
       filteredRestrooms: response.data,
     });
+
   };
 
   //Update the Search Param entered by user and Filter Data
   updateSearch(event) {
+
     console.log(`Updating search parameters`);
+
     this.setState({ search: event.target.value });
     this.filterRestrooms(event.target.value);
+
   }
 
   handleSubmit = (event) => {
@@ -42,6 +47,7 @@ export default class RestroomSearch extends React.Component {
 
   //Filter Restrooms by Search Parameter entered by User
   filterRestrooms = (search) => {
+
     console.log(`filtering with search: ${search}`);
 
     let filteredRestrooms = this.state.restrooms;
@@ -55,20 +61,20 @@ export default class RestroomSearch extends React.Component {
 
   //Write HTML inside render function
   render() {
+
     return (
       <div>
+
         {/* Search Form */}
 
         <form onSubmit={this.handleSubmit.bind(this)}>
           <h1> Search for a Restroom:</h1>
           <div>
             <label>Search: </label>
-
             <input
               type="text"
               value={this.state.search.toLowerCase()}
-              onChange={this.updateSearch.bind(this)}
-            ></input>
+              onChange={this.updateSearch.bind(this)}/>
           </div>
         </form>
 
