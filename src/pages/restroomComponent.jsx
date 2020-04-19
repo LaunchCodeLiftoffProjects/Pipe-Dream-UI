@@ -3,7 +3,7 @@ import axios from "axios";
 // eslint-disable-next-line
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 
-export default class RestroomProfile extends React.Component {
+export default class RestroomComponent extends React.Component {
   
   constructor(props) {
     super(props);
@@ -132,10 +132,10 @@ export default class RestroomProfile extends React.Component {
                   <fieldset className="form-group">
                     <label>Business Type: </label>
                     <Field as="select" className="form-control" name="businessType" >
-                      <option value="restaurant">Restaurant</option>
-                      <option value="gas-station">Gas station</option>
-                      <option value="retail-store">Retail Store</option>
-                      <option value="other">Other</option>
+                      <option value="Restaurant">Restaurant</option>
+                      <option value="Gas Station">Gas station</option>
+                      <option value="Retail Store">Retail Store</option>
+                      <option value="Other">Other</option>
                     </Field>
                   </fieldset>
                     <label>Single Stall? </label>
@@ -157,20 +157,13 @@ export default class RestroomProfile extends React.Component {
                     </Field>
                   </fieldset>
                   <button className="btn btn-success" type="submit">Save</button>
+                  <a href='/restrooms'>Cancel</a>
                 </Form>
               )
             }
           </Formik>
         </div>
-        {// <p>Restroom ID: {id}</p>
-        // <p>Business Name: {businessName}</p>
-        // <p>Business Type: {businessType}</p>
-        // <p>Accessible Option? {(isAccessible === true) ? "Yes" : "No"}</p>
-        // <p>Single Stall? {(isSingleStall === true) ? "Yes" : "No"}</p>
-        // <p>Gender Neutral Option? {(isGenderNeutral === true) ? "Yes" : "No"}</p>
-        // <p>Has Changing Table(s)? {(isAccessible === true) ? "Yes" : "No"}</p>
-    }
-        
+  
       </div>
     }
     </div>
