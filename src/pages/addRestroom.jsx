@@ -7,7 +7,7 @@ export default class AddRestroom extends React.Component {
     super(props);
     this.state = {
       businessName: '',
-      businessType: 'restaurant',
+      businessType: 'Gas Station',
       isAccessible: false,
       isSingleStall: false,
       isGenderNeutral: false,
@@ -92,7 +92,7 @@ export default class AddRestroom extends React.Component {
             <option value="restaurant">Restaurant</option>
             <option value="gas-station">Gas station</option>
             <option value="retail-store">Retail Store</option>
-            <option value="other">Other</option>
+            <option value="other">Other</option> 
           </select>
         </div>
         <div>

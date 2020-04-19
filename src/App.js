@@ -3,22 +3,7 @@ import "./App.css";
 import { Routes } from "./Router";
 import { Component } from "react";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
-// import Restrooms from "./Restrooms";
 
-// let restrooms =
-// [{
-//   name: "Cafe Mochi",
-//   id: 1
-// },
-// {
-//   name: "The Vine",
-//   id: 2
-// },
-// { 
-//  name: "CBGB",
-//  id: 3
-// }
-// ]
 
 const theme = createMuiTheme({
   palette: {
