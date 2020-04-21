@@ -160,10 +160,11 @@ export default class RestroomSearch extends React.Component {
           <div>
           <label>Type of Business: </label>
           <select value={this.state.businessType} onChange={this.updateBusinessType}>
-            <option value="restaurant">Restaurant</option>
-            <option value="gas-station">Gas station</option>
-            <option value="retail-store">Retail Store</option>
-            <option value="other">Other</option> 
+            <option value="Gas Station">Gas station</option>
+            <option value="Restaurant">Restaurant</option>
+            <option value="Bar">Bar</option>
+            <option value="Retail Store">Retail Store</option>
+            <option value="Other">Other</option> 
           </select>
           </div>
           <label>Single Stall </label>
