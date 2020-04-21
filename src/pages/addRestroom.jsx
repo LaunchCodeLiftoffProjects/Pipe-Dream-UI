@@ -84,7 +84,7 @@ export default class AddRestroom extends React.Component {
 
     axios.post(`http://localhost:8080/restrooms`, restroom)
         .then((response) => {
-            this.setState({message: `Restroom ID: ${response.data.id} Added!`});
+            this.setState({message: `Restroom ID: ${response.data.id} added!`});
         })
     }
 

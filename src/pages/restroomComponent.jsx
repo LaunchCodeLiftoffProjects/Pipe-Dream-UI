@@ -79,13 +79,13 @@ export default class RestroomComponent extends React.Component {
     };
 
     if (this.state.id !== -1){
-      axios.put(`http://localhost:8080/restrooms/update/${this.state.id}`, restroom)
+      axios.put(`http://localhost:8080/restrooms/${this.state.id}`, restroom)
       .then((response) => {
-        this.setState({message: `Update of Restroom ID: ${this.state.id} Successful!`});
+        this.setState({message: `Restroom ID: ${this.state.id} updated!`});
         this.refreshRestrooms();
       })
     } else {
-      axios.post(`http://localhost:8080/restrooms/update`, restroom)
+      axios.post(`http://localhost:8080/restrooms`, restroom)
     }
 
     

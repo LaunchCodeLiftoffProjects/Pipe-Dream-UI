@@ -47,10 +47,10 @@ export default class ReviewComponent extends React.Component {
           };
 
           console.log(review);
-        // axios.post(`http://localhost:8080/restrooms/${this.state.restroomId}/details`, review)
-        //   .then((response) => {
-        //       this.setState({message: `Review added to Restroom ID: ${this.state.restroomId}.`});
-        //   })
+        axios.post(`http://localhost:8080/restrooms/${this.state.restroomId}/reviews`, review)
+          .then((response) => {
+              this.setState({message: `Review added to Restroom ID: ${this.state.restroomId}.`});
+          })
         
     }
     render() {

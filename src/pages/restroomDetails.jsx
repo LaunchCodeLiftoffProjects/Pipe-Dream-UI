@@ -7,7 +7,7 @@ export default class RestroomDetails extends React.Component {
       super(props);
   
         this.state = {
-            id: this.props.match.params.id,
+            restroomId: this.props.match.params.id,
             businessName: '',
             businessType: '',
             address: '',
@@ -15,16 +15,18 @@ export default class RestroomDetails extends React.Component {
             isSingleStall: false,
             isGenderNeutral: false,
             hasChangingTable: false,
+            reviews: [],
             message: null
         }
 
     this.loadData = this.loadData.bind(this);
     this.addReviewClicked = this.addReviewClicked.bind(this);
+    this.deleteReviewClicked = this.deleteReviewClicked.bind(this);
 
     }
 
     loadData() {
-        axios.get(`http://localhost:8080/restrooms/${this.state.id}`)
+        axios.get(`http://localhost:8080/restrooms/${this.state.restroomId}`)
         .then(
           response => {
             this.setState({
@@ -37,14 +39,38 @@ export default class RestroomDetails extends React.Component {
               hasChangingTable: response.data.hasChangingTable
             })
           })
+
+          axios.get(`http://localhost:8080/restrooms/${this.state.restroomId}/reviews`)
+          .then(
+            response => {
+              this.setState({reviews: response.data})
+            }
+          );
       }
     
       componentDidMount() {
         this.loadData();
       }
 
+      refreshReviews() {
+        axios.get(`http://localhost:8080/restrooms/${this.state.restroomId}/reviews`)
+        .then(
+          response => {
+            this.setState({reviews: response.data})
+          }
+        );
+      }
+
       addReviewClicked(){
-        this.props.history.push(`/add-review/${this.state.id}`);
+        this.props.history.push(`/add-review/${this.state.restroomId}`);
+      }
+
+      deleteReviewClicked(restroomId, reviewId) {
+        axios.delete(`http://localhost:8080/restrooms/${restroomId}/reviews/${reviewId}`)
+        .then(response => {
+          this.setState({message: `Review deleted!`});
+          this.refreshReviews();
+      })
       }
 
     render() {
@@ -57,10 +83,13 @@ export default class RestroomDetails extends React.Component {
             isGenderNeutral: this.state.isGenderNeutral,
             hasChangingTable: this.state.hasChangingTable
         }
+
         return(
-       
+        <div className="container">
             <div className="container">
-            <h1>{restroom.businessName}</h1>
+                <h1>{restroom.businessName}</h1>
+                {this.state.message && <div className="alert alert-success">{this.state.message}</div>}
+            <div className="container">
             <table className="table">
               <tbody>
             
@@ -99,8 +128,39 @@ export default class RestroomDetails extends React.Component {
             <button className="btn btn-success" onClick={this.addReviewClicked}>Add Review</button>
         </div>
 
+        <div className="container">
+            <table className="table">
+                <tbody>
+                {
+                this.state.reviews.map(
+                    review => 
+                    <tr key={review.id}>
+                        <td>Username: <br />
+                            {review.username} <br />
+                            <br />
+                            Rating: <br />
+                            {review.rating} <br />
+                            <br />
+                            Review: <br />
+                            {review.reviewText}
+                        </td>
+
+                        <td>
+                            <button className="btn btn-warning" onClick={() => this.deleteReviewClicked(this.restroomId, this.reviewId)}>Delete</button>
+                        </td>
+                  </tr>
+              )
+            }
+            
+        
+            </tbody>
+        </table>
+      </div>
+      </div>
+      </div>
+
         )
     }
+}
 
-
-    }
+    
