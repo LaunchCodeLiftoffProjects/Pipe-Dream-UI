@@ -12,6 +12,7 @@ export default class RestroomComponent extends React.Component {
       id: this.props.match.params.id,
       businessName: '',
       businessType: '',
+      address: '',
       isAccessible: false,
       isSingleStall: false,
       isGenderNeutral: false,
@@ -31,6 +32,7 @@ export default class RestroomComponent extends React.Component {
         this.setState({
           businessName: response.data.businessName,
           businessType: response.data.businessType,
+          address: response.data.address,
           isAccessible: response.data.isAccessible,
           isSingleStall: response.data.isSingleStall,
           isGenderNeutral: response.data.isGenderNeutral,
@@ -69,6 +71,7 @@ export default class RestroomComponent extends React.Component {
       id: this.state.id,
       businessName: values.businessName,
       businessType: values.businessType,
+      address: values.address,
       isAccessible: values.isAccessible,
       isSingleStall: values.isSingleStall,
       isGenderNeutral: values.isGenderNeutral,
@@ -76,13 +79,13 @@ export default class RestroomComponent extends React.Component {
     };
 
     if (this.state.id !== -1){
-      axios.put(`http://localhost:8080/restrooms/${this.state.id}`, restroom)
+      axios.put(`http://localhost:8080/restrooms/update/${this.state.id}`, restroom)
       .then((response) => {
         this.setState({message: `Update of Restroom ID: ${this.state.id} Successful!`});
         this.refreshRestrooms();
       })
     } else {
-      axios.post(`http://localhost:8080/restrooms`, restroom)
+      axios.post(`http://localhost:8080/restrooms/update`, restroom)
     }
 
     
@@ -91,7 +94,7 @@ export default class RestroomComponent extends React.Component {
 
   //Write HTML inside render function
   render() {
-    let {id, businessName, businessType, isAccessible, isSingleStall, isGenderNeutral, hasChangingTable} = this.state;
+    let {id, businessName, businessType, address, isAccessible, isSingleStall, isGenderNeutral, hasChangingTable} = this.state;
     
     if (this.state.id === -1) {
       return
@@ -109,7 +112,7 @@ export default class RestroomComponent extends React.Component {
         {this.state.message && <div className="alert alert-success">{this.state.message}</div>}
         <div className="container">
           <Formik
-            initialValues = {{id, businessName, businessType, isAccessible, isSingleStall, isGenderNeutral, hasChangingTable}}
+            initialValues = {{id, businessName, businessType, address, isAccessible, isSingleStall, isGenderNeutral, hasChangingTable}}
             onSubmit={this.onSubmit}
             validateOnChange={false}
             validateOnBlur={false}
@@ -119,16 +122,25 @@ export default class RestroomComponent extends React.Component {
             {
               (props) => (
                 <Form>
+
                   <ErrorMessage name="businessName" component="div"
                     className="alert alert-warning" />
+
                   <fieldset className="form-group">
                     <label>Restroom ID: </label>
                     <Field className="form-control" type="text" name="id" disabled />
                   </fieldset>
+
                   <fieldset className="form-group">
                     <label>Business Name: </label>
                     <Field className="form-control" type="text" name="businessName" />
                   </fieldset>
+
+                  <fieldset className="form-group">
+                    <label>Address: </label>
+                    <Field className="form-control" type="text" name="address" />
+                  </fieldset>
+
                   <fieldset className="form-group">
                     <label>Business Type: </label>
                     <Field as="select" className="form-control" name="businessType" >
@@ -138,26 +150,34 @@ export default class RestroomComponent extends React.Component {
                       <option value="Other">Other</option>
                     </Field>
                   </fieldset>
+
+                  <fieldset>
                     <label>Single Stall? </label>
                     <Field className="form-control" type="checkbox" name="isSingleStall" >
                     </Field>
+                  </fieldset>
+                  
                   <fieldset>
                     <label>Accessible Option? </label>
                     <Field className="form-control" type="checkbox" name="isAccessible" >
                     </Field>
                   </fieldset>
+                  
                   <fieldset>
                     <label>Gender Neutral Option? </label>
                     <Field className="form-control" type="checkbox" name="isGenderNeutral" >
                     </Field>
                   </fieldset>
+
                   <fieldset>
                     <label>Has Changing Table(s)? </label>
                     <Field className="form-control" type="checkbox" name="hasChangingTable" >
                     </Field>
                   </fieldset>
+                  
                   <button className="btn btn-success" type="submit">Save</button>
                   <a href='/restrooms'>Cancel</a>
+
                 </Form>
               )
             }
