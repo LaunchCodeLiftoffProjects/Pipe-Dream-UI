@@ -16,7 +16,7 @@ export const Routes = () => {
           <Route path="/add-restroom" exact component={AddRestroom} />
           <Route path="/restrooms" exact component={RestroomList} />
           <Route path="/restrooms/:id/" component={RestroomComponent} />
-          <Route path="/restrooms/:id/add-review" component={ReviewComponent} />
+          <Route path="/add-review/:id" component={ReviewComponent} />
         </div>
       </Layout>
     </Router>

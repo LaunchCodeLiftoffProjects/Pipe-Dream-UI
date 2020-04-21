@@ -1,7 +1,8 @@
 import React from "react";
 import axios from "axios";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import StarRatings from 'react-star-ratings';
+// import StarRatings from 'react-star-ratings';
+import FormRatings from 'form-ratings'
 
 export default class ReviewComponent extends React.Component {
     constructor(props){
@@ -16,7 +17,6 @@ export default class ReviewComponent extends React.Component {
             message: null
           }
         
-        this.changeRating = this.changeRating.bind(this);
         this.loadData = this.loadData.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         // this.validate = this.validate.bind(this);
@@ -35,13 +35,6 @@ export default class ReviewComponent extends React.Component {
         this.loadData();
         console.log(this.state.restroomId);
     }
-
-    changeRating(newRating, name ) {
-        this.setState({
-          rating: newRating
-        });
-     
-      }
     
 
     onSubmit (values){
@@ -97,18 +90,12 @@ export default class ReviewComponent extends React.Component {
                       <label>Business Name: </label>
                       <Field className="form-control" type="text" name="businessName" value={businessName} disabled />
                     </fieldset>
-
+      
                     <fieldset className="form-group">
-                    <label>Rating: </label>
-                    <StarRatings
-                      rating={this.state.rating}
-                      starRatedColor="blue"
-                      changeRating={this.changeRating}
-                      numberOfStars={5}
-                      name='rating'
-                  />
-                  </fieldset>
-
+                      <label>Rating: </label>
+                      <Field name="rating" as={FormRatings} />
+                    </fieldset>
+                   
                     <fieldset className="form-group">
                       <label>Username: </label>
                       <Field className="form-control" type="text" name="username" />
