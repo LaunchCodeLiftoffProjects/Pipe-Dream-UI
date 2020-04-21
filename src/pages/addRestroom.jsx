@@ -1,5 +1,5 @@
-import React from "react";
-import axios from "axios";
+import axios from 'axios';
+import React from 'react';
 
 export default class AddRestroom extends React.Component {
   //Write HTML inside render function
@@ -11,7 +11,8 @@ export default class AddRestroom extends React.Component {
       isAccessible: false,
       isSingleStall: false,
       isGenderNeutral: false,
-      hasChangingTable: false
+      hasChangingTable: false,
+      message: null
     };
 
     this.handleBusinessNameChange = this.handleBusinessNameChange.bind(this);
@@ -72,16 +73,17 @@ export default class AddRestroom extends React.Component {
       hasChangingTable: this.state.hasChangingTable
     }
 
-    axios.post(`http://localhost:8080/restroom`, restroom)
-      .then(response => {
-        console.log(response);
-        console.log(response.data);
-      })
-  }
+    axios.post(`http://localhost:8080/restrooms`, restroom)
+        .then((response) => {
+            this.setState({message: `Restroom ID: ${response.data.id} Added!`});
+        })
+    }
 
   render() {
+   
     return (
       <form onSubmit={this.handleSubmit}>
+      {this.state.message && <div className="alert alert-success">{this.state.message} <a href="/restrooms">See All Restrooms</a></div>}
         <div>
           <label>Business Name: </label>
           <input type="text" name="businessName" value={this.state.businessName} onChange={this.handleBusinessNameChange}/>
@@ -89,10 +91,10 @@ export default class AddRestroom extends React.Component {
         <div>
           <label>Type of Business: </label>
           <select value={this.state.businessType} onChange={this.handleBusinessTypeChange}>
-            <option value="restaurant">Restaurant</option>
-            <option value="gas-station">Gas station</option>
-            <option value="retail-store">Retail Store</option>
-            <option value="other">Other</option>
+            <option value="Restaurant">Restaurant</option>
+            <option value="Gas Station">Gas station</option>
+            <option value="Retail Store">Retail Store</option>
+            <option value="Other">Other</option>
           </select>
         </div>
         <div>
@@ -125,7 +127,7 @@ export default class AddRestroom extends React.Component {
             onChange={this.handleOnChangeHasChangingTable}
           />
         </div>
-        <button type="submit">Submit</button>
+        <button className="btn btn-success" type="submit">Submit</button>
       </form>
     );
     };

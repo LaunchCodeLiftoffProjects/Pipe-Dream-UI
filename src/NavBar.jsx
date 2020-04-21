@@ -12,12 +12,10 @@ export const NavBar = ({ color }) => (
       <Link to="/add-restroom">
         <Button>Add a Restroom</Button>
       </Link>
-      <Link to="/restroom-list">
+      <Link to="/restrooms">
         <Button>Restroom List</Button>
       </Link>
-      <Link to="/restroom-profile">
-        <Button>Restroom Profile</Button>
-      </Link>
+      
     </Toolbar>
   </AppBar>
 );

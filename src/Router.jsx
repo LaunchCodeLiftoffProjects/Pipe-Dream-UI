@@ -4,7 +4,8 @@ import Layout from "./Layout";
 import PageOne from "./pages/pageOne.jsx";
 import AddRestroom from "./pages/addRestroom.jsx";
 import RestroomList from "./pages/restroomList.jsx";
-import RestroomProfile from "./pages/restroomProfile.jsx";
+import RestroomComponent from "./pages/restroomComponent.jsx";
+import ReviewComponent from "./pages/reviewComponent.jsx";
 
 export const Routes = () => {
   return (
@@ -13,8 +14,9 @@ export const Routes = () => {
         <div style={{ marginTop: "100px" }}>
           <Route path="/" exact component={PageOne} />
           <Route path="/add-restroom" exact component={AddRestroom} />
-          <Route path="/restroom-list" exact component={RestroomList} />
-          <Route path="/restroom-profile" exact component={RestroomProfile} />
+          <Route path="/restrooms" exact component={RestroomList} />
+          <Route path="/restrooms/:id/" component={RestroomComponent} />
+          <Route path="/add-review/:id" component={ReviewComponent} />
         </div>
       </Layout>
     </Router>
