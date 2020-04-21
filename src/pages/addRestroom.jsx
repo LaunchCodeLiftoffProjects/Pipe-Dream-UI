@@ -7,7 +7,8 @@ export default class AddRestroom extends React.Component {
     super(props);
     this.state = {
       businessName: '',
-      businessType: 'restaurant',
+      address: '',
+      businessType: 'Restaurant',
       isAccessible: false,
       isSingleStall: false,
       isGenderNeutral: false,
@@ -16,6 +17,7 @@ export default class AddRestroom extends React.Component {
     };
 
     this.handleBusinessNameChange = this.handleBusinessNameChange.bind(this);
+    this.handleAddressChange = this.handleAddressChange.bind(this);
     this.handleBusinessTypeChange = this.handleBusinessTypeChange.bind(this);
     this.handleOnChangeSingleStall = this.handleOnChangeSingleStall.bind(this);
     this.handleOnChangeIsAccessible = this.handleOnChangeIsAccessible.bind(this);
@@ -28,6 +30,12 @@ export default class AddRestroom extends React.Component {
   handleBusinessNameChange = (event) => {
     this.setState({
       businessName: event.target.value
+    })
+  }
+
+  handleAddressChange = (event) => {
+    this.setState({
+      address: event.target.value
     })
   }
 
@@ -66,6 +74,7 @@ export default class AddRestroom extends React.Component {
     
     const restroom = {
       businessName: this.state.businessName,
+      address: this.state.address,
       businessType: this.state.businessType,
       isAccessible: this.state.isAccessible,
       isSingleStall: this.state.isSingleStall,
@@ -88,6 +97,12 @@ export default class AddRestroom extends React.Component {
           <label>Business Name: </label>
           <input type="text" name="businessName" value={this.state.businessName} onChange={this.handleBusinessNameChange}/>
         </div>
+
+        <div>
+          <label>Address: </label>
+          <input type="text" name="address" value={this.state.address} onChange={this.handleAddressChange}/>
+        </div>
+
         <div>
           <label>Type of Business: </label>
           <select value={this.state.businessType} onChange={this.handleBusinessTypeChange}>
@@ -97,6 +112,7 @@ export default class AddRestroom extends React.Component {
             <option value="Other">Other</option>
           </select>
         </div>
+       
         <div>
           <label>Single Stall? </label>
           <input type="checkbox"

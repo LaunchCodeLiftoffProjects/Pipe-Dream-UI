@@ -11,6 +11,7 @@ export default class RestroomList extends React.Component {
     }
 
     this.refreshRestrooms = this.refreshRestrooms.bind(this);
+    this.detailsClicked = this.detailsClicked.bind(this);
     this.updateRestroomClicked = this.updateRestroomClicked.bind(this);
     this.deleteRestroomClicked = this.deleteRestroomClicked.bind(this);
     this.addRestroomClicked = this.addRestroomClicked.bind(this);
@@ -34,10 +35,14 @@ export default class RestroomList extends React.Component {
     );
   }
 
+  detailsClicked(id) {
+    this.props.history.push(`/restrooms/details/${id}`);
+  }
+
 
   updateRestroomClicked(id) {
     console.log('Update: ' + id);
-    this.props.history.push(`/restrooms/${id}`);
+    this.props.history.push(`/restrooms/update/${id}`);
   }
 
   deleteRestroomClicked(id) {
@@ -68,13 +73,13 @@ export default class RestroomList extends React.Component {
                   restroom => 
                     <tr key={restroom.id}>
                       <td>{restroom.businessName}<br />
-                      Insert Address
+                      {restroom.address}
                       </td>
                       <td>Business Type: <br />
                       {restroom.businessType}</td>
                       <td>
                         <button>Directions</button><br />
-                        <button>Details</button>
+                        <button onClick={() => this.detailsClicked(restroom.id)}>Details</button>
                       </td>
                       <td><button className="btn btn-success" onClick={() => this.updateRestroomClicked(restroom.id)}>Update</button></td>
                       <td><button className="btn btn-warning" onClick={() => this.deleteRestroomClicked(restroom.id)}>Delete</button></td>
