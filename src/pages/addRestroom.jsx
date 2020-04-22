@@ -1,5 +1,5 @@
-import React from "react";
-import axios from "axios";
+import axios from 'axios';
+import React from 'react';
 
 export default class AddRestroom extends React.Component {
   //Write HTML inside render function
@@ -8,13 +8,16 @@ export default class AddRestroom extends React.Component {
     this.state = {
       businessName: '',
       businessType: '',
+      address: '',
       isAccessible: false,
       isSingleStall: false,
       isGenderNeutral: false,
-      hasChangingTable: false
+      hasChangingTable: false,
+      message: null
     };
 
     this.handleBusinessNameChange = this.handleBusinessNameChange.bind(this);
+    this.handleAddressChange = this.handleAddressChange.bind(this);
     this.handleBusinessTypeChange = this.handleBusinessTypeChange.bind(this);
     this.handleOnChangeSingleStall = this.handleOnChangeSingleStall.bind(this);
     this.handleOnChangeIsAccessible = this.handleOnChangeIsAccessible.bind(this);
@@ -27,6 +30,12 @@ export default class AddRestroom extends React.Component {
   handleBusinessNameChange = (event) => {
     this.setState({
       businessName: event.target.value
+    })
+  }
+
+  handleAddressChange = (event) => {
+    this.setState({
+      address: event.target.value
     })
   }
 
@@ -68,6 +77,7 @@ export default class AddRestroom extends React.Component {
     
     const restroom = {
       businessName: this.state.businessName,
+      address: this.state.address,
       businessType: this.state.businessType,
       isAccessible: this.state.isAccessible,
       isSingleStall: this.state.isSingleStall,
@@ -75,22 +85,29 @@ export default class AddRestroom extends React.Component {
       hasChangingTable: this.state.hasChangingTable
     }
 
-    axios.post(`http://localhost:8080/restroom`, restroom)
-      .then(response => {
-        console.log(response);
-        console.log(response.data);
-      })
-  }
+    axios.post(`http://localhost:8080/restrooms`, restroom)
+        .then((response) => {
+            this.setState({message: `Restroom ID: ${response.data.id} Added!`});
+        })
+    }
 
   render() {
+   
     return (
       <form onSubmit={this.handleSubmit}>
+      {this.state.message && <div className="alert alert-success">{this.state.message} <a href="/restrooms">See All Restrooms</a></div>}
         <div>
           <label>Business Name: </label>
           <input type="text" name="businessName" 
           value={this.state.businessName} 
           onChange={this.handleBusinessNameChange}/>
         </div>
+
+        <div>
+          <label>Address: </label>
+          <input type="text" name="address" value={this.state.address} onChange={this.handleAddressChange}/>
+        </div>
+
         <div>
           <label>Type of Business: </label>
           <select value={this.state.businessType} 
@@ -101,9 +118,10 @@ export default class AddRestroom extends React.Component {
             <option value="Restaurant">Restaurant</option>
             <option value="Bar">Bar</option>
             <option value="Retail Store">Retail Store</option>
-            <option value="Other">Other</option>  
+            <option value="Other">Other</option> 
           </select>
         </div>
+       
         <div>
           <label>Single Stall? </label>
           <input type="checkbox"
@@ -134,7 +152,7 @@ export default class AddRestroom extends React.Component {
             onChange={this.handleOnChangeHasChangingTable}
           />
         </div>
-        <button type="submit">Submit</button>
+        <button className="btn btn-success" type="submit">Submit</button>
       </form>
     );
     };

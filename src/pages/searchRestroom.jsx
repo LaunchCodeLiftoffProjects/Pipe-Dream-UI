@@ -5,8 +5,9 @@ export default class RestroomSearch extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "",
-      businessType: "Gas Station",
+      name: '',
+      businessType: '',
+      address: '',
       hasChangingTable: false,
       isGenderNeutral: false,
       isSingleStall: false,
@@ -49,6 +50,14 @@ export default class RestroomSearch extends React.Component {
 
     console.log(`Updating business type`);
     await this.setState({ businessType: event.target.value });
+    this.filterRestrooms();
+
+  }
+
+  updateAddress = async (event) => {
+
+    console.log(`Updating address`);
+    await this.setState({ address: event.target.value });
     this.filterRestrooms();
 
   }
@@ -101,11 +110,13 @@ export default class RestroomSearch extends React.Component {
   filterRestrooms = () => {
     let filteredRestrooms = this.state.restrooms;
     let name = this.state.name;
+    let businessType = this.state.businessType;
+    let address= this.state.address;
     let isSingleStall = this.state.isSingleStall;
     let isAccessible = this.state.isAccessible;
     let isGenderNeutral = this.state.isGenderNeutral;
     let hasChangingTable = this.state.hasChangingTable;
-    let businessType = this.state.businessType;
+    
 
   
     console.log(`filtering restrooms with name: ${name}, Business type is: ${businessType}, singleStall: ${isSingleStall}, is accessible: ${isAccessible}, is gender-neutral:${isGenderNeutral}, has changing table: ${hasChangingTable}`);
@@ -116,7 +127,9 @@ export default class RestroomSearch extends React.Component {
     filteredRestrooms = filteredRestrooms.filter((restroom) => {
       return restroom.businessType.toLowerCase().indexOf(businessType.toLowerCase()) !== -1
     });
-
+    filteredRestrooms = filteredRestrooms.filter((restroom) => {
+      return restroom.address.toLowerCase().indexOf(address.toLowerCase()) !== -1
+    });
     if(isSingleStall === true ){
       filteredRestrooms = filteredRestrooms.filter((restroom) => {
         return restroom.isSingleStall === true
@@ -158,8 +171,17 @@ export default class RestroomSearch extends React.Component {
               onChange={this.updateName.bind(this)}/>
           </div>
           <div>
+          <label>Address: </label>
+          <input type="text" name="address" 
+          value={this.state.address} 
+          onChange={this.updateAddress}/>
+        </div>
+          <div>
           <label>Type of Business: </label>
-          <select value={this.state.businessType} onChange={this.updateBusinessType}>
+          <select value={this.state.businessType} 
+          onChange={this.updateBusinessType}  
+          onFocus={this.handleFocus}>
+            <option value="">Please select...</option>
             <option value="Gas Station">Gas station</option>
             <option value="Restaurant">Restaurant</option>
             <option value="Bar">Bar</option>

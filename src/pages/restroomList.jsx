@@ -11,11 +11,14 @@ export default class RestroomList extends React.Component {
     }
 
     this.refreshRestrooms = this.refreshRestrooms.bind(this);
+    this.detailsClicked = this.detailsClicked.bind(this);
+    this.updateRestroomClicked = this.updateRestroomClicked.bind(this);
     this.deleteRestroomClicked = this.deleteRestroomClicked.bind(this);
+    this.addRestroomClicked = this.addRestroomClicked.bind(this);
   }
 
   componentDidMount() {
-    axios.get(`http://localhost:8080/restroom`)
+    axios.get(`http://localhost:8080/restrooms`)
       .then(
         response => {
           this.setState({restrooms: response.data})
@@ -24,7 +27,7 @@ export default class RestroomList extends React.Component {
   }
 
   refreshRestrooms() {
-    axios.get(`http://localhost:8080/restroom`)
+    axios.get(`http://localhost:8080/restrooms`)
     .then(
       response => {
         this.setState({restrooms: response.data})
@@ -32,12 +35,28 @@ export default class RestroomList extends React.Component {
     );
   }
 
+  detailsClicked(id) {
+    this.props.history.push(`/restrooms/details/${id}`);
+  }
+
+
+  updateRestroomClicked(id) {
+    console.log('Update: ' + id);
+    this.props.history.push(`/restrooms/update/${id}`);
+  }
+
   deleteRestroomClicked(id) {
-    axios.delete(`http://localhost:8080/restroom/${id}`)
+    axios.delete(`http://localhost:8080/restrooms/${id}`)
       .then(response => {
         this.setState({message: `Deletion of Restroom ID: ${id} Successful!`});
         this.refreshRestrooms();
     })
+  }
+
+  addRestroomClicked() {
+    console.log('Add restroom clicked');
+    this.props.history.push(`/restrooms/`);
+
   }
   
   //Write HTML inside render function
@@ -45,7 +64,7 @@ export default class RestroomList extends React.Component {
     return (
       <div className="container">
         <h1>All Restrooms</h1>
-        {this.state.message && <div class="alert alert-success">{this.state.message}</div>}
+        {this.state.message && <div className="alert alert-success">{this.state.message}</div>}
         <div className="container">
           <table className="table">
             <tbody>
@@ -54,31 +73,22 @@ export default class RestroomList extends React.Component {
                   restroom => 
                     <tr key={restroom.id}>
                       <td>{restroom.businessName}<br />
-                      Insert Address
+                      {restroom.address}
                       </td>
                       <td>Business Type: <br />
                       {restroom.businessType}</td>
                       <td>
                         <button>Directions</button><br />
-                        <button>Details</button>
+                        <button onClick={() => this.detailsClicked(restroom.id)}>Details</button>
                       </td>
+                      <td><button className="btn btn-success" onClick={() => this.updateRestroomClicked(restroom.id)}>Update</button></td>
                       <td><button className="btn btn-warning" onClick={() => this.deleteRestroomClicked(restroom.id)}>Delete</button></td>
                     </tr>
                 )
               }
-
-              {// <tr>
-              //   <td>LaunchCode<br />
-              //     1234 Delmar Blvd.
-              //   </td>
-              //   <td>1.5 miles away</td>
-              //   <td>
-              //     <button>Directions</button><br />
-              //     <button>Details</button>
-              //   </td>
-              // </tr>
-              }
               
+                <tr><td><button className="btn btn-success" onClick={this.addRestroomClicked}>Add Restroom</button></td></tr>
+          
             </tbody>
           </table>
         </div>
