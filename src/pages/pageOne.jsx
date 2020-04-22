@@ -6,7 +6,7 @@ export default class RestroomSearch extends React.Component {
     super(props);
     this.state = {
       name: "",
-      businessType: "Gas Station",
+      businessType: "",
       hasChangingTable: false,
       isGenderNeutral: false,
       isSingleStall: false,
@@ -51,6 +51,10 @@ export default class RestroomSearch extends React.Component {
     await this.setState({ businessType: event.target.value });
     this.filterRestrooms();
 
+  }
+
+  handleFocus = (event) => {
+    this.setState({businessType: ''});
   }
 
   //Update & Search By Single Stall
@@ -159,7 +163,10 @@ export default class RestroomSearch extends React.Component {
           </div>
           <div>
           <label>Type of Business: </label>
-          <select value={this.state.businessType} onChange={this.updateBusinessType}>
+          <select value={this.state.businessType} 
+          onChange={this.updateBusinessType}
+          onFocus={this.handleFocus}>
+            <option value="">Please select...</option>
             <option value="Gas Station">Gas station</option>
             <option value="Restaurant">Restaurant</option>
             <option value="Bar">Bar</option>

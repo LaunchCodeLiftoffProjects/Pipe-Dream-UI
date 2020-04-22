@@ -7,7 +7,7 @@ export default class AddRestroom extends React.Component {
     super(props);
     this.state = {
       businessName: '',
-      businessType: 'Gas Station',
+      businessType: '',
       isAccessible: false,
       isSingleStall: false,
       isGenderNeutral: false,
@@ -36,6 +36,9 @@ export default class AddRestroom extends React.Component {
     })
   }
 
+  handleFocus = (event) => {
+    this.setState({businessType: ''});
+  }
   handleOnChangeSingleStall = () => {
     this.setState(initialState => ({
       isSingleStall: !initialState.isSingleStall
@@ -84,11 +87,15 @@ export default class AddRestroom extends React.Component {
       <form onSubmit={this.handleSubmit}>
         <div>
           <label>Business Name: </label>
-          <input type="text" name="businessName" value={this.state.businessName} onChange={this.handleBusinessNameChange}/>
+          <input type="text" name="businessName" 
+          value={this.state.businessName} 
+          onChange={this.handleBusinessNameChange}
+          onFocus={this.handleFocus}/>
         </div>
         <div>
           <label>Type of Business: </label>
           <select value={this.state.businessType} onChange={this.handleBusinessTypeChange}>
+          <option value="">Please select...</option>
             <option value="Gas Station">Gas station</option>
             <option value="Restaurant">Restaurant</option>
             <option value="Bar">Bar</option>
