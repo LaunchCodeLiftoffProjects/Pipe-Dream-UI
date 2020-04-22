@@ -2,9 +2,25 @@
 
 .App {
   text-align: center;
+  padding-top: 100px;
+  padding-bottom: none;
+  align-items: center;
 }
 
-.App-logo {
+.navBar{
+  align-items: center;
+  width: 100%;
+  display: inline-block;
+  text-align: center;
+  font-size: large;
+}
+
+.navButton {
+  font-size: 100px;
+}
+
+
+/* .App-logo {
   height: 40vmin;
   pointer-events: none;
 }
@@ -13,7 +29,7 @@
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
-}
+} */
 
 .App-header {
   background-color: #282c34;
@@ -22,8 +38,12 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: calc(100px + 2vmin);
   color: white;
+}
+
+.paragraph {
+  font-size: 40px;
 }
 
 .App-link {

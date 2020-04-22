@@ -7,8 +7,8 @@ export default class AddRestroom extends React.Component {
     super(props);
     this.state = {
       businessName: '',
+      businessType: '',
       address: '',
-      businessType: 'Restaurant',
       isAccessible: false,
       isSingleStall: false,
       isGenderNeutral: false,
@@ -45,6 +45,9 @@ export default class AddRestroom extends React.Component {
     })
   }
 
+  handleFocus = (event) => {
+    this.setState({businessType: ''});
+  }
   handleOnChangeSingleStall = () => {
     this.setState(initialState => ({
       isSingleStall: !initialState.isSingleStall
@@ -95,7 +98,9 @@ export default class AddRestroom extends React.Component {
       {this.state.message && <div className="alert alert-success">{this.state.message} <a href="/restrooms">See All Restrooms</a></div>}
         <div>
           <label>Business Name: </label>
-          <input type="text" name="businessName" value={this.state.businessName} onChange={this.handleBusinessNameChange}/>
+          <input type="text" name="businessName" 
+          value={this.state.businessName} 
+          onChange={this.handleBusinessNameChange}/>
         </div>
 
         <div>
@@ -105,11 +110,15 @@ export default class AddRestroom extends React.Component {
 
         <div>
           <label>Type of Business: </label>
-          <select value={this.state.businessType} onChange={this.handleBusinessTypeChange}>
-            <option value="Restaurant">Restaurant</option>
+          <select value={this.state.businessType} 
+          onChange={this.handleBusinessTypeChange}
+          onFocus={this.handleFocus}>
+            <option value="">Please select...</option>
             <option value="Gas Station">Gas station</option>
+            <option value="Restaurant">Restaurant</option>
+            <option value="Bar">Bar</option>
             <option value="Retail Store">Retail Store</option>
-            <option value="Other">Other</option>
+            <option value="Other">Other</option> 
           </select>
         </div>
        
