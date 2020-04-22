@@ -35,6 +35,17 @@ export default class ReviewComponent extends React.Component {
         this.loadData();
         console.log(this.state.restroomId);
     }
+
+    validate(values) {
+      let errors = {}
+      if (!values.username) {
+        errors.username = 'Please enter username.'
+      } else if (values.username.length < 5 || values.username.length > 20) {
+        errors.username = 'Username must be between 5 and 20 characters.'
+      }
+  
+      return errors
+    }
     
 
     onSubmit (values){
@@ -64,7 +75,7 @@ export default class ReviewComponent extends React.Component {
                 { this.state.isLoading && <div>Loading...please wait!</div>}
           
             {!this.state.isLoading && <div>
-                <h1>Add Review</h1>
+                <h1>Leave a Review</h1>
                 {this.state.message && <div className="alert alert-success">{this.state.message}</div>}
                 <div className="container">
                     <Formik
@@ -77,9 +88,8 @@ export default class ReviewComponent extends React.Component {
             {
                 (props) => (
                   <Form>
-                    {// <ErrorMessage name="userName" component="div"
-                    //   className="alert alert-warning" />
-                }
+                    <ErrorMessage name="username" component="div"
+                      className="alert alert-warning" />
                 
                     <fieldset className="form-group">
                       <label>Restroom ID: </label>
@@ -92,15 +102,15 @@ export default class ReviewComponent extends React.Component {
                     </fieldset>
       
                     <fieldset className="form-group">
+                    <label>Username: </label>
+                    <Field className="form-control" type="text" name="username" />
+                  </fieldset>
+                    
+                    <fieldset className="form-group">
                       <label>Rating: </label>
                       <Field name="rating" as={FormRatings} />
                     </fieldset>
                    
-                    <fieldset className="form-group">
-                      <label>Username: </label>
-                      <Field className="form-control" type="text" name="username" />
-                    </fieldset>
-                  
                     <fieldset className="form-group">
                       <label>Review: </label>
                       <Field className="form-control" type="textarea" name="reviewText" />
