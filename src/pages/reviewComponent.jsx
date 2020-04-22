@@ -77,9 +77,9 @@ export default class ReviewComponent extends React.Component {
             {
                 (props) => (
                   <Form>
-                    {// <ErrorMessage name="userName" component="div"
-                    //   className="alert alert-warning" />
-                }
+                    <ErrorMessage name="username" component="div"
+                      className="alert alert-warning" />
+                
                 
                     <fieldset className="form-group">
                       <label>Restroom ID: </label>
