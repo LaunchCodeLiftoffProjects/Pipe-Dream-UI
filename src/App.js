@@ -20,9 +20,7 @@ const theme = createMuiTheme({
 class App extends Component {
   render() {
     return (
-      
-        <div className="App">
-           <img src={PipeDreamLogo} alt="Pipe Dream Logo"/>
+    <div>
         <MuiThemeProvider theme={theme}>
           <Routes />
         </MuiThemeProvider>  
