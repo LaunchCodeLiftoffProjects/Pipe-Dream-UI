@@ -6,7 +6,8 @@ class Home extends React.Component {
     render() {
       return (
         <Fragment>
-        <div classname= "paragraph"><p>Pipe Dream is a super dope app that everyone should download</p> </div>
+        <div classname= "paragraph">
+        <p>Pipe Dream is a super dope app that everyone should download</p> </div>
         <Link to="/search">
         <Button>Search</Button>
       </Link>
