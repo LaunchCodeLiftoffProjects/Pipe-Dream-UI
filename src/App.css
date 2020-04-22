@@ -2,6 +2,13 @@
 
 .App {
   text-align: center;
+  padding-top: 100px;
+  padding-bottom: none;
+}
+
+.Logo {
+  text-align: absolute;
+  
 }
 
 .App-logo {
