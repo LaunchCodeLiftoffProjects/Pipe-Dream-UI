@@ -110,11 +110,11 @@ export default class RestroomSearch extends React.Component {
   
     console.log(`filtering restrooms with name: ${name}, Business type is: ${businessType}, singleStall: ${isSingleStall}, is accessible: ${isAccessible}, is gender-neutral:${isGenderNeutral}, has changing table: ${hasChangingTable}`);
     filteredRestrooms = filteredRestrooms.filter((restroom) => {
-      return restroom.businessName.toLowerCase().indexOf(name) !== -1
+      return restroom.businessName.toLowerCase().indexOf(name.toLowerCase()) !== -1
     });
 
     filteredRestrooms = filteredRestrooms.filter((restroom) => {
-      return restroom.businessType.toLowerCase().indexOf(businessType) !== -1
+      return restroom.businessType.toLowerCase().indexOf(businessType.toLowerCase()) !== -1
     });
 
     if(isSingleStall === true ){

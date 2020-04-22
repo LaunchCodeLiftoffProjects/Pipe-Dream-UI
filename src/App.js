@@ -8,7 +8,7 @@ import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: "#0b5994"
+      main: "#42A5FF"
     },
     secondary: {
       main: "#ffa500"
@@ -23,8 +23,7 @@ class App extends Component {
         <MuiThemeProvider theme={theme}>
           <Routes />
         </MuiThemeProvider>
-        {/* <h1> Restrooms</h1>
-        <Restrooms restrooms= {this.props.restrooms} /> */}
+       
       </div>
       
     );
