@@ -33,7 +33,6 @@ export default class ReviewComponent extends React.Component {
       }
     componentDidMount() {
         this.loadData();
-        console.log(this.state.restroomId);
     }
     
     validate(values) {
@@ -59,7 +58,7 @@ export default class ReviewComponent extends React.Component {
           console.log(review);
           axios.post(`http://localhost:8080/reviews/`, review)
             .then((response) => {
-                this.setState({message: `Review added to Restroom ID: ${this.state.restroomId}.  `});
+                this.setState({message: `Review added to Restroom ID: ${this.state.restroomId}!  `});
             })
         
     }
@@ -110,7 +109,7 @@ export default class ReviewComponent extends React.Component {
                       <Field className="form-control" type="textarea" name="reviewText" />
                     </fieldset>
 
-                    <button className="btn btn-success" type="submit">Save</button>
+                    <button className="btn btn-success" type="submit">Save</button> &emsp;
                     <a href={`/restrooms/details/${this.state.restroomId}`}>Cancel</a>
                 </Form>
                 )}

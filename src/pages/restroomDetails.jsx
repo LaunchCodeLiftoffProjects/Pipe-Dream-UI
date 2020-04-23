@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import {Stars} from "form-ratings";
 
 export default class RestroomDetails extends React.Component {
   
@@ -22,6 +23,7 @@ export default class RestroomDetails extends React.Component {
     this.loadData = this.loadData.bind(this);
     this.addReviewClicked = this.addReviewClicked.bind(this);
     this.deleteReviewClicked = this.deleteReviewClicked.bind(this);
+    this.averageReviews = this.averageReviews.bind(this);
 
     }
 
@@ -40,7 +42,7 @@ export default class RestroomDetails extends React.Component {
             })
           })
 
-          axios.get(`http://localhost:8080/restrooms/${this.state.restroomId}/reviews`)
+          axios.get(`http://localhost:8080/reviews`)
           .then(
             response => {
               this.setState({reviews: response.data})
@@ -53,7 +55,7 @@ export default class RestroomDetails extends React.Component {
       }
 
       refreshReviews() {
-        axios.get(`http://localhost:8080/restrooms/${this.state.restroomId}/reviews`)
+        axios.get(`http://localhost:8080/reviews`)
         .then(
           response => {
             this.setState({reviews: response.data})
@@ -61,12 +63,21 @@ export default class RestroomDetails extends React.Component {
         );
       }
 
+      averageReviews() {
+        let sum = 0;
+        this.refreshReviews();
+        for (let i = 0; i < this.state.reviews.length; i++ ) {
+          sum += this.state.reviews[i].rating;
+        }
+        return sum / this.state.reviews.length;
+      }
+
       addReviewClicked(){
         this.props.history.push(`/add-review/${this.state.restroomId}`);
       }
 
-      deleteReviewClicked(restroomId, reviewId) {
-        axios.delete(`http://localhost:8080/restrooms/${restroomId}/reviews/${reviewId}`)
+      deleteReviewClicked(reviewId) {
+        axios.delete(`http://localhost:8080/reviews/${reviewId}`)
         .then(response => {
           this.setState({message: `Review deleted!`});
           this.refreshReviews();
@@ -88,9 +99,10 @@ export default class RestroomDetails extends React.Component {
         <div className="container">
             <div className="container">
                 <h1>{restroom.businessName}</h1>
+                <Stars value={this.averageReviews()} color="gold" /> <br />
                 {this.state.message && <div className="alert alert-success">{this.state.message}</div>}
             <div className="container">
-            <table className="table">
+            <table className="table table-striped">
               <tbody>
             
                 <tr>
@@ -125,11 +137,15 @@ export default class RestroomDetails extends React.Component {
             
               </tbody>
             </table>
-            <button className="btn btn-success" onClick={this.addReviewClicked}>Leave a Review</button>
+            <button className="btn btn-success" onClick={this.addReviewClicked}>Leave a Review</button> &emsp;
             <a href="/restrooms">See All Restrooms</a>
         </div>
 
+        <br />
+
         <div className="container">
+          <h1>Reviews</h1>
+
             <table className="table">
                 <tbody>
                 {
@@ -140,14 +156,14 @@ export default class RestroomDetails extends React.Component {
                             {review.username} <br />
                             <br />
                             Rating: <br />
-                            {review.rating} <br />
+                            <Stars value={review.rating} color="gold" /> <br />
                             <br />
                             Review: <br />
                             {review.reviewText}
                         </td>
 
                         <td>
-                            <button className="btn btn-warning" onClick={() => this.deleteReviewClicked(this.restroomId, this.reviewId)}>Delete</button>
+                            <button className="btn btn-warning" onClick={() => this.deleteReviewClicked(review.id)}>Delete</button>
                         </td>
                   </tr>
               )
