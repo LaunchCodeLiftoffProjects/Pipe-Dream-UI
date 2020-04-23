@@ -3,8 +3,8 @@ import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 import { AppBar, Toolbar } from "@material-ui/core";
 
-export const NavBar = ({ color }) => (
-  <AppBar color={color} className="navBar">
+export const NavBar = ({ color, size }) => (
+  <AppBar color={color} size={size} className="navBar">
     <Toolbar>
     <Link to="/">
         <Button>Home</Button>

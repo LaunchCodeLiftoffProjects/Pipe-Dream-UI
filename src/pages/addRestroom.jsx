@@ -94,6 +94,9 @@ export default class AddRestroom extends React.Component {
   render() {
    
     return (
+      // <div>
+      // <h1>Add a Restroom:</h1>
+      // </div>
       <form onSubmit={this.handleSubmit}>
       {this.state.message && <div className="alert alert-success">{this.state.message} <a href="/restrooms">See All Restrooms</a></div>}
         <div>
@@ -105,7 +108,9 @@ export default class AddRestroom extends React.Component {
 
         <div>
           <label>Address: </label>
-          <input type="text" name="address" value={this.state.address} onChange={this.handleAddressChange}/>
+          <input type="text" name="address" 
+          value={this.state.address} 
+          onChange={this.handleAddressChange}/>
         </div>
 
         <div>

@@ -263,12 +263,3 @@ export default class RestroomSearch extends React.Component {
 }
 
 
-// <option value="restaurant">Restaurant</option>
-// <option value="gas-station">Gas station</option>
-// <option value="retail-store">Retail Store</option>
-// <option value="other">Other</option> 
-
-// <option value="restaurant" name="Restaurant">Restaurant</option>
-//             <option value="gas-station" name= "Gas Station">Gas station</option>
-//             <option value="retail-store" name="Retail Store">Retail Store</option>
-//             <option value="other" name="Other">Other</option>

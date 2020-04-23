@@ -9,6 +9,8 @@
 
 .navBar{
   align-items: center;
+  color:red;
+  size: large;
   width: 100%;
   display: inline-block;
   text-align: center;
@@ -18,9 +20,8 @@
 .navButton {
   font-size: 100px;
 }
-
-
-/* .App-logo {
+/* 
+.App-logo {
   height: 40vmin;
   pointer-events: none;
 }
@@ -38,12 +39,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(100px + 2vmin);
+  font-size: calc(10px + 2vmin);
   color: white;
-}
-
-.paragraph {
-  font-size: 40px;
 }
 
 .App-link {
@@ -57,4 +54,18 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.btn-success {
+  color: white;
+  font-weight: bold;
+  background-color: #6DDDD0;
+  border-color:  #6DDDD0;
+}
+
+.btn-warning{
+  color: white;
+  font-weight: bold;
+  background-color: #e57373;
+  border-color:  #e57373;
 }
