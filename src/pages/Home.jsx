@@ -12,16 +12,18 @@ class Home extends React.Component {
             <Typography color= "primary" variant="h1" size="large">
             What is Pipe Dream?
             </Typography>
-            <Typography color= "gray" variant="h3">
-        Pipe Dream is a super dope app that everyone should download 
+            <Typography color= "gray" variant="p">
+        Pipe Dream is a restroom locator and reviewer app. 
+        It's like the Yelp for public restrooms.
         </Typography>
-        
+        <div>
         <Link to="/search">
-        <Button color="secondary" size="large">Search</Button>
+        <Button color="secondary" size="large" variant="contained">Search</Button>
       </Link>
       <Link to="/add-restroom">
-        <Button>Add a Restroom</Button>
+        <Button variant="contained" size="large">Add a Restroom</Button>
       </Link>
+      </div>
       </div>
       </StylesProvider>
       </Fragment>
