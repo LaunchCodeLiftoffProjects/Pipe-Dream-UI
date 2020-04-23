@@ -10,7 +10,7 @@ export const NavBar = ({ color }) => (
         <Button>Home</Button>
       </Link>
       <Link to="/search">
-        <Button classname="navButton">Search</Button>
+        <Button className="navButton">Search</Button>
       </Link>
       <Link to="/add-restroom">
         <Button>Add a Restroom</Button>

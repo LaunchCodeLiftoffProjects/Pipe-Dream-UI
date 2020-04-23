@@ -176,9 +176,11 @@ export default class RestroomComponent extends React.Component {
                     </Field>
                   </fieldset>
                   <br />
-                  <button className="btn btn-success" type="submit">Save</button> &emsp;
-                  <a href='/restrooms'>Cancel</a>
 
+                  <button className="btn btn-success" type="submit">Save</button>&emsp;
+
+                  <a href='/restrooms'>Cancel</a>
+                
                 </Form>
               )
             }
