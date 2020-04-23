@@ -175,10 +175,10 @@ export default class RestroomComponent extends React.Component {
                     <Field className="form-control" type="checkbox" name="hasChangingTable" >
                     </Field>
                   </fieldset>
-                  
-                  <button className="btn btn-success" type="submit">Save</button>
+                  <br />
+                  <button className="btn btn-success" type="submit">Save</button>&emsp;
                   <a href='/restrooms'>Cancel</a>
-
+                
                 </Form>
               )
             }

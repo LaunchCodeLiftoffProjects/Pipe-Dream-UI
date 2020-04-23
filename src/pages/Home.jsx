@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 
