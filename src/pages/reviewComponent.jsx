@@ -19,7 +19,7 @@ export default class ReviewComponent extends React.Component {
         
         this.loadData = this.loadData.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
-        // this.validate = this.validate.bind(this);
+        this.validate = this.validate.bind(this);
     }
 
     loadData() {
@@ -35,7 +35,7 @@ export default class ReviewComponent extends React.Component {
         this.loadData();
         console.log(this.state.restroomId);
     }
-
+    
     validate(values) {
       let errors = {}
       if (!values.username) {
@@ -46,7 +46,6 @@ export default class ReviewComponent extends React.Component {
   
       return errors
     }
-    
 
     onSubmit (values){
         const review = {
@@ -58,10 +57,10 @@ export default class ReviewComponent extends React.Component {
           };
 
           console.log(review);
-        axios.post(`http://localhost:8080/restrooms/${this.state.restroomId}/reviews`, review)
-          .then((response) => {
-              this.setState({message: `Review added to Restroom ID: ${this.state.restroomId}.`});
-          })
+          axios.post(`http://localhost:8080/restrooms/reviews/`, review)
+            .then((response) => {
+                this.setState({message: `Review added to Restroom ID: ${this.state.restroomId}!`});
+            })
         
     }
     render() {
@@ -75,7 +74,7 @@ export default class ReviewComponent extends React.Component {
                 { this.state.isLoading && <div>Loading...please wait!</div>}
           
             {!this.state.isLoading && <div>
-                <h1>Leave a Review</h1>
+                <h1>Add Review</h1>
                 {this.state.message && <div className="alert alert-success">{this.state.message}</div>}
                 <div className="container">
                     <Formik
@@ -102,15 +101,15 @@ export default class ReviewComponent extends React.Component {
                     </fieldset>
       
                     <fieldset className="form-group">
-                    <label>Username: </label>
-                    <Field className="form-control" type="text" name="username" />
-                  </fieldset>
-                    
-                    <fieldset className="form-group">
                       <label>Rating: </label>
                       <Field name="rating" as={FormRatings} />
                     </fieldset>
                    
+                    <fieldset className="form-group">
+                      <label>Username: </label>
+                      <Field className="form-control" type="text" name="username" />
+                    </fieldset>
+                  
                     <fieldset className="form-group">
                       <label>Review: </label>
                       <Field className="form-control" type="textarea" name="reviewText" />
