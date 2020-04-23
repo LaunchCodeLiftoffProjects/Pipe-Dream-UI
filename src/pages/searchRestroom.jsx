@@ -162,11 +162,12 @@ export default class RestroomSearch extends React.Component {
 
         {/* Search Form */}
 
-        <form onSubmit={this.handleSubmit.bind(this)}>
+        <form onSubmit={this.handleSubmit.bind(this)}
+        class="form">
           <h1> Search for a Restroom:</h1>
           <div>
             <label>Search By Name: </label>
-            <input
+            <input class="inputText"
               type="text"
               value={this.state.name.toLowerCase()}
               onChange={this.updateName.bind(this)}/>
@@ -174,12 +175,14 @@ export default class RestroomSearch extends React.Component {
           <div>
           <label>Address: </label>
           <input type="text" name="address" 
+          class="inputText"
           value={this.state.address.toLowerCase()} 
           onChange={this.updateAddress.bind(this)}/>
         </div>
           <div>
           <label>Type of Business: </label>
-          <select value={this.state.businessType} 
+          <select class="select"
+          value={this.state.businessType} 
           onChange={this.updateBusinessType}  
           onFocus={this.handleFocus}>
             <option value="">Please select...</option>
@@ -191,14 +194,14 @@ export default class RestroomSearch extends React.Component {
           </select>
           </div>
           <label>Single Stall </label>
-          <input type="checkbox"
+          <input type="checkbox" class= "checkbox"
             name="isSingleStall"
             checked={this.state.isSingleStall}
             onChange={this.updateSingleStall}
           />
           <div>
           <label>Accessible Restroom </label>
-          <input type="checkbox"
+          <input type="checkbox" class= "checkbox"
             name="isAccessible"
             checked={this.state.isAccessible}
             onChange={this.updateAccessible}
@@ -206,7 +209,7 @@ export default class RestroomSearch extends React.Component {
           </div>
           <div>
           <label>Gender-Neutral Restroom </label>
-          <input type="checkbox"
+          <input type="checkbox" class= "checkbox"
             name="isGenderNeutral"
             checked={this.state.isGenderNeutral}
             onChange={this.updateGenderNeutral}
@@ -214,7 +217,7 @@ export default class RestroomSearch extends React.Component {
           </div>
           <div>
           <label>Changing Table </label>
-          <input type="checkbox"
+          <input type="checkbox" class= "checkbox"
             name="hasChangingTable"
             checked={this.state.hasChangingTable}
             onChange={this.updateChangingTable}
@@ -225,7 +228,7 @@ export default class RestroomSearch extends React.Component {
         {/* Restroom Results */}
 
         <div className="container">
-          <h1>All Restrooms</h1>
+          <h1>Results:</h1>
           {this.state.message && (
             <div className="alert alert-success">{this.state.message}</div>
           )}

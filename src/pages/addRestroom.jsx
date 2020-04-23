@@ -94,10 +94,9 @@ export default class AddRestroom extends React.Component {
   render() {
    
     return (
-      // <div>
-      // <h1>Add a Restroom:</h1>
-      // </div>
-      <form onSubmit={this.handleSubmit}>
+      
+      <form onSubmit={this.handleSubmit} class="form">
+      <h1>Add a Restroom:</h1>
       {this.state.message && <div className="alert alert-success">{this.state.message} <a href="/restrooms">See All Restrooms</a></div>}
         <div>
           <label>Business Name: </label>
@@ -129,7 +128,7 @@ export default class AddRestroom extends React.Component {
        
         <div>
           <label>Single Stall? </label>
-          <input type="checkbox"
+          <input type="checkbox" class= "checkbox"
             name="isSingleStall"
             checked={this.state.isSingleStall}
             onChange={this.handleOnChangeSingleStall}
@@ -137,7 +136,7 @@ export default class AddRestroom extends React.Component {
         </div>
         <div>
           <label>Accessible Option? </label>
-          <input type="checkbox"
+          <input type="checkbox" class= "checkbox"
             name="isAccessible"
             checked={this.state.isAccessible}
             onChange={this.handleOnChangeIsAccessible}
@@ -145,14 +144,14 @@ export default class AddRestroom extends React.Component {
         </div>
         <div>
           <label>Gender Neutral Option? </label>
-          <input type="checkbox"
+          <input type="checkbox" class= "checkbox"
             checked={this.state.isGenderNeutral}
             onChange={this.handleOnChangeIsGenderNeutral}
           />
         </div>
         <div>
           <label>Has Changing Table(s)? </label>
-          <input type="checkbox"
+          <input type="checkbox" class= "checkbox"
             checked={this.state.hasChangingTable}
             onChange={this.handleOnChangeHasChangingTable}
           />

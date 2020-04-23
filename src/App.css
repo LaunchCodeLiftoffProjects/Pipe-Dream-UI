@@ -2,35 +2,14 @@
 
 .App {
   text-align: center;
-  padding-top: none;
-  padding-bottom: none;
+  padding-top: 50px;
+  padding-bottom: 50px;
   align-items: center;
 }
 
 .navBar{
   align-items: center;
-  color:red;
-  size: large;
-  width: 100%;
-  display: inline-block;
-  text-align: center;
-  font-size: large;
 }
-
-.navButton {
-  font-size: 100px;
-}
-/* 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-} */
 
 .App-header {
   background-color: #282c34;
@@ -47,20 +26,12 @@
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 .btn-success {
   color: white;
   font-weight: bold;
-  background-color: #6DDDD0;
-  border-color:  #6DDDD0;
+  background-color: #42A5FF;
+  border-color:  #42A5FF;
+  
 }
 
 .btn-warning{
@@ -70,6 +41,23 @@
   border-color:  #e57373;
 }
 
-.alert-success{
-  color:
+.inputText{
+    /* background-image: url('searchicon.png'); */
+    box-sizing: border-box;
+
+}
+
+.checkbox {
+  margin-left: 5px;
+}
+
+.form {
+  text-align: center;
+  /* background-color: #6DDDD0; */
+  width: 500px;
+  border: 5px solid #42A5FF;
+  padding: 50px;
+  margin:auto;
+  margin-bottom: 50px;
+
 }
