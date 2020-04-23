@@ -18,6 +18,8 @@ export default class RestroomSearch extends React.Component {
     };
   }
 
+
+
   //On Mount GET all restrooms
   componentDidMount() {
     this.getRestrooms();
@@ -26,7 +28,7 @@ export default class RestroomSearch extends React.Component {
   //Get All Restrooms From API
   getRestrooms = async () => {
 
-    let response = await axios.get(`http://localhost:8080/restroom`);
+    let response = await axios.get(`http://localhost:8080/restrooms`);
 
     console.log(`Got ${response.data.length} restrooms`);
 
@@ -73,7 +75,6 @@ export default class RestroomSearch extends React.Component {
 
   }
   
-
   updateAccessible = async () => {
 
     console.log(`Updating accessibility`);
@@ -119,7 +120,7 @@ export default class RestroomSearch extends React.Component {
     
 
   
-    console.log(`filtering restrooms with name: ${name}, Business type is: ${businessType}, singleStall: ${isSingleStall}, is accessible: ${isAccessible}, is gender-neutral:${isGenderNeutral}, has changing table: ${hasChangingTable}`);
+    console.log(`filtering restrooms with name: ${name}, Business type is: ${businessType}, singleStall: ${isSingleStall}, is accessible: ${isAccessible}, is gender-neutral:${isGenderNeutral}, has changing table: ${hasChangingTable}, address ${address}`);
     filteredRestrooms = filteredRestrooms.filter((restroom) => {
       return restroom.businessName.toLowerCase().indexOf(name.toLowerCase()) !== -1
     });
@@ -173,8 +174,8 @@ export default class RestroomSearch extends React.Component {
           <div>
           <label>Address: </label>
           <input type="text" name="address" 
-          value={this.state.address} 
-          onChange={this.updateAddress}/>
+          value={this.state.address.toLowerCase()} 
+          onChange={this.updateAddress.bind(this)}/>
         </div>
           <div>
           <label>Type of Business: </label>
@@ -236,9 +237,9 @@ export default class RestroomSearch extends React.Component {
                   <tr key={restroom.id}>
                     <td>
                       {restroom.businessName}
-                      <br />
-                      Insert Address
-                    </td>
+                   <br/>
+                      {restroom.address}
+                      </td>
                     <td>
                       Business Type: <br />
                       {restroom.businessType}
@@ -261,5 +262,3 @@ export default class RestroomSearch extends React.Component {
     );
   }
 }
-
-
