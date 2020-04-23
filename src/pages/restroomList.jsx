@@ -48,14 +48,13 @@ export default class RestroomList extends React.Component {
   deleteRestroomClicked(id) {
     axios.delete(`http://localhost:8080/restrooms/${id}`)
       .then(response => {
-        this.setState({message: `Deletion of Restroom ID: ${id} Successful!`});
+        this.setState({message: `Restroom ID: ${id} deleted!`});
         this.refreshRestrooms();
     })
   }
 
   addRestroomClicked() {
-    console.log('Add restroom clicked');
-    this.props.history.push(`/restrooms/`);
+    this.props.history.push(`/add-restroom/`);
 
   }
   

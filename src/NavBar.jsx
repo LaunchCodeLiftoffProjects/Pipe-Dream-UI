@@ -12,7 +12,7 @@ export const NavBar = ({ color, size }) => (
         </Typography>
       </Link>
       <Link to="/search">
-        <Button classname="navButton">Search</Button>
+        <Button className="navButton">Search</Button>
       </Link>
       <Link to="/add-restroom">
         <Button>Add a Restroom</Button>

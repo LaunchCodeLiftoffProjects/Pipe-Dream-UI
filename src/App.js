@@ -31,10 +31,7 @@ export default function App() {
         <MuiThemeProvider theme={theme}>
           <Routes />
         </MuiThemeProvider>  
-      </div>
-     
-      
-      
+      </div> 
     );
   }
 

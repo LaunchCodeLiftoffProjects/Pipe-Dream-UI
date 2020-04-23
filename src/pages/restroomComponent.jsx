@@ -48,7 +48,7 @@ export default class RestroomComponent extends React.Component {
   validate(values) {
     let errors = {}
     if (!values.businessName) {
-      errors.businessName = 'Enter Business Name.'
+      errors.businessName = 'Please enter business name.'
     } else if (values.businessName.length < 5 || values.businessName.length > 100) {
       errors.businessName = 'Business Name must be between 5 and 100 characters.'
     }
@@ -79,13 +79,14 @@ export default class RestroomComponent extends React.Component {
     };
 
     if (this.state.id !== -1){
-      axios.put(`http://localhost:8080/restrooms/update/${this.state.id}`, restroom)
+      axios.put(`http://localhost:8080/restrooms/${this.state.id}`, restroom)
       .then((response) => {
-        this.setState({message: `Update of Restroom ID: ${this.state.id} Successful!`});
+        this.setState({message: `Restroom ID: ${this.state.id} updated!`});
         this.refreshRestrooms();
+
       })
     } else {
-      axios.post(`http://localhost:8080/restrooms/update`, restroom)
+      axios.post(`http://localhost:8080/restrooms`, restroom)
     }
 
     
@@ -174,10 +175,10 @@ export default class RestroomComponent extends React.Component {
                     <Field className="form-control" type="checkbox" name="hasChangingTable" >
                     </Field>
                   </fieldset>
-                  
-                  <button className="btn btn-success" type="submit">Save</button>
+                  <br />
+                  <button className="btn btn-success" type="submit">Save</button>&emsp;
                   <a href='/restrooms'>Cancel</a>
-
+                
                 </Form>
               )
             }
