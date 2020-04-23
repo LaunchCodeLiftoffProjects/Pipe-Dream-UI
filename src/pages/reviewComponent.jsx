@@ -19,7 +19,7 @@ export default class ReviewComponent extends React.Component {
         
         this.loadData = this.loadData.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
-        // this.validate = this.validate.bind(this);
+        this.validate = this.validate.bind(this);
     }
 
     loadData() {
@@ -33,9 +33,18 @@ export default class ReviewComponent extends React.Component {
       }
     componentDidMount() {
         this.loadData();
-        console.log(this.state.restroomId);
     }
     
+    validate(values) {
+      let errors = {}
+      if (!values.username) {
+        errors.username = 'Please enter username.'
+      } else if (values.username.length < 5 || values.username.length > 20) {
+        errors.username = 'Username must be between 5 and 20 characters.'
+      }
+  
+      return errors
+    }
 
     onSubmit (values){
         const review = {
@@ -47,10 +56,10 @@ export default class ReviewComponent extends React.Component {
           };
 
           console.log(review);
-        // axios.post(`http://localhost:8080/restrooms/${this.state.restroomId}/details`, review)
-        //   .then((response) => {
-        //       this.setState({message: `Review added to Restroom ID: ${this.state.restroomId}.`});
-        //   })
+          axios.post(`http://localhost:8080/reviews/`, review)
+            .then((response) => {
+                this.setState({message: `Review added to Restroom ID: ${this.state.restroomId}!  `});
+            })
         
     }
     render() {
@@ -64,8 +73,8 @@ export default class ReviewComponent extends React.Component {
                 { this.state.isLoading && <div>Loading...please wait!</div>}
           
             {!this.state.isLoading && <div>
-                <h1>Add Review</h1>
-                {this.state.message && <div className="alert alert-success">{this.state.message}</div>}
+                <h1>Leave a Review for {this.state.businessName}</h1>
+                {this.state.message && <div className="alert alert-success">{this.state.message}<a href={`/restrooms/details/${this.state.restroomId}`}>Return to Restroom</a></div>}
                 <div className="container">
                     <Formik
                         initialValues = {{restroomId, businessName, username, rating, reviewText}}
@@ -77,20 +86,14 @@ export default class ReviewComponent extends React.Component {
             {
                 (props) => (
                   <Form>
-                    {// <ErrorMessage name="userName" component="div"
-                    //   className="alert alert-warning" />
-                }
+                    <ErrorMessage name="username" component="div"
+                      className="alert alert-warning" />
                 
                     <fieldset className="form-group">
                       <label>Restroom ID: </label>
                       <Field className="form-control" type="text" name="id" value={restroomId} disabled />
                     </fieldset>
 
-                    <fieldset className="form-group">
-                      <label>Business Name: </label>
-                      <Field className="form-control" type="text" name="businessName" value={businessName} disabled />
-                    </fieldset>
-      
                     <fieldset className="form-group">
                       <label>Rating: </label>
                       <Field name="rating" as={FormRatings} />
@@ -106,8 +109,8 @@ export default class ReviewComponent extends React.Component {
                       <Field className="form-control" type="textarea" name="reviewText" />
                     </fieldset>
 
-                    <button className="btn btn-success" type="submit">Save</button>
-                    <a href='/restrooms/'>Cancel</a>
+                    <button className="btn btn-success" type="submit">Save</button> &emsp;
+                    <a href={`/restrooms/details/${this.state.restroomId}`}>Cancel</a>
                 </Form>
                 )}
             </Formik>
