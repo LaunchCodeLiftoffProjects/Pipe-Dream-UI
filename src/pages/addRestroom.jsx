@@ -1,159 +1,159 @@
-import axios from 'axios';
-import React from 'react';
+import React from "react";
+import axios from "axios";
+// eslint-disable-next-line
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 
 export default class AddRestroom extends React.Component {
-  //Write HTML inside render function
-  constructor(props){
+  
+  constructor(props) {
     super(props);
+
     this.state = {
       businessName: '',
-      businessType: '',
+      businessType: 'Restaurant',
       address: '',
       isAccessible: false,
       isSingleStall: false,
       isGenderNeutral: false,
       hasChangingTable: false,
       message: null
-    };
+    }
+    this.onSubmit = this.onSubmit.bind(this);
+    this.validate = this.validate.bind(this);
 
-    this.handleBusinessNameChange = this.handleBusinessNameChange.bind(this);
-    this.handleAddressChange = this.handleAddressChange.bind(this);
-    this.handleBusinessTypeChange = this.handleBusinessTypeChange.bind(this);
-    this.handleOnChangeSingleStall = this.handleOnChangeSingleStall.bind(this);
-    this.handleOnChangeIsAccessible = this.handleOnChangeIsAccessible.bind(this);
-    this.handleOnChangeIsGenderNeutral = this.handleOnChangeIsGenderNeutral.bind(this);
-    this.handleOnChangeHasChangingTable = this.handleOnChangeHasChangingTable.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+   
+  validate(values) {
+    let errors = {}
+    if (!values.businessName) {
+      errors.businessName = 'Please enter business name.'
+    } else if (values.businessName.length < 5 || values.businessName.length > 100) {
+      errors.businessName = 'Business Name must be between 5 and 100 characters.'
+    }
 
-  handleBusinessNameChange = (event) => {
-    this.setState({
-      businessName: event.target.value
-    })
+    return errors
   }
 
-  handleAddressChange = (event) => {
-    this.setState({
-      address: event.target.value
-    })
+  refreshRestrooms() {
+    axios.get(`http://localhost:8080/restrooms`)
+    .then(
+      response => {
+        this.setState({restrooms: response.data})
+      }
+    );
   }
 
-  handleBusinessTypeChange = (event) => {
-    this.setState({
-      businessType: event.target.value
-    })
-  }
-
-  handleFocus = (event) => {
-    this.setState({businessType: ''});
-  }
-  handleOnChangeSingleStall = () => {
-    this.setState(initialState => ({
-      isSingleStall: !initialState.isSingleStall
-    }));
-  }
-
-  handleOnChangeIsAccessible = () => {
-    this.setState(initialState => ({
-      isAccessible: !initialState.isAccessible
-    }));
-  }
-
-  handleOnChangeIsGenderNeutral = () => {
-    this.setState(initialState => ({
-      isGenderNeutral: !initialState.isGenderNeutral
-    }));
-  }
-
-  handleOnChangeHasChangingTable = () => {
-    this.setState(initialState => ({
-      hasChangingTable: !initialState.hasChangingTable
-    }));
-  }
-
-  handleSubmit = (event) => {
-    event.preventDefault();
+  onSubmit = (values) => {
     
     const restroom = {
-      businessName: this.state.businessName,
-      address: this.state.address,
-      businessType: this.state.businessType,
-      isAccessible: this.state.isAccessible,
-      isSingleStall: this.state.isSingleStall,
-      isGenderNeutral: this.state.isGenderNeutral,
-      hasChangingTable: this.state.hasChangingTable
-    }
-
-    axios.post(`http://localhost:8080/restrooms`, restroom)
-        .then((response) => {
-            this.setState({message: `Restroom ID: ${response.data.id} added!`});
-        })
-    }
-
-  render() {
-   
-    return (
-      <form onSubmit={this.handleSubmit}>
-      {this.state.message && <div className="alert alert-success">{this.state.message} <a href="/restrooms">See All Restrooms</a></div>}
-        <div>
-          <label>Business Name: </label>
-          <input type="text" name="businessName" 
-          value={this.state.businessName} 
-          onChange={this.handleBusinessNameChange}/>
-        </div>
-
-        <div>
-          <label>Address: </label>
-          <input type="text" name="address" value={this.state.address} onChange={this.handleAddressChange}/>
-        </div>
-
-        <div>
-          <label>Type of Business: </label>
-          <select value={this.state.businessType} 
-          onChange={this.handleBusinessTypeChange}
-          onFocus={this.handleFocus}>
-            <option value="">Please select...</option>
-            <option value="Gas Station">Gas station</option>
-            <option value="Restaurant">Restaurant</option>
-            <option value="Bar">Bar</option>
-            <option value="Retail Store">Retail Store</option>
-            <option value="Other">Other</option> 
-          </select>
-        </div>
-       
-        <div>
-          <label>Single Stall? </label>
-          <input type="checkbox"
-            name="isSingleStall"
-            checked={this.state.isSingleStall}
-            onChange={this.handleOnChangeSingleStall}
-          />
-        </div>
-        <div>
-          <label>Accessible Option? </label>
-          <input type="checkbox"
-            name="isAccessible"
-            checked={this.state.isAccessible}
-            onChange={this.handleOnChangeIsAccessible}
-          />
-        </div>
-        <div>
-          <label>Gender Neutral Option? </label>
-          <input type="checkbox"
-            checked={this.state.isGenderNeutral}
-            onChange={this.handleOnChangeIsGenderNeutral}
-          />
-        </div>
-        <div>
-          <label>Has Changing Table(s)? </label>
-          <input type="checkbox"
-            checked={this.state.hasChangingTable}
-            onChange={this.handleOnChangeHasChangingTable}
-          />
-        </div>
-        <button className="btn btn-success" type="submit">Submit</button>
-      </form>
-    );
+      businessName: values.businessName,
+      businessType: values.businessType,
+      address: values.address,
+      isAccessible: values.isAccessible,
+      isSingleStall: values.isSingleStall,
+      isGenderNeutral: values.isGenderNeutral,
+      hasChangingTable: values.hasChangingTable
     };
+    console.log(restroom);
+   
+    axios.post(`http://localhost:8080/restrooms`, restroom)
+      .then((response)=> {
+        this.setState({message: `Restroom at ${restroom.businessName} added!`});
+      })
   }
+
+
+  //Write HTML inside render function
+  render() {
+    let {businessName, businessType, address, isAccessible, isSingleStall, isGenderNeutral, hasChangingTable} = this.state;
+    
+    if (this.state.id === -1) {
+      return
+    }
+
+    return (
+       <div>
+          { this.state.isLoading &&
+            <div>Loading...please wait!</div>
+          }
+
+    {!this.state.isLoading &&
+      <div>
+        <h1>Add a Restroom</h1>
+        {this.state.message && <div className="alert alert-success">{this.state.message}</div>}
+        <div className="container">
+          <Formik
+            initialValues = {{businessName, businessType, address, isAccessible, isSingleStall, isGenderNeutral, hasChangingTable}}
+            onSubmit={this.onSubmit}
+            validateOnChange={false}
+            validateOnBlur={false}
+            validate={this.validate}
+            enableReinitialize={true}
+          >
+            {
+              (props) => (
+                <Form>
+
+                  <ErrorMessage name="businessName" component="div"
+                    className="alert alert-warning" />
+
+                  <fieldset className="form-group">
+                    <label>Business Name: </label>
+                    <Field className="form-control" type="text" name="businessName" />
+                  </fieldset>
+
+                  <fieldset className="form-group">
+                    <label>Address: </label>
+                    <Field className="form-control" type="text" name="address" />
+                  </fieldset>
+
+                  <fieldset className="form-group">
+                    <label>Business Type: </label>
+                    <Field as="select" className="form-control" name="businessType" >
+                      <option value="Restaurant">Restaurant</option>
+                      <option value="Gas Station">Gas station</option>
+                      <option value="Retail Store">Retail Store</option>
+                      <option value="Other">Other</option>
+                    </Field>
+                  </fieldset>
+
+                  <fieldset>
+                    <label>Single Stall? </label>
+                    <Field className="form-control" type="checkbox" name="isSingleStall" >
+                    </Field>
+                  </fieldset>
+                  
+                  <fieldset>
+                    <label>Accessible Option? </label>
+                    <Field className="form-control" type="checkbox" name="isAccessible" >
+                    </Field>
+                  </fieldset>
+                  
+                  <fieldset>
+                    <label>Gender Neutral Option? </label>
+                    <Field className="form-control" type="checkbox" name="isGenderNeutral" >
+                    </Field>
+                  </fieldset>
+
+                  <fieldset>
+                    <label>Has Changing Table(s)? </label>
+                    <Field className="form-control" type="checkbox" name="hasChangingTable" >
+                    </Field>
+                  </fieldset>
+                  <br />
+                  <button className="btn btn-success" type="submit">Save</button>&emsp;
+                  <a href='/restrooms'>Cancel</a>
+
+                </Form>
+              )
+            }
+          </Formik>
+        </div>
+  
+      </div>
+    }
+    </div>
+    );
+  }
+}

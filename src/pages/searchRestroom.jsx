@@ -26,7 +26,7 @@ export default class RestroomSearch extends React.Component {
   //Get All Restrooms From API
   getRestrooms = async () => {
 
-    let response = await axios.get(`http://localhost:8080/restroom`);
+    let response = await axios.get(`http://localhost:8080/restrooms`);
 
     console.log(`Got ${response.data.length} restrooms`);
 
