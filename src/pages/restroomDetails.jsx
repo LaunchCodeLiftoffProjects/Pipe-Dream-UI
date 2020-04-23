@@ -76,6 +76,11 @@ export default class RestroomDetails extends React.Component {
         this.props.history.push(`/add-review/${this.state.restroomId}`);
       }
 
+      updateReviewClicked(reviewId) {
+        console.log('Update: ' + reviewId);
+        this.props.history.push(`/reviews/update/${reviewId}`);
+      }
+      
       deleteReviewClicked(reviewId) {
         axios.delete(`http://localhost:8080/reviews/${reviewId}`)
         .then(response => {
@@ -163,6 +168,7 @@ export default class RestroomDetails extends React.Component {
                         </td>
 
                         <td>
+                            <button className="btn btn-success" onClick={() => this.updateReviewClicked(review.id)}>Update</button><br /><br />
                             <button className="btn btn-warning" onClick={() => this.deleteReviewClicked(review.id)}>Delete</button>
                         </td>
                   </tr>

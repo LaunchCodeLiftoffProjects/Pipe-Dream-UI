@@ -9,7 +9,7 @@ export default class ReviewComponent extends React.Component {
         super(props);
 
         this.state = {
-            restroomId: this.props.match.params.id,
+            id: this.props.match.params.id,
             businessName: '',
             username: '',
             rating: 1,
@@ -20,6 +20,7 @@ export default class ReviewComponent extends React.Component {
         this.loadData = this.loadData.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.validate = this.validate.bind(this);
+        this.refreshReviews = this.refreshReviews.bind(this);
     }
 
     loadData() {
@@ -30,9 +31,30 @@ export default class ReviewComponent extends React.Component {
               businessName: response.data.businessName
             })
           })
+        axios.get(`http://localhost:8080/reviews/${this.state.id}`)
+          .then(
+            response => {
+              this.setState({
+                username: response.data.username,
+                rating: response.data.rating,
+                reviewText: response.data.reviewText
+              })
+            }
+          
+          )
       }
+
     componentDidMount() {
         this.loadData();
+    }
+
+    refreshReviews() {
+      axios.get(`http://localhost:8080/reviews`)
+      .then(
+        response => {
+          this.setState({reviews: response.data})
+        }
+      );
     }
     
     validate(values) {
@@ -48,7 +70,7 @@ export default class ReviewComponent extends React.Component {
 
     onSubmit (values){
         const review = {
-            restroomId: this.state.restroomId,
+            id: this.state.id,
             businessName: this.state.businessName,
             username: values.username,
             rating: values.rating,
@@ -56,14 +78,23 @@ export default class ReviewComponent extends React.Component {
           };
 
           console.log(review);
+
+          if (this.state.id !== -1){
+            axios.put(`http://localhost:8080/reviews/`, review)
+            .then((response) => {
+              this.setState({message: `Review ID: ${this.state.id} updated!`});
+              this.refreshReviews();
+      
+            })
+          } else {
           axios.post(`http://localhost:8080/reviews/`, review)
             .then((response) => {
-                this.setState({message: `Review added to Restroom ID: ${this.state.restroomId}!  `});
+                this.setState({message: `Review added to ${this.state.businessName}!  `});
             })
-        
+          }
     }
     render() {
-        const {restroomId, businessName, username, rating, reviewText} = this.state;
+        const {id, restroomId, businessName, username, rating, reviewText} = this.state;
         if (this.state.restroomId === -1) {
             return
         }
@@ -74,10 +105,10 @@ export default class ReviewComponent extends React.Component {
           
             {!this.state.isLoading && <div>
                 <h1>Leave a Review for {this.state.businessName}</h1>
-                {this.state.message && <div className="alert alert-success">{this.state.message}<a href={`/restrooms/details/${this.state.restroomId}`}>Return to Restroom</a></div>}
+                {this.state.message && <div className="alert alert-success">{this.state.message} &ensp;<a href={`/restrooms/details/${this.state.restroomId}`}>Return to Restroom</a></div>}
                 <div className="container">
                     <Formik
-                        initialValues = {{restroomId, businessName, username, rating, reviewText}}
+                        initialValues = {{id, restroomId, businessName, username, rating, reviewText}}
                         onSubmit={this.onSubmit}
                         validateOnChange={false}
                         validateOnBlur={false}
@@ -90,8 +121,8 @@ export default class ReviewComponent extends React.Component {
                       className="alert alert-warning" />
                 
                     <fieldset className="form-group">
-                      <label>Restroom ID: </label>
-                      <Field className="form-control" type="text" name="id" value={restroomId} disabled />
+                      <label>Review ID: </label>
+                      <Field className="form-control" type="text" name="id" value={this.state.id} disabled />
                     </fieldset>
 
                     <fieldset className="form-group">
