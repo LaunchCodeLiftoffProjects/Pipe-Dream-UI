@@ -1,13 +1,15 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
+import {Button, Typography }from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { AppBar, Toolbar } from "@material-ui/core";
 
-export const NavBar = ({ color }) => (
-  <AppBar color={color} className="navBar">
+export const NavBar = ({ color, size }) => (
+  <AppBar color={color} size={size} className="navBar">
     <Toolbar>
     <Link to="/">
+      <Typography variant="h4">
         <Button>Home</Button>
+        </Typography>
       </Link>
       <Link to="/search">
         <Button className="navButton">Search</Button>

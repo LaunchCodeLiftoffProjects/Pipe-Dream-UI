@@ -10,7 +10,7 @@ export default class AddRestroom extends React.Component {
 
     this.state = {
       businessName: '',
-      businessType: 'Restaurant',
+      businessType: '',
       address: '',
       isAccessible: false,
       isSingleStall: false,
@@ -100,7 +100,7 @@ export default class AddRestroom extends React.Component {
 
                   <fieldset className="form-group">
                     <label>Business Name: </label>
-                    <Field className="form-control" type="text" name="businessName" />
+                    <Field className="form-control" type="text" name="businessName"/>
                   </fieldset>
 
                   <fieldset className="form-group">
@@ -111,8 +111,10 @@ export default class AddRestroom extends React.Component {
                   <fieldset className="form-group">
                     <label>Business Type: </label>
                     <Field as="select" className="form-control" name="businessType" >
-                      <option value="Restaurant">Restaurant</option>
+                    <option value="">Please select...</option>
                       <option value="Gas Station">Gas station</option>
+                      <option value="Restaurant">Restaurant</option>
+                      <option value="Bar">Bar</option>
                       <option value="Retail Store">Retail Store</option>
                       <option value="Other">Other</option>
                     </Field>

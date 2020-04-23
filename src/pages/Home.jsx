@@ -1,27 +1,34 @@
-import React, { Fragment } from 'react';
-import Button from "@material-ui/core/Button";
+import React, { Component, Fragment } from 'react';
+import {Button, Typography }from "@material-ui/core";
 import { Link } from "react-router-dom";
+import { StylesProvider } from '@material-ui/core/styles';
+import { spacing } from '@material-ui/system';
 
 class Home extends React.Component {
     render() {
       return (
         <Fragment>
-        <div classname= "paragraph"><p>Pipe Dream is a super dope app that everyone should download</p> </div>
+           
+        <div classname= "paragraph" >
+            <Typography color= "primary" variant="h1" size="large">
+            What is Pipe Dream?
+            </Typography>
+            <br/>
+            <Typography color= "gray" variant="h4" display="block" >
+        Pipe Dream is a restroom locator and reviewer app. <br/>
+        It's like Yelp for public restrooms.
+        </Typography>
+        <br/>
+
         <Link to="/search">
-        <Button>Search</Button>
-      </Link>
+        <Button color="secondary" size="large" variant="contained" ml={8}>Search</Button>
+        </Link>
       <Link to="/add-restroom">
-        <Button>Add a Restroom</Button>
+        <Button variant="contained" size="large" ml={8}>Add a Restroom</Button>
       </Link>
+      </div>
+    
       </Fragment>
-      
-        
-        //   <div className="App">
-        //      <img src={PipeDreamLogo} alt="Pipe Dream Logo"/>
-        //   <MuiThemeProvider theme={theme}>
-        //     <Routes />
-        //   </MuiThemeProvider>  
-        // </div>
       
       );
     }
