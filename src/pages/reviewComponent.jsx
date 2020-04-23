@@ -59,7 +59,7 @@ export default class ReviewComponent extends React.Component {
           console.log(review);
           axios.post(`http://localhost:8080/reviews/`, review)
             .then((response) => {
-                this.setState({message: `Review added to Restroom ID: ${this.state.restroomId}!`});
+                this.setState({message: `Review added to Restroom ID: ${this.state.restroomId}.  `});
             })
         
     }
@@ -74,8 +74,8 @@ export default class ReviewComponent extends React.Component {
                 { this.state.isLoading && <div>Loading...please wait!</div>}
           
             {!this.state.isLoading && <div>
-                <h1>Add Review</h1>
-                {this.state.message && <div className="alert alert-success">{this.state.message}</div>}
+                <h1>Leave a Review for {this.state.businessName}</h1>
+                {this.state.message && <div className="alert alert-success">{this.state.message}<a href={`/restrooms/details/${this.state.restroomId}`}>Return to Restroom</a></div>}
                 <div className="container">
                     <Formik
                         initialValues = {{restroomId, businessName, username, rating, reviewText}}
@@ -96,11 +96,6 @@ export default class ReviewComponent extends React.Component {
                     </fieldset>
 
                     <fieldset className="form-group">
-                      <label>Business Name: </label>
-                      <Field className="form-control" type="text" name="businessName" value={businessName} disabled />
-                    </fieldset>
-      
-                    <fieldset className="form-group">
                       <label>Rating: </label>
                       <Field name="rating" as={FormRatings} />
                     </fieldset>
@@ -116,7 +111,7 @@ export default class ReviewComponent extends React.Component {
                     </fieldset>
 
                     <button className="btn btn-success" type="submit">Save</button>
-                    <a href='/restrooms/'>Cancel</a>
+                    <a href={`/restrooms/details/${this.state.restroomId}`}>Cancel</a>
                 </Form>
                 )}
             </Formik>

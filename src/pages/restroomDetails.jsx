@@ -125,7 +125,8 @@ export default class RestroomDetails extends React.Component {
             
               </tbody>
             </table>
-            <button className="btn btn-success" onClick={this.addReviewClicked}>Add Review</button>
+            <button className="btn btn-success" onClick={this.addReviewClicked}>Leave a Review</button>
+            <a href="/restrooms">See All Restrooms</a>
         </div>
 
         <div className="container">
