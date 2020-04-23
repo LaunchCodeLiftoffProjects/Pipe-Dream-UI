@@ -110,7 +110,7 @@ export default class RestroomComponent extends React.Component {
     {!this.state.isLoading &&
       <div>
         <h1>Restroom</h1>
-        {this.state.message && <div className="alert alert-success">{this.state.message}</div>}
+        {this.state.message && <div className="alert alert-success">{this.state.message}&ensp;<a href={`/restrooms/details/${this.state.id}`}>View Restroom</a></div>}
         <div className="container">
           <Formik
             initialValues = {{id, businessName, businessType, address, isAccessible, isSingleStall, isGenderNeutral, hasChangingTable}}
@@ -176,11 +176,9 @@ export default class RestroomComponent extends React.Component {
                     </Field>
                   </fieldset>
                   <br />
-
                   <button className="btn btn-success" type="submit">Save</button>&emsp;
-
                   <a href='/restrooms'>Cancel</a>
-                
+
                 </Form>
               )
             }
