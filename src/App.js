@@ -2,7 +2,7 @@ import "./App.css";
 import { Routes } from "./Router";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import PipeDreamLogo from './pipe-dream-logo.png'
-import React, { Component} from 'react';
+import React, { Component } from 'react';
 
 const theme = createMuiTheme({
   palette: {
