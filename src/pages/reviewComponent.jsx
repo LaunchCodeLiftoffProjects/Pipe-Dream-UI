@@ -33,7 +33,7 @@ export default class ReviewComponent extends React.Component {
 
       await this.setState({businessName: restroom.data.businessName});
 
-      let reviews = await axios.get(`http://localhost:8080/reviews/${this.state.id}`);
+      let reviews = await axios.get(`http://localhost:8080/reviews/restroom/${this.state.id}`);
 
       console.log(`Got ${reviews.data.length} reviews`);
 
