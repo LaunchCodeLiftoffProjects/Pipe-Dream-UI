@@ -72,7 +72,7 @@ export default class ReviewComponent extends React.Component {
 
     onSubmit (values){
         const review = {
-            id: this.state.id,
+            restroomId: this.state.id,
             businessName: this.state.businessName,
             username: values.username,
             rating: values.rating,
