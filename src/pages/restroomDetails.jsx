@@ -27,40 +27,44 @@ export default class RestroomDetails extends React.Component {
 
     }
 
-    loadData() {
-        axios.get(`http://localhost:8080/restrooms/${this.state.restroomId}`)
-        .then(
-          response => {
-            this.setState({
-              businessName: response.data.businessName,
-              businessType: response.data.businessType,
-              address: response.data.address,
-              isAccessible: response.data.isAccessible,
-              isSingleStall: response.data.isSingleStall,
-              isGenderNeutral: response.data.isGenderNeutral,
-              hasChangingTable: response.data.hasChangingTable
-            })
-          })
 
-          axios.get(`http://localhost:8080/reviews`)
-          .then(
-            response => {
-              this.setState({reviews: response.data})
-            }
-          );
-      }
+    loadData = async () => {
+
+      let restroom = await axios.get(`http://localhost:8080/restrooms/${this.state.restroomId}`)
+
+      console.log(`Got restroom: ${JSON.stringify(restroom)}`);
+
+      await this.setState({
+        businessName: restroom.data.businessName,
+        businessType: restroom.data.businessType,
+        address: restroom.data.address,
+        isAccessible: restroom.data.isAccessible,
+        isSingleStall: restroom.data.isSingleStall,
+        isGenderNeutral: restroom.data.isGenderNeutral,
+        hasChangingTable: restroom.data.hasChangingTable
+      });
+
+      let reviews = await axios.get(`http://localhost:8080/reviews/restroom/${this.state.restroomId}`)
+
+      console.log(`Got ${reviews.data.length} reviews`);
+
+      await this.setState({reviews: reviews.data})
+    
+      };
     
       componentDidMount() {
         this.loadData();
       }
 
-      refreshReviews() {
-        axios.get(`http://localhost:8080/reviews`)
-        .then(
-          response => {
-            this.setState({reviews: response.data})
-          }
-        );
+
+ 
+      refreshReviews = async () => {
+        // let response = await axios.get(`http://localhost:8080/reviews/restroom/${this.state.restroomId}`)
+         
+        // console.log(`Got ${response.data.length} reviews`);
+
+        // await this.setState({reviews: response.data});
+
       }
 
       averageReviews() {

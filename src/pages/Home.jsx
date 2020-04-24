@@ -9,7 +9,7 @@ class Home extends React.Component {
       return (
         <Fragment>
            
-        <div classname= "paragraph" >
+        <div className= "paragraph" >
             <Typography color= "primary" variant="h1" size="large">
             What is Pipe Dream?
             </Typography>
