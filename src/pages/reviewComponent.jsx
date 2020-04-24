@@ -23,29 +23,31 @@ export default class ReviewComponent extends React.Component {
         this.refreshReviews = this.refreshReviews.bind(this);
     }
 
-    loadData() {
-        axios.get(`http://localhost:8080/restrooms/${this.state.restroomId}`)
-        .then(
-          response => {
-            this.setState({
-              businessName: response.data.businessName
-            })
-          })
-        axios.get(`http://localhost:8080/reviews/${this.state.id}`)
-          .then(
-            response => {
-              this.setState({
-                username: response.data.username,
-                rating: response.data.rating,
-                reviewText: response.data.reviewText
-              })
-            }
-          
-          )
-      }
+    loadData = async () => {
+
+      console.log(`ID: ${this.props.match.params.id}`)
+
+      let restroom = await axios.get(`http://localhost:8080/restrooms/${this.state.id}`);
+
+      console.log(`Got restroom: ${JSON.stringify(restroom)}`);
+
+      await this.setState({businessName: restroom.data.businessName});
+
+      let reviews = await axios.get(`http://localhost:8080/reviews/${this.state.id}`);
+
+      console.log(`Got ${reviews.data.length} reviews`);
+
+      await this.setState({
+        username: reviews.data.username,
+        rating: reviews.data.rating,
+        reviewText: reviews.data.reviewText
+      })
+
+
+    }
 
     componentDidMount() {
-        this.loadData();
+      this.loadData();
     }
 
     refreshReviews() {
