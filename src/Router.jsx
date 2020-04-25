@@ -22,7 +22,7 @@ export const Routes = () => {
           <Route path="/restrooms/update/:id/" component={RestroomComponent} />
           <Route path="/restrooms/details/:id/" component={RestroomDetails} />
           <Route path="/add-review/:id" component={ReviewComponent} />
-          <Route path="/reviews/update/:id" component={ReviewComponent} />
+          <Route path="/reviews/update/:restroomId/:id" component={ReviewComponent} />
         </div>
       </Layout>
     </Router>

@@ -9,7 +9,8 @@ export default class ReviewComponent extends React.Component {
         super(props);
 
         this.state = {
-            id: this.props.match.params.id,
+            id: null,
+            restroomId: null,
             businessName: '',
             username: '',
             rating: 1,
@@ -25,15 +26,19 @@ export default class ReviewComponent extends React.Component {
 
     loadData = async () => {
 
+      console.log(`Path: ${this.props.location.pathname}`)
+
       console.log(`ID: ${this.props.match.params.id}`)
 
-      let restroom = await axios.get(`http://localhost:8080/restrooms/${this.state.id}`);
+      console.log(this.state.restroomId)
+
+      let restroom = await axios.get(`http://localhost:8080/restrooms/${this.state.restroomId}`);
 
       console.log(`Got restroom: ${JSON.stringify(restroom)}`);
 
       await this.setState({businessName: restroom.data.businessName});
 
-      let reviews = await axios.get(`http://localhost:8080/reviews/restroom/${this.state.id}`);
+      let reviews = await axios.get(`http://localhost:8080/reviews/restroom/${this.state.restroomId}`);
 
       console.log(`Got ${reviews.data.length} reviews`);
 
@@ -46,17 +51,34 @@ export default class ReviewComponent extends React.Component {
 
     }
 
+    setIds = async () => {
+
+      if(this.props.match.params.id){
+        console.log(1)
+        await this.setState({id: this.props.match.params.id})
+
+      };
+
+      if(this.props.match.params.restroomId){
+      console.log(2)
+         await this.setState({restroomId: this.props.match.params.restroomId})
+      }
+
+      console.log(this.state)
+  }
+
     componentDidMount() {
+      this.setIds();
       this.loadData();
     }
 
     refreshReviews() {
-      axios.get(`http://localhost:8080/reviews`)
-      .then(
-        response => {
-          this.setState({reviews: response.data})
-        }
-      );
+      // axios.get(`http://localhost:8080/reviews`)
+      // .then(
+      //   response => {
+      //     this.setState({reviews: response.data})
+      //   }
+      // );
     }
     
     validate(values) {

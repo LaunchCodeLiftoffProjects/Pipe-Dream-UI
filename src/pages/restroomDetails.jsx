@@ -82,7 +82,7 @@ export default class RestroomDetails extends React.Component {
 
       updateReviewClicked(reviewId) {
         console.log('Update: ' + reviewId);
-        this.props.history.push(`/reviews/update/${reviewId}`);
+        this.props.history.push(`/reviews/update/${this.state.restroomId}/${reviewId}`);
       }
       
       deleteReviewClicked(reviewId) {
