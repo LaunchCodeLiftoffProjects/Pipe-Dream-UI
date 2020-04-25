@@ -76,13 +76,13 @@ export default class RestroomDetails extends React.Component {
         this.props.history.push(`/add-review/${this.state.restroomId}`);
       }
 
-      updateReviewClicked(reviewId) {
-        console.log('Update: ' + reviewId);
-        this.props.history.push(`/reviews/update/${reviewId}`);
+      updateReviewClicked(id) {
+        console.log('Update: ' + id);
+        this.props.history.push(`/reviews/update/${id}`);
       }
       
-      deleteReviewClicked(reviewId) {
-        axios.delete(`http://localhost:8080/reviews/${reviewId}`)
+      deleteReviewClicked(id) {
+        axios.delete(`http://localhost:8080/reviews/${id}`)
         .then(response => {
           this.setState({message: `Review deleted!`});
           this.refreshReviews();

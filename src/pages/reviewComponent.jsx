@@ -1,7 +1,6 @@
 import React from "react";
 import axios from "axios";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-// import StarRatings from 'react-star-ratings';
 import FormRatings from 'form-ratings'
 
 export default class ReviewComponent extends React.Component {
@@ -9,7 +8,7 @@ export default class ReviewComponent extends React.Component {
         super(props);
 
         this.state = {
-            id: this.props.match.params.id,
+            restroomId: this.props.match.params.id,
             businessName: '',
             username: '',
             rating: 1,
@@ -20,7 +19,6 @@ export default class ReviewComponent extends React.Component {
         this.loadData = this.loadData.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.validate = this.validate.bind(this);
-        this.refreshReviews = this.refreshReviews.bind(this);
     }
 
     loadData() {
@@ -31,30 +29,10 @@ export default class ReviewComponent extends React.Component {
               businessName: response.data.businessName
             })
           })
-        axios.get(`http://localhost:8080/reviews/${this.state.id}`)
-          .then(
-            response => {
-              this.setState({
-                username: response.data.username,
-                rating: response.data.rating,
-                reviewText: response.data.reviewText
-              })
-            }
-          
-          )
       }
-
     componentDidMount() {
         this.loadData();
-    }
-
-    refreshReviews() {
-      axios.get(`http://localhost:8080/reviews`)
-      .then(
-        response => {
-          this.setState({reviews: response.data})
-        }
-      );
+        console.log(this.state.restroomId);
     }
     
     validate(values) {
@@ -67,34 +45,26 @@ export default class ReviewComponent extends React.Component {
   
       return errors
     }
+  
 
     onSubmit (values){
         const review = {
-            id: this.state.id,
+            restroomId: this.state.restroomId,
             businessName: this.state.businessName,
             username: values.username,
             rating: values.rating,
             reviewText: values.reviewText
           };
 
-          console.log(review);
-
-          if (this.state.id !== -1){
-            axios.put(`http://localhost:8080/reviews/`, review)
-            .then((response) => {
-              this.setState({message: `Review ID: ${this.state.id} updated!`});
-              this.refreshReviews();
-      
-            })
-          } else {
-          axios.post(`http://localhost:8080/reviews/`, review)
-            .then((response) => {
-                this.setState({message: `Review added to ${this.state.businessName}!  `});
-            })
-          }
+        console.log(review);
+        axios.post(`http://localhost:8080/reviews`, review)
+          .then((response) => {
+              this.setState({message: `Review added to ${this.state.businessName}.`});
+          })
+        
     }
     render() {
-        const {id, restroomId, businessName, username, rating, reviewText} = this.state;
+        const {restroomId, businessName, username, rating, reviewText} = this.state;
         if (this.state.restroomId === -1) {
             return
         }
@@ -104,11 +74,11 @@ export default class ReviewComponent extends React.Component {
                 { this.state.isLoading && <div>Loading...please wait!</div>}
           
             {!this.state.isLoading && <div>
-                <h1>Leave a Review for {this.state.businessName}</h1>
-                {this.state.message && <div className="alert alert-success">{this.state.message} &ensp;<a href={`/restrooms/details/${this.state.restroomId}`}>Return to Restroom</a></div>}
+                <h1>Leave a Review</h1>
+                {this.state.message && <div className="alert alert-success">{this.state.message}&ensp;<a href={`/restrooms/details/${this.state.restroomId}`}>Return to Restroom</a></div>}
                 <div className="container">
                     <Formik
-                        initialValues = {{id, restroomId, businessName, username, rating, reviewText}}
+                        initialValues = {{restroomId, businessName, username, rating, reviewText}}
                         onSubmit={this.onSubmit}
                         validateOnChange={false}
                         validateOnBlur={false}
@@ -121,10 +91,15 @@ export default class ReviewComponent extends React.Component {
                       className="alert alert-warning" />
                 
                     <fieldset className="form-group">
-                      <label>Review ID: </label>
-                      <Field className="form-control" type="text" name="id" value={this.state.id} disabled />
+                      <label>Restroom ID: </label>
+                      <Field className="form-control" type="text" name="id" value={restroomId} disabled />
                     </fieldset>
 
+                    <fieldset className="form-group">
+                      <label>Business Name: </label>
+                      <Field className="form-control" type="text" name="businessName" value={businessName} disabled />
+                    </fieldset>
+      
                     <fieldset className="form-group">
                       <label>Rating: </label>
                       <Field name="rating" as={FormRatings} />
@@ -140,8 +115,8 @@ export default class ReviewComponent extends React.Component {
                       <Field className="form-control" type="textarea" name="reviewText" />
                     </fieldset>
 
-                    <button className="btn btn-success" type="submit">Save</button> &emsp;
-                    <a href={`/restrooms/details/${this.state.restroomId}`}>Cancel</a>
+                    <button className="btn btn-success" type="submit">Save</button>
+                    <a href='/restrooms/'>Cancel</a>
                 </Form>
                 )}
             </Formik>
