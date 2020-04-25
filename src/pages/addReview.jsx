@@ -1,9 +1,9 @@
 import React from "react";
 import axios from "axios";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import FormRatings from 'form-ratings'
+import FormRatings from 'form-ratings';
 
-export default class ReviewComponent extends React.Component {
+export default class AddReview extends React.Component {
     constructor(props){
         super(props);
 
@@ -31,17 +31,6 @@ export default class ReviewComponent extends React.Component {
               businessName: response.data.businessName
             })
           })
-        axios.get(`http://localhost:8080/reviews/${this.state.id}`)
-          .then(
-            response => {
-              this.setState({
-                username: response.data.username,
-                rating: response.data.rating,
-                reviewText: response.data.reviewText
-              })
-            }
-          
-          )
       }
 
     componentDidMount() {
@@ -72,6 +61,7 @@ export default class ReviewComponent extends React.Component {
 
         const review = {
             id: this.state.id,
+            restroomId: this.props.match.params.restroomId,
             businessName: this.state.businessName,
             username: values.username,
             rating: values.rating,
@@ -80,21 +70,14 @@ export default class ReviewComponent extends React.Component {
 
           console.log(review);
 
-          if (this.state.id !== -1){
-      
-            axios.put(`http://localhost:8080/reviews/${this.state.id}`, review)
-            .then((response) => {
-              this.setState({message: `Review ID: ${this.state.id} updated!`});
-              this.refreshReviews();
-      
-            })
-          } else {
           axios.post(`http://localhost:8080/reviews/`, review)
             .then((response) => {
                 this.setState({message: `Review added to ${this.state.businessName}!  `});
             })
-          }
+          
     }
+
+
     render() {
         const {id, restroomId, businessName, username, rating, reviewText} = this.state;
         if (this.state.restroomId === -1) {
