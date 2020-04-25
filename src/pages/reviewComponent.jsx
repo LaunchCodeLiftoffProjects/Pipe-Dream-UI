@@ -31,7 +31,7 @@ export default class ReviewComponent extends React.Component {
               businessName: response.data.businessName
             })
           })
-        axios.get(`http://localhost:8080/reviews/${this.state.id}`)
+        axios.get(`http://localhost:8080/reviews/${this.state.restroomId}/${this.state.id}`)
           .then(
             response => {
               this.setState({
@@ -49,7 +49,7 @@ export default class ReviewComponent extends React.Component {
     }
 
     refreshReviews() {
-      axios.get(`http://localhost:8080/reviews`)
+      axios.get(`http://localhost:8080/reviews/${this.state.restroomId}`)
       .then(
         response => {
           this.setState({reviews: response.data})
@@ -79,21 +79,14 @@ export default class ReviewComponent extends React.Component {
           };
 
           console.log(review);
-
-          if (this.state.id !== -1){
       
-            axios.put(`http://localhost:8080/reviews/${this.state.id}`, review)
+          axios.put(`http://localhost:8080/reviews/${this.state.restroomId}/${this.state.id}`, review)
             .then((response) => {
               this.setState({message: `Review ID: ${this.state.id} updated!`});
               this.refreshReviews();
       
             })
-          } else {
-          axios.post(`http://localhost:8080/reviews/`, review)
-            .then((response) => {
-                this.setState({message: `Review added to ${this.state.businessName}!  `});
-            })
-          }
+   
     }
     render() {
         const {id, restroomId, businessName, username, rating, reviewText} = this.state;
@@ -106,7 +99,7 @@ export default class ReviewComponent extends React.Component {
                 { this.state.isLoading && <div>Loading...please wait!</div>}
           
             {!this.state.isLoading && <div>
-                <h1>Leave a Review for {this.state.businessName}</h1>
+                <h1>Update Review for {this.state.businessName}</h1>
                 {this.state.message && <div className="alert alert-success">{this.state.message} &ensp;<a href={`/restrooms/details/${this.state.restroomId}`}>Return to Restroom</a></div>}
                 <div className="container">
                     <Formik
@@ -122,11 +115,11 @@ export default class ReviewComponent extends React.Component {
                     <ErrorMessage name="username" component="div"
                       className="alert alert-warning" />
                 
-                {// <fieldset className="form-group">
-                    //   <label>Review ID: </label>
-                    //   <Field className="form-control" type="text" name="id" value={this.state.id} disabled />
-                    // </fieldset>
-                }
+                <fieldset className="form-group">
+                      <label>Review ID: </label>
+                      <Field className="form-control" type="text" name="id" value={this.state.id} disabled />
+                    </fieldset>
+            
 
                     <fieldset className="form-group">
                       <label>Rating: </label>

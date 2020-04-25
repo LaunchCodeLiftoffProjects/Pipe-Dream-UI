@@ -70,7 +70,7 @@ export default class AddReview extends React.Component {
 
           console.log(review);
 
-          axios.post(`http://localhost:8080/reviews/`, review)
+          axios.post(`http://localhost:8080/reviews/${this.state.restroomId}`, review)
             .then((response) => {
                 this.setState({message: `Review added to ${this.state.businessName}!  `});
             })
