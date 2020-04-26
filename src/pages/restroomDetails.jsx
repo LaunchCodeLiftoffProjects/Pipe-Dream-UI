@@ -42,7 +42,7 @@ export default class RestroomDetails extends React.Component {
             })
           })
 
-          axios.get(`http://localhost:8080/reviews`)
+          axios.get(`http://localhost:8080/reviews/restroom/${this.state.restroomId}`)
           .then(
             response => {
               this.setState({reviews: response.data})
@@ -55,7 +55,7 @@ export default class RestroomDetails extends React.Component {
       }
 
       refreshReviews() {
-        axios.get(`http://localhost:8080/reviews`)
+        axios.get(`http://localhost:8080/reviews/restroom/${this.state.restroomId}`)
         .then(
           response => {
             this.setState({reviews: response.data})
@@ -76,13 +76,13 @@ export default class RestroomDetails extends React.Component {
         this.props.history.push(`/add-review/${this.state.restroomId}`);
       }
 
-      updateReviewClicked(reviewId) {
-        console.log('Update: ' + reviewId);
-        this.props.history.push(`/reviews/update/${reviewId}`);
+      updateReviewClicked(id) {
+        console.log('Update: ' + id);
+        this.props.history.push(`/reviews/update/${this.state.restroomId}/${id}`);
       }
       
-      deleteReviewClicked(reviewId) {
-        axios.delete(`http://localhost:8080/reviews/${reviewId}`)
+      deleteReviewClicked(id) {
+        axios.delete(`http://localhost:8080/reviews/${id}`)
         .then(response => {
           this.setState({message: `Review deleted!`});
           this.refreshReviews();

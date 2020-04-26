@@ -12,7 +12,7 @@
     "form-ratings": "^0.3.0",
     "formik": "^2.1.4",
     "google-maps-react": "^2.0.2",
-    "react": "^16.13.0",
+    "react": "^16.13.1",
     "react-dom": "^16.13.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",

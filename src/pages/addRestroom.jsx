@@ -1,6 +1,5 @@
 import React from "react";
 import axios from "axios";
-// eslint-disable-next-line
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 
 export default class AddRestroom extends React.Component {
