@@ -80,7 +80,8 @@ export default class AddRestroom extends React.Component {
     {!this.state.isLoading &&
       <div>
         <h1>Add a Restroom</h1>
-        {this.state.message && <div className="alert alert-success">{this.state.message}</div>}
+        {this.state.message && <div className="alert alert-success">{this.state.message}&ensp;
+        <a href="/restrooms">See All Restrooms</a></div>}
         <div className="container">
           <Formik
             initialValues = {{businessName, businessType, address, isAccessible, isSingleStall, isGenderNeutral, hasChangingTable}}
