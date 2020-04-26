@@ -72,6 +72,7 @@ export default class ReviewComponent extends React.Component {
 
         const review = {
             id: this.state.id,
+            restroomId: this.state.restroomId,
             businessName: this.state.businessName,
             username: values.username,
             rating: values.rating,
@@ -80,7 +81,7 @@ export default class ReviewComponent extends React.Component {
 
           console.log(review);
 
-          if (this.state.id !== -1){
+          // if (this.state.id !== -1){
       
             axios.put(`http://localhost:8080/reviews/`, review)
             .then((response) => {
@@ -88,12 +89,12 @@ export default class ReviewComponent extends React.Component {
               this.refreshReviews();
       
             })
-          } else {
-          axios.post(`http://localhost:8080/reviews/`, review)
-            .then((response) => {
-                this.setState({message: `Review added to ${this.state.businessName}!  `});
-            })
-          }
+          // } else {
+          // axios.post(`http://localhost:8080/reviews/`, review)
+          //   .then((response) => {
+          //       this.setState({message: `Review added to ${this.state.businessName}!  `});
+          //   })
+          // }
     }
     render() {
         const {id, restroomId, businessName, username, rating, reviewText} = this.state;
