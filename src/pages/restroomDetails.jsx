@@ -42,7 +42,7 @@ export default class RestroomDetails extends React.Component {
             })
           })
 
-          axios.get(`http://localhost:8080/reviews`)
+          axios.get(`http://localhost:8080/reviews/restroom/${this.state.restroomId}`)
           .then(
             response => {
               this.setState({reviews: response.data})
@@ -55,7 +55,7 @@ export default class RestroomDetails extends React.Component {
       }
 
       refreshReviews() {
-        axios.get(`http://localhost:8080/reviews`)
+        axios.get(`http://localhost:8080/reviews/restroom/${this.state.restroomId}`)
         .then(
           response => {
             this.setState({reviews: response.data})
