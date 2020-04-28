@@ -30,7 +30,7 @@ this.state = {
         <Map
           google={this.props.google}
           zoom={8}
-          style={mapStyles}
+          // style={mapStyles}
           initialCenter={{ lat: 38.592220, lng: -90.295372}}
         >
           {this.displayMarkers()}
@@ -43,8 +43,10 @@ export default GoogleApiWrapper({
   apiKey: 'AIzaSyDtqyBXrriWv5qDusJnG3vZa0dH7jy07yU'
 })(MapComponent);
 
-const mapStyles = {
-  width: '75%',
-  height: '75%',
-};
+// const mapStyles = {
+//   width: '50%',
+//   height: '50%',
+  
+  
+// };
 
