@@ -1,5 +1,9 @@
 import React from "react";
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
+import Geocode from "react-geocode";
+import Autocomplete from 'react-google-autocomplete';
+Geocode.setApiKey( 'AIzaSyDtqyBXrriWv5qDusJnG3vZa0dH7jy07yU' );
+Geocode.enableDebug();
 
 
 
@@ -13,6 +17,15 @@ this.state = {
     {latitude: 38.591511, longitude: -90.293442},
     {latitude: 38.593860, longitude: -90.293510}]
 }
+  // mapPosition: {
+  //   lat: this.props.center.lat,
+  //   lng: this.props.center.lng
+  // },
+  // markerPosition: {
+  //   lat: this.props.center.lat,
+  //   lng: this.props.center.lng
+  // }
+// }
   }
 
   displayMarkers = () => {
