@@ -1,5 +1,7 @@
 import React from "react";
 import axios from "axios";
+// import Map from "./components/map"; 
+import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 
 export default class RestroomSearch extends React.Component {
   constructor(props) {
@@ -159,9 +161,9 @@ export default class RestroomSearch extends React.Component {
 
     return (
       <div>
-
-        {/* Search Form */}
-
+      <Map></Map>
+        /* Search Form */
+        
         <form onSubmit={this.handleSubmit.bind(this)}
         class="form">
           <h1> Search for a Restroom:</h1>
