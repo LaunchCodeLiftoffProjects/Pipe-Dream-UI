@@ -7,15 +7,13 @@ Geocode.enableDebug();
 
 
 
+
 export class MapComponent extends React.Component {
   constructor(props){
     super(props);
 
 this.state = {
-  businesses: [{lat: 38.592220, lng: -90.295372},
-    {latitude: 38.592220, longitude: -90.295372},
-    {latitude: 38.591511, longitude: -90.293442},
-    {latitude: 38.593860, longitude: -90.293510}]
+  businesses: this.props.businesses,
 }
   // mapPosition: {
   //   lat: this.props.center.lat,
