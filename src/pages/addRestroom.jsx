@@ -30,6 +30,11 @@ export default class AddRestroom extends React.Component {
     } else if (values.businessName.length < 5 || values.businessName.length > 100) {
       errors.businessName = 'Business Name must be between 5 and 100 characters.'
     }
+    if (!values.address) {
+      errors.address = 'Please enter address.'
+    } else if (values.address.length < 5 || values.address.length > 200) {
+      errors.address = 'Address must be between 5 and 200 characters.'
+    }
 
     return errors
   }
@@ -96,6 +101,8 @@ export default class AddRestroom extends React.Component {
                 <Form>
 
                   <ErrorMessage name="businessName" component="div"
+                    className="alert alert-warning" />
+                  <ErrorMessage name="address" component="div"
                     className="alert alert-warning" />
 
                   <fieldset className="form-group">
