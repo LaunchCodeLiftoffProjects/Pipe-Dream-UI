@@ -21,7 +21,7 @@ class Home extends React.Component {
         <br/>
 
         <Link to="/search">
-        <Button color="secondary" size="large" variant="contained" ml={8}>Search</Button>
+        <Button color="secondary" size="large" variant="contained" ml={8}>Search</Button>&emsp;
         </Link>
       <Link to="/add-restroom">
         <Button variant="contained" size="large" ml={8}>Add a Restroom</Button>

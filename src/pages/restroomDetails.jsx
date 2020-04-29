@@ -104,7 +104,8 @@ export default class RestroomDetails extends React.Component {
         <div className="container">
             <div className="container">
                 <h1>{restroom.businessName}</h1>
-                <Stars value={this.averageReviews()} color="gold" /> <br />
+                <Stars value={this.averageReviews()} color="gold" /> <br /> 
+                {this.state.reviews.length > 0 && <div> ({this.averageReviews().toFixed(1)}/5 stars, {this.state.reviews.length} ratings)<br /></div>}
                 {this.state.message && <div className="alert alert-success">{this.state.message}</div>}
             <div className="container">
             <table className="table table-striped">
@@ -149,7 +150,7 @@ export default class RestroomDetails extends React.Component {
         <br />
 
         <div className="container">
-          <h1>Reviews</h1>
+          <h1>Reviews ({this.state.reviews.length})</h1>
 
             <table className="table">
                 <tbody>
