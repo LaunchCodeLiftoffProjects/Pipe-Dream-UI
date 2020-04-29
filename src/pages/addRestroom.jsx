@@ -1,7 +1,10 @@
 import React from "react";
 import axios from "axios";
 // eslint-disable-next-line
+import Map from "../components/map"; 
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import PlacesAutocomplete from 'react-places-autocomplete';
+import { geocodeByAddress, geocodeByPlaceId, getLatLng,} from 'react-places-autocomplete';
 
 export default class AddRestroom extends React.Component {
   
@@ -16,12 +19,23 @@ export default class AddRestroom extends React.Component {
       isSingleStall: false,
       isGenderNeutral: false,
       hasChangingTable: false,
-      message: null
+      message: null,
+      businesses: []
     }
     this.onSubmit = this.onSubmit.bind(this);
     this.validate = this.validate.bind(this);
 
   }
+
+  handleSelect = address => {
+    geocodeByAddress(address)
+      .then(results => getLatLng(results[0]))
+      .then(latLng => console.log('Success', latLng))
+      .catch(error => console.error('Error', error));
+  };
+  handleChange = address => {
+    this.setState({ address });
+  };
 
    
   validate(values) {
@@ -105,7 +119,46 @@ export default class AddRestroom extends React.Component {
 
                   <fieldset className="form-group">
                     <label>Address: </label>
-                    <Field className="form-control" type="text" name="address" />
+                    {/* <Field  /> */}
+                    <PlacesAutocomplete className="form-control" type="text" name="address"
+                   value={this.state.address}
+                   onChange={this.handleChange}
+                    onSelect={this.handleSelect}
+      >
+        {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+          <div>
+            <input
+              {...getInputProps({
+                placeholder: 'Search Places ...',
+                className: 'location-search-input',
+              })}
+            />
+            <div className="autocomplete-dropdown-container">
+              {loading && <div>Loading...</div>}
+              {suggestions.map(suggestion => {
+                const className = suggestion.active
+                  ? 'suggestion-item--active'
+                  : 'suggestion-item';
+                // inline style for demonstration purpose
+                const style = suggestion.active
+                  ? { backgroundColor: '#fafafa', cursor: 'pointer' }
+                  : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                return (
+                  <div
+                    {...getSuggestionItemProps(suggestion, {
+                      className,
+                      style,
+                    })}
+                  >
+                    <span>{suggestion.description}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+      </PlacesAutocomplete>
+  
                   </fieldset>
 
                   <fieldset className="form-group">
