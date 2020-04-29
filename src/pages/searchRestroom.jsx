@@ -107,6 +107,11 @@ export default class RestroomSearch extends React.Component {
     event.preventDefault();
   };
 
+  detailsClicked(id) {
+    this.props.history.push(`/restrooms/details/${id}`);
+  }
+
+
   //Filter Restrooms by Search Parameter entered by User
   filterRestrooms = () => {
     let filteredRestrooms = this.state.restrooms;
@@ -250,7 +255,7 @@ export default class RestroomSearch extends React.Component {
                     <td>
                       <button>Directions</button>
                       <br />
-                      <button>Details</button>
+                      <button onClick={() => this.detailsClicked(restroom.id)}>Details</button>
                     </td>
                     <td>
                   
