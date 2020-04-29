@@ -191,10 +191,10 @@ export default class RestroomSearch extends React.Component {
           onChange={this.updateBusinessType}  
           onFocus={this.handleFocus}>
             <option value="">Please select...</option>
-            <option value="Gas Station">Gas station</option>
+            <option value="Gas station">Gas station</option>
             <option value="Restaurant">Restaurant</option>
             <option value="Bar">Bar</option>
-            <option value="Retail Store">Retail Store</option>
+            <option value="Retail store">Retail store</option>
             <option value="Other">Other</option> 
           </select>
           </div>
