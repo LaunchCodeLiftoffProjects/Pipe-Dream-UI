@@ -1,10 +1,10 @@
 import React from "react";
 import axios from "axios";
 // eslint-disable-next-line
-import Map from "../components/map"; 
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import PlacesAutocomplete from 'react-places-autocomplete';
 import { geocodeByAddress, geocodeByPlaceId, getLatLng,} from 'react-places-autocomplete';
+
 
 export default class AddRestroom extends React.Component {
   
@@ -37,7 +37,36 @@ export default class AddRestroom extends React.Component {
     this.setState({ address });
   };
 
-   
+  handleScriptLoad = () => {
+    // Declare Options For Autocomplete
+    const options = {
+      types: ['(cities)'],
+    };
+
+     // Avoid paying for data that you don't need by restricting the set of
+    // place fields that are returned to just the address components and formatted
+    // address.
+    this.autocomplete.setFields(['address_components', 'formatted_address']);
+
+    // Fire Event when a suggested name is selected
+    this.autocomplete.addListener('place_changed', this.handlePlaceSelect);
+  }
+  handlePlaceSelect = () => {
+
+    // Extract City From Address Object
+    const addressObject = this.autocomplete.getPlace();
+    const address = addressObject.address_components;
+
+    // Check if address is valid
+    if (address) {
+      // Set State
+      this.setState(
+        {
+          address: addressObject.formatted_address,
+        }
+      );
+    }
+  }
   validate(values) {
     let errors = {}
     if (!values.businessName) {
@@ -99,6 +128,7 @@ export default class AddRestroom extends React.Component {
         <div className="container">
           <Formik
             initialValues = {{businessName, businessType, address, isAccessible, isSingleStall, isGenderNeutral, hasChangingTable}}
+            onLoad={this.handleScriptLoad}
             onSubmit={this.onSubmit}
             validateOnChange={false}
             validateOnBlur={false}
@@ -117,13 +147,16 @@ export default class AddRestroom extends React.Component {
                     <Field className="form-control" type="text" name="businessName"/>
                   </fieldset>
 
-                  <fieldset className="form-group">
+                  {/* <fieldset className="form-group"> */}
                     <label>Address: </label>
                     {/* <Field  /> */}
-                    <PlacesAutocomplete className="form-control" type="text" name="address"
-                   value={this.state.address}
-                   onChange={this.handleChange}
-                    onSelect={this.handleSelect}
+                    <PlacesAutocomplete 
+                    className="form-control" 
+                    type="text"
+                    name="address" 
+                    value={this.state.address}
+                    onChange={this.handleChange}
+                    onClick={this.handleSelect}
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
           <div>
@@ -131,6 +164,7 @@ export default class AddRestroom extends React.Component {
               {...getInputProps({
                 placeholder: 'Search Places ...',
                 className: 'location-search-input',
+        
               })}
             />
             <div className="autocomplete-dropdown-container">
@@ -159,7 +193,8 @@ export default class AddRestroom extends React.Component {
         )}
       </PlacesAutocomplete>
   
-                  </fieldset>
+  
+                  {/* </fieldset> */}
 
                   <fieldset className="form-group">
                     <label>Business Type: </label>
