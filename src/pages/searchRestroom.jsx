@@ -123,6 +123,11 @@ export default class RestroomSearch extends React.Component {
     event.preventDefault();
   };
 
+  detailsClicked(id) {
+    this.props.history.push(`/restrooms/details/${id}`);
+  }
+
+
   //Filter Restrooms by Search Parameter entered by User
   filterRestrooms = () => {
     let filteredRestrooms = this.state.restrooms;
@@ -251,10 +256,10 @@ export default class RestroomSearch extends React.Component {
           onChange={this.updateBusinessType}  
           onFocus={this.handleFocus}>
             <option value="">Please select...</option>
-            <option value="Gas Station">Gas station</option>
+            <option value="Gas station">Gas station</option>
             <option value="Restaurant">Restaurant</option>
             <option value="Bar">Bar</option>
-            <option value="Retail Store">Retail Store</option>
+            <option value="Retail store">Retail store</option>
             <option value="Other">Other</option> 
           </select>
           </div>
@@ -317,7 +322,7 @@ export default class RestroomSearch extends React.Component {
                     <td>
                       <button>Directions</button>
                       <br />
-                      <button>Details</button>
+                      <button onClick={() => this.detailsClicked(restroom.id)}>Details</button>
                     </td>
                     <td>
                   

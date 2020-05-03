@@ -52,6 +52,14 @@ export default class RestroomComponent extends React.Component {
     } else if (values.businessName.length < 5 || values.businessName.length > 100) {
       errors.businessName = 'Business Name must be between 5 and 100 characters.'
     }
+    if (!values.address) {
+      errors.address = 'Please enter address.'
+    } else if (values.address.length < 5 || values.address.length > 200) {
+      errors.address = 'Address must be between 5 and 200 characters.'
+    }
+    if (!values.businessType) {
+      errors.businessType = 'Please select type of business.'
+    }
 
     return errors
   }
@@ -110,7 +118,9 @@ export default class RestroomComponent extends React.Component {
     {!this.state.isLoading &&
       <div>
         <h1>Restroom</h1>
-        {this.state.message && <div className="alert alert-success">{this.state.message}</div>}
+        {this.state.message && <div className="alert alert-success">{this.state.message}&ensp;
+          <a href={`/restrooms/details/${this.state.id}`}>View Restroom</a>&ensp;
+          <a href="/restrooms">See All Restrooms</a></div>}
         <div className="container">
           <Formik
             initialValues = {{id, businessName, businessType, address, isAccessible, isSingleStall, isGenderNeutral, hasChangingTable}}
@@ -125,6 +135,10 @@ export default class RestroomComponent extends React.Component {
                 <Form>
 
                   <ErrorMessage name="businessName" component="div"
+                    className="alert alert-warning" />
+                  <ErrorMessage name="address" component="div"
+                    className="alert alert-warning" />
+                  <ErrorMessage name="businessType" component="div"
                     className="alert alert-warning" />
 
                   <fieldset className="form-group">
@@ -145,25 +159,27 @@ export default class RestroomComponent extends React.Component {
                   <fieldset className="form-group">
                     <label>Business Type: </label>
                     <Field as="select" className="form-control" name="businessType" >
+                      <option value="">Please select...</option>
+                      <option value="Gas station">Gas station</option>
                       <option value="Restaurant">Restaurant</option>
-                      <option value="Gas Station">Gas station</option>
-                      <option value="Retail Store">Retail Store</option>
+                      <option value="Bar">Bar</option>
+                      <option value="Retail store">Retail store</option>
                       <option value="Other">Other</option>
                     </Field>
                   </fieldset>
-
+             
                   <fieldset>
                     <label>Single Stall? </label>
                     <Field className="form-control" type="checkbox" name="isSingleStall" >
                     </Field>
                   </fieldset>
-                  
+               
                   <fieldset>
                     <label>Accessible Option? </label>
                     <Field className="form-control" type="checkbox" name="isAccessible" >
                     </Field>
                   </fieldset>
-                  
+    
                   <fieldset>
                     <label>Gender Neutral Option? </label>
                     <Field className="form-control" type="checkbox" name="isGenderNeutral" >
@@ -178,7 +194,7 @@ export default class RestroomComponent extends React.Component {
                   <br />
                   <button className="btn btn-success" type="submit">Save</button>&emsp;
                   <a href='/restrooms'>Cancel</a>
-                
+
                 </Form>
               )
             }

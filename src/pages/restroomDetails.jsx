@@ -42,7 +42,7 @@ export default class RestroomDetails extends React.Component {
             })
           })
 
-          axios.get(`http://localhost:8080/reviews`)
+          axios.get(`http://localhost:8080/reviews/restroom/${this.state.restroomId}`)
           .then(
             response => {
               this.setState({reviews: response.data})
@@ -55,7 +55,7 @@ export default class RestroomDetails extends React.Component {
       }
 
       refreshReviews() {
-        axios.get(`http://localhost:8080/reviews`)
+        axios.get(`http://localhost:8080/reviews/restroom/${this.state.restroomId}`)
         .then(
           response => {
             this.setState({reviews: response.data})
@@ -76,8 +76,13 @@ export default class RestroomDetails extends React.Component {
         this.props.history.push(`/add-review/${this.state.restroomId}`);
       }
 
-      deleteReviewClicked(reviewId) {
-        axios.delete(`http://localhost:8080/reviews/${reviewId}`)
+      updateReviewClicked(id) {
+        console.log('Update: ' + id);
+        this.props.history.push(`/reviews/update/${this.state.restroomId}/${id}`);
+      }
+      
+      deleteReviewClicked(id) {
+        axios.delete(`http://localhost:8080/reviews/${id}`)
         .then(response => {
           this.setState({message: `Review deleted!`});
           this.refreshReviews();
@@ -99,7 +104,8 @@ export default class RestroomDetails extends React.Component {
         <div className="container">
             <div className="container">
                 <h1>{restroom.businessName}</h1>
-                <Stars value={this.averageReviews()} color="gold" /> <br />
+                <Stars value={this.averageReviews()} color="gold" /> <br /> 
+                {this.state.reviews.length > 0 && <div> ({this.averageReviews().toFixed(1)}/5 stars, {this.state.reviews.length} ratings)<br /></div>}
                 {this.state.message && <div className="alert alert-success">{this.state.message}</div>}
             <div className="container">
             <table className="table table-striped">
@@ -144,7 +150,7 @@ export default class RestroomDetails extends React.Component {
         <br />
 
         <div className="container">
-          <h1>Reviews</h1>
+          <h1>Reviews ({this.state.reviews.length})</h1>
 
             <table className="table">
                 <tbody>
@@ -163,6 +169,7 @@ export default class RestroomDetails extends React.Component {
                         </td>
 
                         <td>
+                            <button className="btn btn-success" onClick={() => this.updateReviewClicked(review.id)}>Update</button><br /><br />
                             <button className="btn btn-warning" onClick={() => this.deleteReviewClicked(review.id)}>Delete</button>
                         </td>
                   </tr>

@@ -1,6 +1,5 @@
 import React from "react";
 import axios from "axios";
-// eslint-disable-next-line
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import PlacesAutocomplete from 'react-places-autocomplete';
 import { geocodeByAddress, geocodeByPlaceId, getLatLng,} from 'react-places-autocomplete';
@@ -40,8 +39,15 @@ export default class AddRestroom extends React.Component {
   handleScriptLoad = () => {
     // Declare Options For Autocomplete
     const options = {
-      types: ['(cities)'],
+      types: ['(establishment)'],
     };
+
+      // Initialize Google Autocomplete
+    /*global google*/ // To disable any eslint 'google not defined' errors
+    this.autocomplete = new google.maps.places.Autocomplete(
+      document.getElementById('autocomplete'),
+      options,
+    );
 
      // Avoid paying for data that you don't need by restricting the set of
     // place fields that are returned to just the address components and formatted
@@ -73,6 +79,14 @@ export default class AddRestroom extends React.Component {
       errors.businessName = 'Please enter business name.'
     } else if (values.businessName.length < 5 || values.businessName.length > 100) {
       errors.businessName = 'Business Name must be between 5 and 100 characters.'
+    }
+    if (!values.address) {
+      errors.address = 'Please enter address.'
+    } else if (values.address.length < 5 || values.address.length > 200) {
+      errors.address = 'Address must be between 5 and 200 characters.'
+    }
+    if (!values.businessType) {
+      errors.businessType = 'Please select type of business.'
     }
 
     return errors
@@ -124,7 +138,8 @@ export default class AddRestroom extends React.Component {
     {!this.state.isLoading &&
       <div>
         <h1>Add a Restroom</h1>
-        {this.state.message && <div className="alert alert-success">{this.state.message}</div>}
+        {this.state.message && <div className="alert alert-success">{this.state.message}&ensp;
+        <a href="/restrooms">See All Restrooms</a></div>}
         <div className="container">
           <Formik
             initialValues = {{businessName, businessType, address, isAccessible, isSingleStall, isGenderNeutral, hasChangingTable}}
@@ -140,6 +155,10 @@ export default class AddRestroom extends React.Component {
                 <Form>
 
                   <ErrorMessage name="businessName" component="div"
+                    className="alert alert-warning" />
+                  <ErrorMessage name="address" component="div"
+                    className="alert alert-warning" />
+                  <ErrorMessage name="businessType" component="div"
                     className="alert alert-warning" />
 
                   <fieldset className="form-group">
@@ -200,10 +219,10 @@ export default class AddRestroom extends React.Component {
                     <label>Business Type: </label>
                     <Field as="select" className="form-control" name="businessType" >
                     <option value="">Please select...</option>
-                      <option value="Gas Station">Gas station</option>
+                      <option value="Gas station">Gas station</option>
                       <option value="Restaurant">Restaurant</option>
                       <option value="Bar">Bar</option>
-                      <option value="Retail Store">Retail Store</option>
+                      <option value="Retail store">Retail store</option>
                       <option value="Other">Other</option>
                     </Field>
                   </fieldset>

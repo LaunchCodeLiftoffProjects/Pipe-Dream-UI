@@ -1,9 +1,9 @@
 import React from "react";
 import axios from "axios";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import FormRatings from 'form-ratings'
+import FormRatings from 'form-ratings';
 
-export default class ReviewComponent extends React.Component {
+export default class AddReview extends React.Component {
     constructor(props){
         super(props);
 
@@ -31,17 +31,6 @@ export default class ReviewComponent extends React.Component {
               businessName: response.data.businessName
             })
           })
-        axios.get(`http://localhost:8080/reviews/${this.state.id}`)
-          .then(
-            response => {
-              this.setState({
-                username: response.data.username,
-                rating: response.data.rating,
-                reviewText: response.data.reviewText
-              })
-            }
-          
-          )
       }
 
     componentDidMount() {
@@ -49,7 +38,7 @@ export default class ReviewComponent extends React.Component {
     }
 
     refreshReviews() {
-      axios.get(`http://localhost:8080/reviews/`)
+      axios.get(`http://localhost:8080/reviews`)
       .then(
         response => {
           this.setState({reviews: response.data})
@@ -72,7 +61,7 @@ export default class ReviewComponent extends React.Component {
 
         const review = {
             id: this.state.id,
-            restroomId: this.state.restroomId,
+            restroomId: this.props.match.params.restroomId,
             businessName: this.state.businessName,
             username: values.username,
             rating: values.rating,
@@ -81,16 +70,16 @@ export default class ReviewComponent extends React.Component {
 
           console.log(review);
 
-          axios.put(`http://localhost:8080/reviews/`, review)
+          axios.post(`http://localhost:8080/reviews/`, review)
             .then((response) => {
-              this.setState({message: `Review ID: ${this.state.id} updated!`});
-              this.refreshReviews();
-      
+                this.setState({message: `Review added to ${this.state.businessName}!  `});
             })
+          
     }
-    render() {
-        let {id, username, rating, reviewText} = this.state;
 
+
+    render() {
+        const {id, restroomId, businessName, username, rating, reviewText} = this.state;
         if (this.state.restroomId === -1) {
             return
         }
@@ -100,11 +89,11 @@ export default class ReviewComponent extends React.Component {
                 { this.state.isLoading && <div>Loading...please wait!</div>}
           
             {!this.state.isLoading && <div>
-                <h1>Update Review for {this.state.businessName}</h1>
+                <h1>Leave a Review for {this.state.businessName}</h1>
                 {this.state.message && <div className="alert alert-success">{this.state.message} &ensp;<a href={`/restrooms/details/${this.state.restroomId}`}>Return to Restroom</a></div>}
                 <div className="container">
                     <Formik
-                        initialValues = {{id, username, rating, reviewText}}
+                        initialValues = {{id, restroomId, businessName, username, rating, reviewText}}
                         onSubmit={this.onSubmit}
                         validateOnChange={false}
                         validateOnBlur={false}
@@ -116,25 +105,26 @@ export default class ReviewComponent extends React.Component {
                     <ErrorMessage name="username" component="div"
                       className="alert alert-warning" />
                 
-                <fieldset className="form-group">
-                      <label>Review ID: </label>
-                      <Field className="form-control" type="text" name="id" value={this.state.id} disabled />
-                    </fieldset>
+                {// <fieldset className="form-group">
+                    //   <label>Review ID: </label>
+                    //   <Field className="form-control" type="text" name="id" value={this.state.id} disabled />
+                    // </fieldset>
+                }
 
-                  <fieldset className="form-group">
-                    <label>Username: </label>
-                    <Field className="form-control" type="text" name="username" />
-                  </fieldset>
-                    
-                  <fieldset className="form-group">
-                    <label>Rating: </label>
-                    <Field name="rating" as={FormRatings} />
-                  </fieldset>
+                    <fieldset className="form-group">
+                      <label>Rating: </label>
+                      <Field name="rating" as={FormRatings} />
+                    </fieldset>
+                   
+                    <fieldset className="form-group">
+                      <label>Username: </label>
+                      <Field className="form-control" type="text" name="username" />
+                    </fieldset>
                   
-                  <fieldset className="form-group">
-                    <label>Review: </label>
-                    <Field className="form-control" type="textarea" name="reviewText" />
-                  </fieldset>
+                    <fieldset className="form-group">
+                      <label>Review: </label>
+                      <Field className="form-control" type="textarea" name="reviewText" />
+                    </fieldset>
 
                     <button className="btn btn-success" type="submit">Save</button> &emsp;
                     <a href={`/restrooms/details/${this.state.restroomId}`}>Cancel</a>

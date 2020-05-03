@@ -8,6 +8,7 @@ import Home from "./pages/Home.jsx";
 import RestroomComponent from "./pages/restroomComponent.jsx";
 import RestroomDetails from "./pages/restroomDetails.jsx";
 import ReviewComponent from "./pages/reviewComponent.jsx";
+import AddReview from "./pages/addReview.jsx";
 
 
 export const Routes = () => {
@@ -21,7 +22,8 @@ export const Routes = () => {
           <Route path="/restrooms" exact component={RestroomList} />
           <Route path="/restrooms/update/:id/" component={RestroomComponent} />
           <Route path="/restrooms/details/:id/" component={RestroomDetails} />
-          <Route path="/add-review/:id" component={ReviewComponent} />
+          <Route path="/add-review/:restroomId/" component={AddReview} />
+          <Route path="/reviews/update/:restroomId/:id" component={ReviewComponent} />
         </div>
       </Layout>
     </Router>
