@@ -1,6 +1,9 @@
 import React from "react";
 import axios from "axios";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import PlacesAutocomplete from 'react-places-autocomplete';
+import { geocodeByAddress, geocodeByPlaceId, getLatLng,} from 'react-places-autocomplete';
+
 
 export default class AddRestroom extends React.Component {
   
@@ -15,14 +18,61 @@ export default class AddRestroom extends React.Component {
       isSingleStall: false,
       isGenderNeutral: false,
       hasChangingTable: false,
-      message: null
+      message: null,
+      businesses: []
     }
     this.onSubmit = this.onSubmit.bind(this);
     this.validate = this.validate.bind(this);
 
   }
 
-   
+  handleSelect = address => {
+    geocodeByAddress(address)
+      .then(results => getLatLng(results[0]))
+      .then(latLng => console.log('Success', latLng))
+      .catch(error => console.error('Error', error));
+  };
+  handleChange = address => {
+    this.setState({ address });
+  };
+
+  handleScriptLoad = () => {
+    // Declare Options For Autocomplete
+    const options = {
+      types: ['(establishment)'],
+    };
+
+      // Initialize Google Autocomplete
+    /*global google*/ // To disable any eslint 'google not defined' errors
+    this.autocomplete = new google.maps.places.Autocomplete(
+      document.getElementById('autocomplete'),
+      options,
+    );
+
+     // Avoid paying for data that you don't need by restricting the set of
+    // place fields that are returned to just the address components and formatted
+    // address.
+    this.autocomplete.setFields(['address_components', 'formatted_address']);
+
+    // Fire Event when a suggested name is selected
+    this.autocomplete.addListener('place_changed', this.handlePlaceSelect);
+  }
+  handlePlaceSelect = () => {
+
+    // Extract City From Address Object
+    const addressObject = this.autocomplete.getPlace();
+    const address = addressObject.address_components;
+
+    // Check if address is valid
+    if (address) {
+      // Set State
+      this.setState(
+        {
+          address: addressObject.formatted_address,
+        }
+      );
+    }
+  }
   validate(values) {
     let errors = {}
     if (!values.businessName) {
@@ -93,6 +143,7 @@ export default class AddRestroom extends React.Component {
         <div className="container">
           <Formik
             initialValues = {{businessName, businessType, address, isAccessible, isSingleStall, isGenderNeutral, hasChangingTable}}
+            onLoad={this.handleScriptLoad}
             onSubmit={this.onSubmit}
             validateOnChange={false}
             validateOnBlur={false}
@@ -115,10 +166,54 @@ export default class AddRestroom extends React.Component {
                     <Field className="form-control" type="text" name="businessName"/>
                   </fieldset>
 
-                  <fieldset className="form-group">
+                  {/* <fieldset className="form-group"> */}
                     <label>Address: </label>
-                    <Field className="form-control" type="text" name="address" />
-                  </fieldset>
+                    {/* <Field  /> */}
+                    <PlacesAutocomplete 
+                    className="form-control" 
+                    type="text"
+                    name="address" 
+                    value={this.state.address}
+                    onChange={this.handleChange}
+                    onClick={this.handleSelect}
+      >
+        {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+          <div>
+            <input
+              {...getInputProps({
+                placeholder: 'Search Places ...',
+                className: 'location-search-input',
+        
+              })}
+            />
+            <div className="autocomplete-dropdown-container">
+              {loading && <div>Loading...</div>}
+              {suggestions.map(suggestion => {
+                const className = suggestion.active
+                  ? 'suggestion-item--active'
+                  : 'suggestion-item';
+                // inline style for demonstration purpose
+                const style = suggestion.active
+                  ? { backgroundColor: '#fafafa', cursor: 'pointer' }
+                  : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                return (
+                  <div
+                    {...getSuggestionItemProps(suggestion, {
+                      className,
+                      style,
+                    })}
+                  >
+                    <span>{suggestion.description}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+      </PlacesAutocomplete>
+  
+  
+                  {/* </fieldset> */}
 
                   <fieldset className="form-group">
                     <label>Business Type: </label>

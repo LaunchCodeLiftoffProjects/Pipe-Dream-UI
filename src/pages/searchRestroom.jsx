@@ -1,5 +1,9 @@
 import React from "react";
 import axios from "axios";
+import Map from "../components/map"; 
+import PlacesAutocomplete from 'react-places-autocomplete';
+import { geocodeByAddress, geocodeByPlaceId, getLatLng,} from 'react-places-autocomplete';
+// import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 
 export default class RestroomSearch extends React.Component {
   constructor(props) {
@@ -15,7 +19,8 @@ export default class RestroomSearch extends React.Component {
       restrooms: [],
       filteredRestrooms: [],
       message: null,
-    };
+      businesses: [],
+    }
   }
 
 
@@ -24,6 +29,17 @@ export default class RestroomSearch extends React.Component {
   componentDidMount() {
     this.getRestrooms();
   }
+
+  handleChange = address => {
+    this.setState({ address });
+  };
+ 
+  handleSelect = address => {
+    geocodeByAddress(address)
+      .then(results => getLatLng(results[0]))
+      .then(latLng => console.log('Success', latLng))
+      .catch(error => console.error('Error', error));
+  };
 
   //Get All Restrooms From API
   getRestrooms = async () => {
@@ -164,11 +180,22 @@ export default class RestroomSearch extends React.Component {
 
     return (
       <div>
-
-        {/* Search Form */}
-
+        <div className="map">
+          <form>
+      <Map
+     google={this.props.google}
+     businesses= {this.state.businesses}
+    //  center={{lat: 18.5204, lng: 73.8567}}
+    //  height='300px'
+    //  zoom={15}
+    />
+    </form>
+    </div>
+    <div>{/* Search Form  */}
+        
         <form onSubmit={this.handleSubmit.bind(this)}
-        class="form">
+        class="form"
+        className="container">
           <h1> Search for a Restroom:</h1>
           <div>
             <label>Search By Name: </label>
@@ -178,11 +205,49 @@ export default class RestroomSearch extends React.Component {
               onChange={this.updateName.bind(this)}/>
           </div>
           <div>
-          <label>Address: </label>
-          <input type="text" name="address" 
+           <label>Address: </label> 
+           <PlacesAutocomplete
+        value={this.state.address}
+        onChange={this.handleChange}
+        onClick={this.handleSelect}
+      >
+        {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+          <div>
+            <input
+              {...getInputProps({
+                placeholder: 'Search Places ...',
+                className: 'location-search-input',
+              })}
+            />
+            <div className="autocomplete-dropdown-container">
+              {loading && <div>Loading...</div>}
+              {suggestions.map(suggestion => {
+                const className = suggestion.active
+                  ? 'suggestion-item--active'
+                  : 'suggestion-item';
+                // inline style for demonstration purpose
+                const style = suggestion.active
+                  ? { backgroundColor: '#fafafa', cursor: 'pointer' }
+                  : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                return (
+                  <div
+                    {...getSuggestionItemProps(suggestion, {
+                      className,
+                      style,
+                    })}
+                  >
+                    <span>{suggestion.description}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+      </PlacesAutocomplete>
+          {/* <input type="text" name="address" 
           class="inputText"
           value={this.state.address.toLowerCase()} 
-          onChange={this.updateAddress.bind(this)}/>
+          onChange={this.updateAddress.bind(this)}/>  */}
         </div>
           <div>
           <label>Type of Business: </label>
@@ -229,6 +294,8 @@ export default class RestroomSearch extends React.Component {
           />
           </div>
         </form>
+        </div>
+         
 
         {/* Restroom Results */}
 
