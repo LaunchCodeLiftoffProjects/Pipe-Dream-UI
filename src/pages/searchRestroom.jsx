@@ -3,7 +3,7 @@ import axios from "axios";
 import Map from "../components/map"; 
 import PlacesAutocomplete from 'react-places-autocomplete';
 import { geocodeByAddress, geocodeByPlaceId, getLatLng,} from 'react-places-autocomplete';
-// import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
+// import { Map, InfoWindow, GoogleApiWrapper, Marker } from 'google-maps-react';
 
 export default class RestroomSearch extends React.Component {
   constructor(props) {
@@ -185,6 +185,7 @@ export default class RestroomSearch extends React.Component {
       <Map
      google={this.props.google}
      businesses= {this.state.businesses}
+     onClick={this.mapClicked}
     //  center={{lat: 18.5204, lng: 73.8567}}
     //  height='300px'
     //  zoom={15}
@@ -206,7 +207,7 @@ export default class RestroomSearch extends React.Component {
           </div>
           <div>
            <label>Address: </label> 
-           <PlacesAutocomplete
+           {/* <PlacesAutocomplete
         value={this.state.address}
         onChange={this.handleChange}
         onClick={this.handleSelect}
@@ -243,11 +244,11 @@ export default class RestroomSearch extends React.Component {
             </div>
           </div>
         )}
-      </PlacesAutocomplete>
-          {/* <input type="text" name="address" 
+      </PlacesAutocomplete> */}
+          <input type="text" name="address" 
           class="inputText"
           value={this.state.address.toLowerCase()} 
-          onChange={this.updateAddress.bind(this)}/>  */}
+          onChange={this.updateAddress.bind(this)}/> 
         </div>
           <div>
           <label>Type of Business: </label>

@@ -1,8 +1,9 @@
 import React from "react";
 import axios from "axios";
+import Map from "../components/map"; 
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import PlacesAutocomplete from 'react-places-autocomplete';
-import { geocodeByAddress, geocodeByPlaceId, getLatLng,} from 'react-places-autocomplete';
+import { geocodeByAddress, Listing, mapStyles, geocodeByPlaceId, getLatLng,} from 'react-places-autocomplete';
 
 
 export default class AddRestroom extends React.Component {
@@ -19,7 +20,11 @@ export default class AddRestroom extends React.Component {
       isGenderNeutral: false,
       hasChangingTable: false,
       message: null,
-      businesses: []
+      businesses: [],
+    }
+
+    const mapStyles = {
+        visible: false
     }
     this.onSubmit = this.onSubmit.bind(this);
     this.validate = this.validate.bind(this);
@@ -36,10 +41,15 @@ export default class AddRestroom extends React.Component {
     this.setState({ address });
   };
 
+  fetchPlaces(mapProps, map) {
+    const {google} = mapProps;
+    const service = new google.maps.places.PlacesService(map);
+  }
+
   handleScriptLoad = () => {
     // Declare Options For Autocomplete
     const options = {
-      types: ['(establishment)'],
+      types: ['({cities})'],
     };
 
       // Initialize Google Autocomplete
@@ -52,7 +62,6 @@ export default class AddRestroom extends React.Component {
      // Avoid paying for data that you don't need by restricting the set of
     // place fields that are returned to just the address components and formatted
     // address.
-    this.autocomplete.setFields(['address_components', 'formatted_address']);
 
     // Fire Event when a suggested name is selected
     this.autocomplete.addListener('place_changed', this.handlePlaceSelect);
@@ -77,8 +86,8 @@ export default class AddRestroom extends React.Component {
     let errors = {}
     if (!values.businessName) {
       errors.businessName = 'Please enter business name.'
-    } else if (values.businessName.length < 5 || values.businessName.length > 100) {
-      errors.businessName = 'Business Name must be between 5 and 100 characters.'
+    } else if (values.businessName.length < 2 || values.businessName.length > 100) {
+      errors.businessName = 'Business Name must be between 2 and 100 characters.'
     }
     if (!values.address) {
       errors.address = 'Please enter address.'
@@ -142,7 +151,7 @@ export default class AddRestroom extends React.Component {
         <a href="/restrooms">See All Restrooms</a></div>}
         <div className="container">
           <Formik
-            initialValues = {{businessName, businessType, address, isAccessible, isSingleStall, isGenderNeutral, hasChangingTable}}
+            initialValues = {{businessName, businessType, isAccessible, isSingleStall, isGenderNeutral, hasChangingTable}}
             onLoad={this.handleScriptLoad}
             onSubmit={this.onSubmit}
             validateOnChange={false}
@@ -166,9 +175,20 @@ export default class AddRestroom extends React.Component {
                     <Field className="form-control" type="text" name="businessName"/>
                   </fieldset>
 
-                  {/* <fieldset className="form-group"> */}
-                    <label>Address: </label>
+                  
                     {/* <Field  /> */}
+                    <div>
+                    <fieldset className="form-group">
+                    <label>Address: </label>
+                {/* <div className="map"> */}
+                <form>
+                {/* <Map google={this.props.google}
+                onReady={this.fetchPlaces}
+                mapStyles={mapStyles}
+                // visible={false}
+                >
+                <Listing places={this.state.places} />
+                </Map> */}
                     <PlacesAutocomplete 
                     className="form-control" 
                     type="text"
@@ -211,9 +231,10 @@ export default class AddRestroom extends React.Component {
           </div>
         )}
       </PlacesAutocomplete>
-  
-  
-                  {/* </fieldset> */}
+
+  </form>
+  {/* </div> */}
+                  </fieldset>
 
                   <fieldset className="form-group">
                     <label>Business Type: </label>
@@ -254,6 +275,7 @@ export default class AddRestroom extends React.Component {
                   <button className="btn btn-success" type="submit">Save</button>&emsp;
                   <a href='/restrooms'>Cancel</a>
 
+                </div>
                 </Form>
               )
             }
